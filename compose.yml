@@ -44,8 +44,6 @@ services:
       - bot_minecraft
       - mc_seed
     user: "100000"
-    group_add:
-      - "100000"
     # MC Config
     environment:
       # Modpack
