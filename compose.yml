@@ -20,9 +20,6 @@ services:
       - "443:443"
       - "80:80/udp"
       - "443:443/udp"
-    user: "100000"
-    group_add:
-      - "100000"
   
   minecraft:
     # Docker Config
@@ -43,7 +40,6 @@ services:
     secrets:
       - bot_minecraft
       - mc_seed
-    user: "100000"
     # MC Config
     environment:
       # Modpack
