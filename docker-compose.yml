@@ -1,0 +1,67 @@
+name: "guziohub"
+
+secrets:
+  bot_minecraft:
+    file: "./secrets/bot_minecraft.txt"
+  mc_seed:
+    file: "./secrets/mc_seed.txt"
+
+services:
+  web-server:
+    image: caddy:alpine
+    restart: unless-stopped
+    volumes:
+      - ./caddy/etc:/etc/caddy
+      - ./caddy/placeholder-website:/srv
+      - ./caddy/data:/data
+      - ./caddy/config:/config"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "80:80/udp"
+      - "443:443/udp"
+  
+  minecraft:
+    # Docker Config
+    image: "itzg/minecraft-server:java21-graalvm"
+    tty: true
+    stdin_open: true
+    volumes:
+      - "../minecraft/server:/data"
+      - "../minecraft/builds:/modpacks:ro"
+    ports:
+      - "25565:25565"
+    restart: no # For production: unless-stopped
+    healthcheck:
+      test: ["CMD", "mc-health"]
+      start_period: 210s #3,5min
+      interval: 3s
+      retries: 40 #extra 2min
+    secrets:
+      - bot_minecraft
+      - mc_seed
+    # MC Config
+    environment:
+      # Modpack
+      TYPE: "MODRINTH"
+      MODRINTH_MODPACK: "/modpacks/[NAME].mrpack" # Placeholder. For now, mc-docker will try to load it, fail (because there'd be no such file) and (due to `restart: no`) not try again. If I ever run an MC server on this machine in the future, this (along with the restart policy) will of course have to be changed.
+      # Minecraft stuff
+      GUI: "FALSE"
+      EULA: "TRUE"              #  Why are some bools upper-case...
+      # Java stuff
+      MEMORY: "18G"
+      USE_AIKAR_FLAGS: "true"   #  ...and others lower-case? No fucking idea! I'm just following the docs, that's all.
+      # Secrets
+      CFG_BOT_TOKEN_FILE: "/run/secrets/bot_minecraft"
+      CFG_SEED_FILE: "/run/secrets/mc_seed"
+      # Desperatley trying to get Secrets to work
+      REPLACE_ENV_VARIABLES: "TRUE"
+      ENV_VARIABLE_PREFIX: "CFG_"
+      REPLACE_ENV_IN_PLACE: "true"
+      REPLACE_ENV_DURING_SYNC: "true"
+      # Misc
+      TZ: "Europe/Warsaw"
+      LOG_TIMESTAMP: "true"
+      MODRINTH_FORCE_SYNCHRONIZE: "true"
+      DATAPACKS: "/data/datapacks"
+      LEVEL: "world"
