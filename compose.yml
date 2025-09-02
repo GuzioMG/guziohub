@@ -31,7 +31,7 @@ services:
       - "../minecraft/builds:/modpacks:ro"
     ports:
       - "25565:25565"
-    restart: no # For production: unless-stopped
+    #restart: unless-stopped
     healthcheck:
       test: ["CMD", "mc-health"]
       start_period: 210s #3,5min
