@@ -62,8 +62,8 @@ services:
       # Misc
       TZ: "Europe/Warsaw"
       LOG_TIMESTAMP: "true"
-      GID: "65534"  # My user group on the host machine
-      UID: "100000"
+      GID: "1001"  # My user group on the host machine
+      UID: "1001"  # My user group on the host machine
       MODRINTH_FORCE_SYNCHRONIZE: "true"
       DATAPACKS: "/data/datapacks"
       LEVEL: "world"
