@@ -6,3 +6,6 @@ Holds the Minecraft seed. Can be left blank to randomize a seed.
 
 ## `bot_minecraft.txt`
 Holds the bot token for the Minecraft bot.
+
+## `pgpass.txt`
+Password for the root (`postgres`) user in the DB.

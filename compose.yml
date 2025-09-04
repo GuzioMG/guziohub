@@ -5,6 +5,8 @@ secrets:
     file: "./secrets/bot_minecraft.txt"
   mc_seed:
     file: "./secrets/mc_seed.txt"
+  pgpass:
+    file: "./secrets/pgpass.txt" 
 
 services:
   web-server:
@@ -12,14 +14,61 @@ services:
     restart: unless-stopped
     volumes:
       - ./caddy/etc:/etc/caddy
-      - ./caddy/placeholder-website:/srv
+      - ./caddy/placeholder-website:/srv:ro
       - ./caddy/data:/data
-      - ./caddy/config:/config"
+      - ./caddy/config:/config
+      - ./nc:/srv/nextcloud:ro
     ports:
       - "80:80"
       - "443:443"
       - "80:80/udp"
       - "443:443/udp"
+  
+  nextcloud:
+    image: nextcloud:31-fpm-alpine
+    restart: unless-stopped
+    secrets:
+      - pgpass
+    depends_on:
+      - pgdb
+      - redis
+    volumes:
+      - ./nc:/var/www/html
+      - ../files/nextcloud:/var/www/html/data
+    environment:
+      - PUID=1001  # My user on the host machine
+      - PGID=1001  # My user group on the host machine
+      - TZ=Europe/Warsaw
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=pgdb
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=postgres
+
+  nextcloudcron:
+    image: nextcloud:31-fpm-alpine
+    restart: unless-stopped
+    volumes:
+      - ./nc:/var/www/html
+      - ../files/nextcloud:/var/www/html/data
+    entrypoint: /cron.sh
+    depends_on:
+      - pgdb
+      - redis
+  
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    
+  pgdb:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    secrets:
+      - pgpass
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
   
   minecraft:
     # Docker Config
@@ -63,7 +112,7 @@ services:
       TZ: "Europe/Warsaw"
       LOG_TIMESTAMP: "true"
       GID: "1001"  # My user group on the host machine
-      UID: "1001"  # My user group on the host machine
+      UID: "1001"  # My user on the host machine
       MODRINTH_FORCE_SYNCHRONIZE: "true"
       DATAPACKS: "/data/datapacks"
       LEVEL: "world"

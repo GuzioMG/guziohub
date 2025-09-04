@@ -1,3 +1,9 @@
 # Private Caddy stuff
 caddy/data
 caddy/config
+
+# Database
+db
+
+# Nextcloud
+nc
