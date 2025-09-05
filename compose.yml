@@ -9,19 +9,19 @@ secrets:
     file: "./secrets/pgpass.txt" 
 
 services:
-  web-server:
-    image: caddy:alpine
-    restart: unless-stopped
-    volumes:
-      - ./caddy/etc:/etc/caddy
-      - ./caddy/placeholder-website:/srv:ro
-      - ./caddy/data:/data
-      - ./caddy/config:/config
-    ports:
-      - "80:80"
-      - "443:443"
-      - "80:80/udp"
-      - "443:443/udp"
+  #web-server:
+  #  image: caddy:alpine
+  #  restart: unless-stopped
+  #  volumes:
+  #    - ./caddy/etc:/etc/caddy
+  #    - ./caddy/placeholder-website:/srv:ro
+  #    - ./caddy/data:/data
+  #    - ./caddy/config:/config
+  #  ports:
+  #    - "80:80"
+  #    - "443:443"
+  #    - "80:80/udp"
+  #    - "443:443/udp"
   
   nextcloud:
     image: nextcloud:31
@@ -29,7 +29,7 @@ services:
     secrets:
       - pgpass
     ports:
-      - "8007:80"
+      - "80:80"
     depends_on:
       - pgdb
       - redis
