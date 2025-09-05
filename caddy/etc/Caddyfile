@@ -9,34 +9,39 @@
 # domain name.
 
 https://guziohub.ovh:443, http://guziohub.ovh:80 {
-    #root * /srv
-    #encode
-    #file_server browse
-#
-	#handle_path /nextcloud/* {
-		root * /srv/nextcloud
-		encode
-    	php_fastcgi nextcloud:9000
-		file_server
-		
-    	redir /.well-known/carddav /nextcloud/remote.php/dav 301
-    	redir /.well-known/caldav /nextcloud/remote.php/dav 301
-		
-    	@forbidden {
-    	        path /nextcloud/.htaccess
-    	        # path /nextcloud/data/* We don't even mount this, so it can be commended out. Preserved for reference.
-    	        path /nextcloud/config/*
-    	        path /nextcloud/db_structure
-    	        path /nextcloud/.xml
-    	        path /nextcloud/README
-    	        path /nextcloud/3rdparty/*
-    	        path /nextcloud/lib/*
-    	        path /nextcloud/templates/*
-    	        path /nextcloud/occ
-    	        path /nextcloud/console.php
-    	}
-    	respond @forbidden 403
-	#}
+    root * /srv
+    encode
+    file_server browse
+	
+	# Make sure noone tries to bypass Nextcloud's auth by directly navigating to its folder
+	redir /nextcloud https://drive.guziohub.ovh 301
+	redir /nextcloud/ https://drive.guziohub.ovh 301
+	respond /nextcloud/* 403
+}
+
+https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
+	root * /srv/nextcloud
+	encode
+    php_fastcgi nextcloud:9000
+	file_server
+	
+    redir /.well-known/carddav /remote.php/dav 301
+    redir /.well-known/caldav /remote.php/dav 301
+	
+    @forbidden {
+            path /.htaccess
+            # path /data/* We don't even mount this, so it can be commended out. Preserved for reference.
+            path /config/*
+            path /db_structure
+            path /.xml
+            path /README
+            path /3rdparty/*
+            path /lib/*
+            path /templates/*
+            path /occ
+            path /console.php
+    }
+    respond @forbidden 403
 }
 
 # Refer to the Caddy docs for more information:
