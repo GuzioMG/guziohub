@@ -17,7 +17,6 @@ services:
       - ./caddy/placeholder-website:/srv:ro
       - ./caddy/data:/data
       - ./caddy/config:/config
-      - ./nc:/srv/nextcloud:ro
     ports:
       - "80:80"
       - "443:443"
@@ -25,10 +24,12 @@ services:
       - "443:443/udp"
   
   nextcloud:
-    image: nextcloud:31-fpm-alpine
+    image: nextcloud:31-alpine
     restart: unless-stopped
     secrets:
       - pgpass
+    ports:
+      - "8007:80"
     depends_on:
       - pgdb
       - redis
