@@ -24,7 +24,7 @@ services:
       - "443:443/udp"
   
   nextcloud:
-    image: nextcloud:31-alpine
+    image: nextcloud:31
     restart: unless-stopped
     secrets:
       - pgpass
@@ -47,7 +47,7 @@ services:
       - POSTGRES_USER=postgres
 
   nextcloudcron:
-    image: nextcloud:31-fpm-alpine
+    image: nextcloud:31
     restart: unless-stopped
     volumes:
       - ./nc:/var/www/html
