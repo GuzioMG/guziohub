@@ -15,7 +15,6 @@ services:
     image: caddy:alpine
     pull_policy: always
     restart: unless-stopped
-    user: "1001:1001"
     volumes:
       - ./caddy/etc:/etc/caddy
       - ./caddy/data:/data
@@ -35,7 +34,6 @@ services:
   app:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
-    user: "1001:1001"
     depends_on:
       db:
         condition: service_healthy
@@ -125,7 +123,6 @@ services:
   nextcloudcron:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
-    user: "1001:1001"
     volumes:
       - ./nc:/var/www/html
       - ../files/drive:/var/www/html/data
