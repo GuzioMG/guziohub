@@ -61,7 +61,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
       - NEXTCLOUD_ADMIN_USER=root
-      - NEXTCLOUD_ADMIN_PASSWORD_FILE=/run/secrets/ncpass
       - REDIS_HOST=redis
       - DOMAIN=drive.guziohub.ovh
       - NEXTCLOUD_VERSION=31-fpm-alpine
