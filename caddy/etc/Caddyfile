@@ -9,11 +9,11 @@
 # domain name.
 
 https://guziohub.ovh:443, http://guziohub.ovh:80 {
-    root * /srv
-    encode
-    file_server browse
-
-	handle_path /nextcloud/* {
+    #root * /srv
+    #encode
+    #file_server browse
+#
+	#handle_path /nextcloud/* {
 		root * /srv/nextcloud
 		encode
     	php_fastcgi nextcloud:9000
@@ -36,7 +36,7 @@ https://guziohub.ovh:443, http://guziohub.ovh:80 {
     	        path /nextcloud/console.php
     	}
     	respond @forbidden 403
-	}
+	#}
 }
 
 # Refer to the Caddy docs for more information:
