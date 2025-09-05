@@ -6,9 +6,85 @@ secrets:
   mc_seed:
     file: "./secrets/mc_seed.txt"
   pgpass:
-    file: "./secrets/pgpass.txt" 
+    file: "./secrets/pgpass.txt"
+  ncpass:
+    file: ./secrets/ncpass.txt
 
 services:
+  web:
+    image: caddy:alpine
+    pull_policy: always
+    restart: unless-stopped
+    user: "1001:1001"
+    volumes:
+      - ./caddy/etc:/etc/caddy
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./caddy/placeholder-website:/srv:ro
+      - ./nc:/var/www/html:ro
+      - ../files/drive:/var/www/html/data:ro
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "127.0.0.1:2019/metrics"]
+      interval: 10s
+      retries: 3
+      start_period: 5s
+      timeout: 5s
+    environment:
+      - TZ=Europe/Warsaw
+
+  app:
+    image: nextcloud:31-fpm-alpine
+    restart: unless-stopped
+    user: "1001:1001"
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    secrets:
+      - ncpass
+      - pgpass
+    volumes:
+      - ./nc:/var/www/html
+      - ../files/drive:/var/www/html/data
+    environment:
+      - TZ=Europe/Warsaw
+      - NEXTCLOUD_TRUSTED_DOMAINS=drive.guziohub.ovh
+      - OVERWRITEHOST=drive.guziohub.ovh
+      - OVERWRITECLIURL=https://drive.guziohub.ovh
+      - OVERWRITEPROTOCOL=https
+      - TRUSTED_PROXIES=172.16.0.0/24
+      - PHP_MEMORY_LIMIT=1G
+      - PHP_UPLOAD_LIMIT=10G
+      - POSTGRES_HOST=pgdb
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
+      - NEXTCLOUD_ADMIN_USER=root
+      - NEXTCLOUD_ADMIN_PASSWORD_FILE=/run/secrets/ncpass
+      - REDIS_HOST=redis
+      - DOMAIN=drive.guziohub.ovh
+      - NEXTCLOUD_VERSION=31-fpm-alpine
+      - UID=1001
+      - GID=1001
+
+  imaginary:
+    image: nextcloud/aio-imaginary:latest
+    restart: unless-stopped
+    expose:
+      - "9000"
+    depends_on:
+      app:
+        condition: service_started
+    environment:
+      - TZ=Europe/Warsaw
+    cap_add:
+      - SYS_NICE
+    tmpfs:
+      - /tmp
+
   #web-server:
   #  image: caddy:alpine
   #  restart: unless-stopped
@@ -23,36 +99,39 @@ services:
   #    - "80:80/udp"
   #    - "443:443/udp"
   
-  nextcloud:
-    image: nextcloud:31
-    restart: unless-stopped
-    secrets:
-      - pgpass
-    ports:
-      - "80:80"
-    depends_on:
-      - pgdb
-      - redis
-    volumes:
-      - ./nc:/var/www/html
-      - ../files/nextcloud:/var/www/html/data
-    environment:
-      - PUID=1001  # My user on the host machine
-      - PGID=1001  # My user group on the host machine
-      - TZ=Europe/Warsaw
-      - REDIS_HOST=redis
-      - POSTGRES_HOST=pgdb
-      - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
-      - POSTGRES_DB=nextcloud
-      - POSTGRES_USER=postgres
+  #nextcloud:
+  #  image: nextcloud:31
+  #  restart: unless-stopped
+  #  secrets:
+  #    - pgpass
+  #  ports:
+  #    - "80:80"
+  #  depends_on:
+  #    - pgdb
+  #    - redis
+  #  volumes:
+  #    - ./nc:/var/www/html
+  #    - ../files/nextcloud:/var/www/html/data
+  #  environment:
+  #    - PUID=1001  # My user on the host machine
+  #    - PGID=1001  # My user group on the host machine
+  #    - TZ=Europe/Warsaw
+  #    - REDIS_HOST=redis
+  #    - POSTGRES_HOST=pgdb
+  #    - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
+  #    - POSTGRES_DB=nextcloud
+  #    - POSTGRES_USER=postgres
 
   nextcloudcron:
-    image: nextcloud:31
+    image: nextcloud:31-fpm-alpine
     restart: unless-stopped
+    user: "1001:1001"
     volumes:
       - ./nc:/var/www/html
-      - ../files/nextcloud:/var/www/html/data
+      - ../files/drive:/var/www/html/data
     entrypoint: /cron.sh
+    environment:
+      - TZ=Europe/Warsaw
     depends_on:
       - pgdb
       - redis
@@ -70,6 +149,13 @@ services:
       - ./db/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
+      - TZ=Europe/Warsaw
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      start_period: 15s
+      interval: 30s
+      retries: 3
+      timeout: 5s
   
   minecraft:
     # Docker Config

@@ -9,3 +9,6 @@ Holds the bot token for the Minecraft bot.
 
 ## `pgpass.txt`
 Password for the root (`postgres`) user in the DB.
+
+## `ncpass.txt`
+Password for the admin (`root`) user in Nextcloud.
