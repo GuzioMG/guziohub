@@ -8,6 +8,15 @@
 # this machine's public IP, then replace ":80" below with your
 # domain name.
 
+{
+	log default {
+		output stdout
+		format console
+		level DEBUG
+	}
+}
+
+
 https://guziohub.ovh:443, http://guziohub.ovh:80 {
     root * /srv
     encode
@@ -95,7 +104,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		redir @msftdavclient /remote.php/webdav/ temporary
 
 		route /robots.txt {
-			log_skip
+			#log_skip
 			file_server
 		}
 
@@ -142,7 +151,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		route @assets {
 			header /* Cache-Control "max-age=15552000" # Cache-Control policy borrowed from `.htaccess`
 			header /*.woff2 Cache-Control "max-age=604800" # Cache-Control policy borrowed from `.htaccess`
-			log_skip # Optional: Don't log access to assets
+			#log_skip # Optional: Don't log access to assets
 			file_server {
 				precompressed gzip
 			}
