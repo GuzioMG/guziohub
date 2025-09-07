@@ -115,9 +115,11 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 			redir /.well-known/carddav /remote.php/dav/ permanent
 			redir /.well-known/caldav /remote.php/dav/ permanent
 
-			@well-known-static path \
- /.well-known/acme-challenge /.well-known/acme-challenge/* \
- /.well-known/pki-validation /.well-known/pki-validation/*
+			@well-known-static path {
+ 				/.well-known/acme-challenge /.well-known/acme-challenge/*
+ 				/.well-known/pki-validation /.well-known/pki-validation/*
+ 			}
+			
 			route @well-known-static {
 				try_files {path} {path}/ =404
 				file_server
@@ -126,22 +128,22 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 			redir * /index.php{path} permanent
 		}
 
-		@internal path \
- /build /build/* \
- /tests /tests/* \
- /config /config/* \
- /lib /lib/* \
- /3rdparty /3rdparty/* \
- /templates /templates/* \
- /data /data/* \
- \
- /.* \
- /autotest* \
- /occ* \
- /issue* \
- /indie* \
- /db_* \
- /console*
+		@internal {
+ 			path /build /build/*
+ 			path /tests /tests/*
+ 			path /config /config/*
+ 			path /lib /lib/*
+ 			path /3rdparty /3rdparty/*
+ 			path /templates /templates/*
+ 			path /data /data/*
+ 			path /.*
+ 			path /autotest*
+ 			path /occ*
+ 			path /issue*
+ 			path /indie*
+ 			path /db_*
+ 			path /console*
+ }
 		error @internal 403
 
 		@assets {
