@@ -172,21 +172,21 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		# Required for legacy support
 		#
 		# Rewrites all other requests to be prepended by “/index.php” unless they match a known-valid PHP file path.
-		@notlegacy {
-			path *.php *.php/
-			not path /index*
-			not path /remote*
-			not path /public*
-			not path /cron*
-			not path /core/ajax/update*
-			not path /status*
-			not path /ocs/v1*
-			#not path /ocs/v2*
-			not path /ocs-provider/*
-			not path /updater/*
-			not path */richdocumentscode/proxy*
-		}
-		rewrite @notlegacy /index.php{uri}
+		#@notlegacy {
+		#	path *.php *.php/
+		#	not path /index*
+		#	not path /remote*
+		#	not path /public*
+		#	not path /cron*
+		#	not path /core/ajax/update*
+		#	not path /status*
+		#	not path /ocs/v1*
+		#	not path /ocs/v2*
+		#	not path /ocs-provider/*
+		#	not path /updater/*
+		#	not path */richdocumentscode/proxy*
+		#}
+		#rewrite @notlegacy /index.php{uri}
 
 		# Let everything else be handled by the PHP-FPM component
 		php_fastcgi app:9000 {
