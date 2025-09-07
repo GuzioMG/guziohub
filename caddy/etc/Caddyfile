@@ -143,7 +143,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
  			path /indie*
  			path /db_*
  			path /console*
- }
+		}
 		error @internal 403
 
 		@assets {
