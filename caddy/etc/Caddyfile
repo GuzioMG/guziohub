@@ -181,7 +181,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 			not path /core/ajax/update*
 			not path /status*
 			not path /ocs/v1*
-			not path /ocs/v2*
+			#not path /ocs/v2*
 			not path /ocs-provider/*
 			not path /updater/*
 			not path */richdocumentscode/proxy*
