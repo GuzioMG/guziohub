@@ -115,9 +115,9 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 			redir /.well-known/carddav /remote.php/dav/ permanent
 			redir /.well-known/caldav /remote.php/dav/ permanent
 
-			@well-known-static path {
- 				/.well-known/acme-challenge /.well-known/acme-challenge/*
- 				/.well-known/pki-validation /.well-known/pki-validation/*
+			@well-known-static {
+ 				path /.well-known/acme-challenge /.well-known/acme-challenge/*
+ 				path /.well-known/pki-validation /.well-known/pki-validation/*
  			}
 			
 			route @well-known-static {
