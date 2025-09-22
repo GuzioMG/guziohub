@@ -7,6 +7,8 @@ secrets:
     file: "./secrets/mc_seed.txt"
   pgpass:
     file: "./secrets/pgpass.txt"
+  ncappkey:
+    file: "./secrets/ncappkey.txt"
 
 services:
   web:
@@ -43,6 +45,8 @@ services:
       web:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      ncapps:
         condition: service_healthy
     secrets:
       - pgpass
@@ -96,6 +100,18 @@ services:
     depends_on:
       - pgdb
       - redis
+  
+  ncapps:
+    image: ghcr.io/nextcloud/nextcloud-appapi-dsp:release
+    restart: unless-stopped
+    secrets:
+      - ncappkey
+    environment:
+      - NC_HAPROXY_PASSWORD_FILE=/run/secrets/ncappkey
+      - TZ=Europe/Warsaw
+    volumes:
+      - /run/user/1001/podman/podman.sock:/var/run/docker.sock
+    privileged: true
   
   redis:
     image: redis:alpine

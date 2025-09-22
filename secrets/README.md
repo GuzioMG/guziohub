@@ -9,3 +9,6 @@ Holds the bot token for the Minecraft bot.
 
 ## `pgpass.txt`
 Password for the root (`postgres`) user in the DB.
+
+## `ncappkey.txt`
+Shared secret between Nextcloud and ExApps DSP
