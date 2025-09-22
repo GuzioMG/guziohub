@@ -78,6 +78,7 @@ services:
   imaginary:
     image: nextcloud/aio-imaginary:latest
     restart: unless-stopped
+    stop_grace_period: 1s
     expose:
       - "9000"
     environment:
@@ -90,6 +91,7 @@ services:
   nctasks:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
+    stop_grace_period: 1s
     volumes:
       - ./nc:/var/www/html
       - ../files/drive:/var/www/html/data
@@ -105,6 +107,7 @@ services:
   ncapps:
     image: ghcr.io/nextcloud/nextcloud-appapi-dsp:release
     restart: unless-stopped
+    stop_grace_period: 1s
     secrets:
       - ncappkey
     environment:
