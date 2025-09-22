@@ -147,7 +147,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		error @internal 403
 
 		@assets {
-			path *.css *.js *.svg *.gif *.png *.jpg *.jpeg *.ico *.wasm *.tflite *.map *.wasm2
+			path *.css *.js *.svg *.gif *.png *.jpg *.jpeg *.ico *.wasm *.tflite *.map *.wasm2 *.mjs *.cjs *.woff *.woff2 *.eot *.ttf *.otf
 			file {path} # Only if requested file exists on disk, otherwise /index.php will take care of it
 		}
 		route @assets {
@@ -163,7 +163,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		redir /remote/* /remote.php{path} permanent
 
 		# Serve found static files, continuing to the PHP default handler below if not found
-		#try_files {path} {path}/
+		#   try_files {path} {path}/
 		#@notphpordir not path /*.php /*.php/* / /*/
 		#file_server @notphpordir {
 		#	pass_thru
