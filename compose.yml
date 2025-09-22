@@ -87,43 +87,6 @@ services:
     tmpfs:
       - /tmp
 
-  #web-server:
-  #  image: caddy:alpine
-  #  restart: unless-stopped
-  #  volumes:
-  #    - ./caddy/etc:/etc/caddy
-  #    - ./caddy/placeholder-website:/srv:ro
-  #    - ./caddy/data:/data
-  #    - ./caddy/config:/config
-  #  ports:
-  #    - "80:80"
-  #    - "443:443"
-  #    - "80:80/udp"
-  #    - "443:443/udp"
-  
-  #nextcloud:
-  #  image: nextcloud:31
-  #  restart: unless-stopped
-  #  secrets:
-  #    - pgpass
-  #  ports:
-  #    - "80:80"
-  #  depends_on:
-  #    - pgdb
-  #    - redis
-  #  volumes:
-  #    - ./nc:/var/www/html
-  #    - ../files/nextcloud:/var/www/html/data
-  #  environment:
-  #    - PUID=1001  # My user on the host machine
-  #    - PGID=1001  # My user group on the host machine
-  #    - TZ=Europe/Warsaw
-  #    - REDIS_HOST=redis
-  #    - POSTGRES_HOST=pgdb
-  #    - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
-  #    - POSTGRES_DB=nextcloud
-  #    - POSTGRES_USER=postgres
-
   nextcloudcron:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
