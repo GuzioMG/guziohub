@@ -40,7 +40,9 @@ services:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
     depends_on:
-      db:
+      imaginary:
+        condition: service_healthy
+      pgdb:
         condition: service_healthy
       web:
         condition: service_healthy
@@ -78,9 +80,6 @@ services:
     restart: unless-stopped
     expose:
       - "9000"
-    depends_on:
-      nextcloud:
-        condition: service_started
     environment:
       - TZ=Europe/Warsaw
     cap_add:
@@ -98,8 +97,10 @@ services:
     environment:
       - TZ=Europe/Warsaw
     depends_on:
-      - pgdb
-      - redis
+      pgdb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
   
   ncapps:
     image: ghcr.io/nextcloud/nextcloud-appapi-dsp:release
