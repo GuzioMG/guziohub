@@ -197,7 +197,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		rewrite @notlegacy /index.php{uri}
 
 		# Let everything else be handled by the PHP-FPM component
-		php_fastcgi app:9000 {
+		php_fastcgi nextcloud:9000 {
 			env modHeadersAvailable true # Avoid sending the security headers twice
 			env front_controller_active true # Enable pretty urls
 		}

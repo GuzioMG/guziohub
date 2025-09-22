@@ -7,8 +7,6 @@ secrets:
     file: "./secrets/mc_seed.txt"
   pgpass:
     file: "./secrets/pgpass.txt"
-  ncpass:
-    file: ./secrets/ncpass.txt
 
 services:
   web:
@@ -36,7 +34,7 @@ services:
     environment:
       - TZ=Europe/Warsaw
 
-  app:
+  nextcloud:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
     depends_on:
@@ -47,7 +45,6 @@ services:
       redis:
         condition: service_healthy
     secrets:
-      - ncpass
       - pgpass
     volumes:
       - ./nc:/var/www/html
@@ -78,7 +75,7 @@ services:
     expose:
       - "9000"
     depends_on:
-      app:
+      nextcloud:
         condition: service_started
     environment:
       - TZ=Europe/Warsaw
@@ -87,7 +84,7 @@ services:
     tmpfs:
       - /tmp
 
-  nextcloudcron:
+  nctasks:
     image: nextcloud:31-fpm-alpine
     restart: unless-stopped
     volumes:
@@ -103,6 +100,11 @@ services:
   redis:
     image: redis:alpine
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
     
   pgdb:
     image: postgres:17-alpine
