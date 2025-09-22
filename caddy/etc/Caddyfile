@@ -163,11 +163,11 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 		redir /remote/* /remote.php{path} permanent
 
 		# Serve found static files, continuing to the PHP default handler below if not found
-		try_files {path} {path}/
-		@notphpordir not path /*.php /*.php/* / /*/
-		file_server @notphpordir {
-			pass_thru
-		}
+		#try_files {path} {path}/
+		#@notphpordir not path /*.php /*.php/* / /*/
+		#file_server @notphpordir {
+		#	pass_thru
+		#}
 
 		# Required for legacy support
 		#
