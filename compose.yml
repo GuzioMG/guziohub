@@ -162,7 +162,6 @@ services:
         TUWUNEL_SERVER_NAME: guziohub.ovh
         TUWUNEL_DATABASE_PATH: /var/lib/tuwunel
         TUWUNEL_ADDRESS: 0.0.0.0
-        TUWUNEL_PORT: 6167
         TUWUNEL_LOG_THREAD_IDS: 'true'
         TUWUNEL_MAX_REQUEST_SIZE: 100000000 # B  =  100 MB
         TUWUNEL_CACHE_CAPACITY_MODIFIER: 2.5
