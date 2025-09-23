@@ -12,3 +12,6 @@ Password for the root (`postgres`) user in the DB.
 
 ## `ncappkey.txt`
 Shared secret between Nextcloud and ExApps DSP
+
+## `mxregkey.txt`
+The password used for registration on Matrix.
