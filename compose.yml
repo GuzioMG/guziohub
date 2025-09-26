@@ -157,6 +157,10 @@ services:
     depends_on:
       web:
         condition: service_healthy
+    ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
+      nofile:
+        soft: 1048567
+        hard: 1048567
     environment:
       # Core
       TUWUNEL_SERVER_NAME: guziohub.ovh
@@ -171,6 +175,7 @@ services:
       TUWUNEL_SENTRY_SEND_SERVER_NAME: 'true'
       TUWUNEL_WELL_KNOWN__CLIENT: 'https://api.chat.guziohub.ovh'
       TUWUNEL_WELL_KNOWN__SERVER: 'matrix.guziohub.ovh:443'
+      TZ: "Europe/Warsaw"
       # Database & media
       TUWUNEL_ROCKSDB_STATS_LEVEL: 2
       TUWUNEL_ROCKSDB_RECOVERY_MODE: 0
