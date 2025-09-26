@@ -36,7 +36,7 @@ services:
       start_period: 5s
       timeout: 5s
     environment:
-      - TZ=Europe/Warsaw
+      TZ: Europe/Warsaw
 
   nextcloud:
     image: nextcloud:31-fpm-alpine
@@ -58,24 +58,24 @@ services:
       - ./nc:/var/www/html
       - ../files/drive:/var/www/html/data
     environment:
-      - TZ=Europe/Warsaw
-      - NEXTCLOUD_TRUSTED_DOMAINS=drive.guziohub.ovh
-      - OVERWRITEHOST=drive.guziohub.ovh
-      - OVERWRITECLIURL=https://drive.guziohub.ovh
-      - OVERWRITEPROTOCOL=https
-      - TRUSTED_PROXIES=172.16.0.0/24
-      - PHP_MEMORY_LIMIT=1G
-      - PHP_UPLOAD_LIMIT=10G
-      - POSTGRES_HOST=pgdb
-      - POSTGRES_DB=nextcloud
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
-      - NEXTCLOUD_ADMIN_USER=root
-      - REDIS_HOST=redis
-      - DOMAIN=drive.guziohub.ovh
-      - NEXTCLOUD_VERSION=31-fpm-alpine
-      - UID=1001
-      - GID=1001
+      TZ: Europe/Warsaw
+      NEXTCLOUD_TRUSTED_DOMAINS: drive.guziohub.ovh
+      OVERWRITEHOST: drive.guziohub.ovh
+      OVERWRITECLIURL: https://drive.guziohub.ovh
+      OVERWRITEPROTOCOL: https
+      TRUSTED_PROXIES: 172.16.0.0/24
+      PHP_MEMORY_LIMIT: 1G
+      PHP_UPLOAD_LIMIT: 10G
+      POSTGRES_HOST: pgdb
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/pgpass
+      NEXTCLOUD_ADMIN_USER: root
+      REDIS_HOST: redis
+      DOMAIN: drive.guziohub.ovh
+      NEXTCLOUD_VERSION: 31-fpm-alpine
+      UID: "1001"
+      GID: "1001"
 
   imaginary:
     image: nextcloud/aio-imaginary:latest
@@ -84,7 +84,7 @@ services:
     expose:
       - "9000"
     environment:
-      - TZ=Europe/Warsaw
+      TZ: Europe/Warsaw
     cap_add:
       - SYS_NICE
     tmpfs:
@@ -99,7 +99,7 @@ services:
       - ../files/drive:/var/www/html/data
     entrypoint: /cron.sh
     environment:
-      - TZ=Europe/Warsaw
+      TZ: Europe/Warsaw
     depends_on:
       pgdb:
         condition: service_healthy
@@ -113,11 +113,11 @@ services:
     secrets:
       - ncappkey
     environment:
-      - NC_HAPROXY_PASSWORD_FILE=/run/secrets/ncappkey
-      - TZ=Europe/Warsaw
+      NC_HAPROXY_PASSWORD_FILE: /run/secrets/ncappkey
+      TZ: Europe/Warsaw
     volumes:
       - /run/user/1001/podman/podman.sock:/var/run/docker.sock
-    privileged: true
+    privileged: true #Security nightmare, but it needs it to be able to manage other containers
   
   redis:
     image: redis:alpine
@@ -136,8 +136,8 @@ services:
     volumes:
       - ./db/postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD_FILE=/run/secrets/pgpass
-      - TZ=Europe/Warsaw
+      POSTGRES_PASSWORD_FILE: /run/secrets/pgpass
+      TZ: Europe/Warsaw
     healthcheck:
       test: ["CMD", "pg_isready"]
       start_period: 15s
@@ -153,62 +153,62 @@ services:
     secrets:
       - mxregkey
     volumes:
-        - ./db/matrix:/var/lib/tuwunel
+      - ./db/matrix:/var/lib/tuwunel
     depends_on:
       web:
         condition: service_healthy
     environment:
-        # Core
-        TUWUNEL_SERVER_NAME: guziohub.ovh
-        TUWUNEL_DATABASE_PATH: /var/lib/tuwunel
-        TUWUNEL_ADDRESS: 0.0.0.0
-        TUWUNEL_LOG_THREAD_IDS: 'true'
-        TUWUNEL_MAX_REQUEST_SIZE: 100000000 # B  =  100 MB
-        TUWUNEL_CACHE_CAPACITY_MODIFIER: 2.5
-        TUWUNEL_ALLOW_CHECK_FOR_UPDATES: 'true'
-        TUWUNEL_ADMIN_CONSOLE_AUTOMATIC: 'true'
-        TUWUNEL_SENTRY: 'true'
-        TUWUNEL_SENTRY_SEND_SERVER_NAME: 'true'
-        TUWUNEL_WELL_KNOWN__CLIENT: 'https://api.chat.guziohub.ovh'
-        TUWUNEL_WELL_KNOWN__SERVER: 'matrix.guziohub.ovh:443'
-        # Database & media
-        TUWUNEL_ROCKSDB_STATS_LEVEL: 2
-        TUWUNEL_ROCKSDB_RECOVERY_MODE: 0
-        TUWUNEL_MEDIA_STARTUP_CHECK: 'false'
-        TUWUNEL_ALLOW_LEGACY_MEDIA: 'true'
-        TUWUNEL_BLURHASHING__COMPONENTS_X: 6
-        TUWUNEL_BLURHASHING__COMPONENTS_Y: 6
-        TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB  („a bit more than the upload limit”, as the documentation recommends - interpretetion of „a bit” left to the user, so I went with just under 2x lol)
-        # DNS
-        TUWUNEL_QUERY_OVER_TCP_ONLY: 'true' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run)
-        TUWUNEL_IP_LOOKUP_STRATEGY: 3
-        TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'true'
-        # Users
-        TUWUNEL_ALLOW_REGISTRATION: 'true'
-        TUWUNEL_REGISTRATION_TOKEN_FILE: '/run/secrets/mxregkey'
-        TUWUNEL_NEW_USER_DISPLAYNAME_SUFFIX: ''
-        TUWUNEL_SUPPRESS_PUSH_WHEN_ACTIVE: 'true'
-        TUWUNEL_TYPING_CLIENT_TIMEOUT_MIN_S: 5
-        TUWUNEL_TYPING_CLIENT_TIMEOUT_MAX_S: 900
-        TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_ALLOWLIST: '["*"]'
-        TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: '["localhost"]' # Localhost ought to be blocked, to prevent people from accidentially leaking their personal projects and stuff. As for the actual security - I'll ask around in the community (once I actually become a part of it, aka get this thing up and running), which addresses are known to be malicious. I'd rather not set up an explicit allow-list (hence the "*" above) and only block known-malicious ones becasue - as (probably) one of the only few users of this homeserver - I'm willing to take the risk of someone accidentially maybe-hypothetically seeing my ISP's IP somewhere (I'm behind a pretty strong NAT (hence why I said „ISP's IP” not „my IP”), which (as annoying as it is for self hosting) makes IP exposures much less of a problem to me), over the inconveince of having embeds (which I absolutely LOVE - my Discord past is showing, ig) be broken.
-        TUWUNEL_URL_PREVIEW_CHECK_ROOT_DOMAIN: 'true' # This is set in advance, for the very unlikely event that I switch to an explicit allow-list instead of a deny-list (which - as stated above - I much prefer).
-        TUWUNEL_DELETE_ROOMS_AFTER_LEAVE: 'false' # This technically defaults to false already, but the docs state that this may change in the future.
-        TUWUNEL_GRANT_ADMIN_TO_FIRST_USER: 'false'
-        # Federation
-        TUWUNEL_ALLOW_FEDERATION: 'true'
-        TUWUNEL_ALLOW_PUBLIC_ROOM_DIRECTORY_OVER_FEDERATION: 'true'
-        TUWUNEL_LOCKDOWN_PUBLIC_ROOM_DIRECTOIRY: 'true'
-        TUWUNEL_REQUIRE_AUTH_FOR_PROFILE_REQUESTS: 'true'
-        TUWUNEL_TYPING_FEDERATION_TIMEOUT_S: 900
-        TUWUNEL_TRUSTED_SERVERS: '["matrix.org"]'
-        # LDAP
-        TUWUNEL_LDAP_ENABLE: 'false' #TODO: Set up LDAP, using the same server as Nextcloud
-        # Support
-        TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
-        TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
-        TUWUNEL_WELL_KNOWN__SUPPORT_MXID: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
-        TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
+      # Core
+      TUWUNEL_SERVER_NAME: guziohub.ovh
+      TUWUNEL_DATABASE_PATH: /var/lib/tuwunel
+      TUWUNEL_ADDRESS: 0.0.0.0
+      TUWUNEL_LOG_THREAD_IDS: 'true'
+      TUWUNEL_MAX_REQUEST_SIZE: 100000000 # B  =  100 MB
+      TUWUNEL_CACHE_CAPACITY_MODIFIER: 2.5
+      TUWUNEL_ALLOW_CHECK_FOR_UPDATES: 'true'
+      TUWUNEL_ADMIN_CONSOLE_AUTOMATIC: 'true'
+      TUWUNEL_SENTRY: 'true'
+      TUWUNEL_SENTRY_SEND_SERVER_NAME: 'true'
+      TUWUNEL_WELL_KNOWN__CLIENT: 'https://api.chat.guziohub.ovh'
+      TUWUNEL_WELL_KNOWN__SERVER: 'matrix.guziohub.ovh:443'
+      # Database & media
+      TUWUNEL_ROCKSDB_STATS_LEVEL: 2
+      TUWUNEL_ROCKSDB_RECOVERY_MODE: 0
+      TUWUNEL_MEDIA_STARTUP_CHECK: 'false'
+      TUWUNEL_ALLOW_LEGACY_MEDIA: 'true'
+      TUWUNEL_BLURHASHING__COMPONENTS_X: 6
+      TUWUNEL_BLURHASHING__COMPONENTS_Y: 6
+      TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB  („a bit more than the upload limit”, as the documentation recommends - interpretetion of „a bit” left to the user, so I went with just under 2x lol)
+      # DNS
+      TUWUNEL_QUERY_OVER_TCP_ONLY: 'true' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run)
+      TUWUNEL_IP_LOOKUP_STRATEGY: 3
+      TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'true'
+      # Users
+      TUWUNEL_ALLOW_REGISTRATION: 'true'
+      TUWUNEL_REGISTRATION_TOKEN_FILE: '/run/secrets/mxregkey'
+      TUWUNEL_NEW_USER_DISPLAYNAME_SUFFIX: ''
+      TUWUNEL_SUPPRESS_PUSH_WHEN_ACTIVE: 'true'
+      TUWUNEL_TYPING_CLIENT_TIMEOUT_MIN_S: 5
+      TUWUNEL_TYPING_CLIENT_TIMEOUT_MAX_S: 900
+      TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_ALLOWLIST: '["*"]'
+      TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: '["localhost"]' # Localhost ought to be blocked, to prevent people from accidentially leaking their personal projects and stuff. As for the actual security - I'll ask around in the community (once I actually become a part of it, aka get this thing up and running), which addresses are known to be malicious. I'd rather not set up an explicit allow-list (hence the "*" above) and only block known-malicious ones becasue - as (probably) one of the only few users of this homeserver - I'm willing to take the risk of someone accidentially maybe-hypothetically seeing my ISP's IP somewhere (I'm behind a pretty strong NAT (hence why I said „ISP's IP” not „my IP”), which (as annoying as it is for self hosting) makes IP exposures much less of a problem to me), over the inconveince of having embeds (which I absolutely LOVE - my Discord past is showing, ig) be broken.
+      TUWUNEL_URL_PREVIEW_CHECK_ROOT_DOMAIN: 'true' # This is set in advance, for the very unlikely event that I switch to an explicit allow-list instead of a deny-list (which - as stated above - I much prefer).
+      TUWUNEL_DELETE_ROOMS_AFTER_LEAVE: 'false' # This technically defaults to false already, but the docs state that this may change in the future.
+      TUWUNEL_GRANT_ADMIN_TO_FIRST_USER: 'false'
+      # Federation
+      TUWUNEL_ALLOW_FEDERATION: 'true'
+      TUWUNEL_ALLOW_PUBLIC_ROOM_DIRECTORY_OVER_FEDERATION: 'true'
+      TUWUNEL_LOCKDOWN_PUBLIC_ROOM_DIRECTOIRY: 'true'
+      TUWUNEL_REQUIRE_AUTH_FOR_PROFILE_REQUESTS: 'true'
+      TUWUNEL_TYPING_FEDERATION_TIMEOUT_S: 900
+      TUWUNEL_TRUSTED_SERVERS: '["matrix.org"]'
+      # LDAP
+      TUWUNEL_LDAP_ENABLE: 'false' #TODO: Set up LDAP, using the same server as Nextcloud
+      # Support
+      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
+      TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
+      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
+      TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
   
   minecraft:
     # Docker Config
@@ -251,8 +251,8 @@ services:
       # Misc
       TZ: "Europe/Warsaw"
       LOG_TIMESTAMP: "true"
-      GID: "1001"  # My user group on the host machine
-      UID: "1001"  # My user on the host machine
+      GID: "1001"
+      UID: "1001"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
       DATAPACKS: "/data/datapacks"
       LEVEL: "world"
