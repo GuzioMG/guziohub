@@ -235,6 +235,20 @@ services:
       - type: tmpfs # Provides a speed boost, according to https://github.com/coturn/coturn/blob/master/docker/coturn/README.md?plain=1#L118-L125  Why they don't just do this by default is beyond me. I'm pretty sure TURN serevers don't need persistent storage (from my own understanding of WebRTC - and from how they recommend to use tmpfs for a speed bump in their own docs, which they probably wouldn't advise (not without a warning, anyway) if they knew they were risks involved), so it should've been fine for them to do.
         target: /var/lib/coturn
   
+  #mxelement:
+  #  image: vectorim/element-web:develop # Using `develop` because it has the latest features and fixes. I'm likely gonna be one of the only few users, so I can afford to be a bit more adventurous. And it's only the GUI, so having it break wouldn't be the end of the world (no data loss or anything); I can just revert to `latest` (I think that's stable??) if that happens.
+  #  restart: unless-stopped
+  #  depends_on:
+  #    mxtuwunel:
+  #      condition: service_healthy
+  #    web:
+  #      condition: service_healthy
+  #  healthcheck:
+  #    test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:80/version || exit 1"] # FROM: https://github.com/element-hq/element-docker-demo/blob/main/compose.yml#L243-L247
+  #    start_period: "5s"
+  #    interval: "15s"
+  #    timeout: "5s"
+  
   minecraft:
     # Docker Config
     image: "itzg/minecraft-server:java21-graalvm"
