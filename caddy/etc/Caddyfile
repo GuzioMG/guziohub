@@ -205,5 +205,5 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 }
 
 https://matrix.guziohub.ovh:443, matrix.guziohub.ovh:8448, https://api.chat.guziohub.ovh:443, http://api.chat.guziohub.ovh:80 {
-    reverse_proxy tuwunel:8008
+    reverse_proxy mxtuwunel:8008
 }
