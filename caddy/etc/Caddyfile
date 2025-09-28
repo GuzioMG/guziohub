@@ -208,6 +208,6 @@ https://matrix.guziohub.ovh:443, matrix.guziohub.ovh:8448, https://api.chat.guzi
     reverse_proxy mxtuwunel:8008
 }
 
-https://ctl.account.guziohub.ovh:443, http://ctl.account.guziohub.ovh:80 {
+https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
     reverse_proxy ldap:17170
 }
