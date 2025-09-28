@@ -233,7 +233,7 @@ services:
       # Support
       TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/PLACEHOLDER'
       TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'PLACEHOLDER'
-      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: 'PLACEHOLDER@guziohub.ovh'
+      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: '@PLACEHOLDER:guziohub.ovh'
       TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'guzekk@protonmail.com'
   
   mxturn:
