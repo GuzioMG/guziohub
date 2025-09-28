@@ -28,7 +28,7 @@ https://guziohub.ovh:443, http://guziohub.ovh:80 {
     root * /srv
     encode
 	header /.well-known/matrix/* Content-Type "application/json"
-	Access-Control-Allow-Origin: *
+	header * Access-Control-Allow-Origin: "*"
     file_server browse
 }
 
