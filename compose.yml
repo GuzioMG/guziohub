@@ -165,8 +165,6 @@ services:
       - mxturn
     volumes:
       - ./db/matrix:/var/lib/tuwunel
-    expose:
-      - 8008
     depends_on:
       web:
         condition: service_healthy
@@ -233,10 +231,10 @@ services:
       TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
       TUEUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
       # Support
-      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
-      TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
-      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
-      TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'None of these need to be filled up. I just want it to generate a stub .well-known file for the support section, that I`ll then manually move to the main server dir, anyway - I`ll fill it up then.'
+      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/PLACEHOLDER'
+      TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'PLACEHOLDER'
+      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: 'PLACEHOLDER@guziohub.ovh'
+      TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'guzekk@protonmail.com'
   
   mxturn:
     image: coturn/coturn:alpine
@@ -265,7 +263,7 @@ services:
   #    timeout: "5s"
   
   ldap:
-    image: ghcr.io/lldap/lldap:latest-alpine-rootless
+    image: ghcr.io/lldap/lldap:latest-alpine
     volumes:
       - ./db/users:/data
     secrets:
@@ -277,8 +275,6 @@ services:
       - 3890
     restart: unless-stopped
     environment:
-      UID: 1001
-      GID: 1001
       TZ: Europe/Warsaw
       LLDAP_JWT_SECRET: /run/secrets/ldap_jwt
       LLDAP_KEY_SEED: /run/secrets/ldap_key
