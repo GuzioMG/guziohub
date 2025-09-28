@@ -13,6 +13,12 @@ secrets:
     file: "./secrets/mxregkey.txt"
   mxturn:
     file: "./secrets/mxturn.txt"
+  ldap_key:
+    file: "./secrets/ldap_key.txt"
+  ldap_jwt:
+    file: "./secrets/ldap_jwt.txt"
+  ldap_pass:
+    file: "./secrets/ldap_pass.txt"
 
 services:
   web:
@@ -54,6 +60,8 @@ services:
         condition: service_healthy
       ncapps:
         condition: service_healthy
+      ldap:
+        condition: service_started # no healthcheck :-(
     secrets:
       - pgpass
     volumes:
@@ -162,6 +170,8 @@ services:
         condition: service_healthy
       mxturn:
         condition: service_started # no healthcheck :-(
+      ldap:
+        condition: service_started # ...here, too :-(
     ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
       nofile:
         soft: 1048567
@@ -213,7 +223,10 @@ services:
       TUWUNEL_TYPING_FEDERATION_TIMEOUT_S: 900
       TUWUNEL_TRUSTED_SERVERS: '["matrix.org"]'
       # LDAP
-      TUWUNEL_LDAP_ENABLE: 'false' #TODO: Set up LDAP, using the same server as Nextcloud
+      TUWUNEL_LDAP__ENABLE: 'true'
+      TURUNEL_LDAP__URI: 'ldap://ldap:3890'
+      TUWUNEL_LDAP__BASE_DN: 'ou=people,dc=guziohub,dc=ovh'
+      #TUWUNEl_LDAP__FILTER: '(&(objectclass=person)(memberOf=cn=SOME_GROUP,ou=groups,dc=guziohub,dc=ovh))'  # For future reference
       #TURN
       TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
       TUEUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
@@ -248,6 +261,23 @@ services:
   #    start_period: "5s"
   #    interval: "15s"
   #    timeout: "5s"
+  
+  ldap:
+    image: ghcr.io/lldap/lldap:latest-alpine-rootless
+    volumes:
+      - ./db/users:/data
+    secrets:
+      - ldap_key
+      - ldap_jwt
+      - ldap_pass
+    environment:
+      UID: 1001
+      GID: 1001
+      TZ: Europe/Warsaw
+      LLDAP_JWT_SECRET: /run/secrets/ldap_jwt
+      LLDAP_KEY_SEED: /run/secrets/ldap_key
+      LLDAP_LDAP_USER_PASS_FILE: /run/secrets/ldap_pass
+      LLDAP_LDAP_BASE_DN: dc=guziohub,dc=ovh
   
   minecraft:
     # Docker Config

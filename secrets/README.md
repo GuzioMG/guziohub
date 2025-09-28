@@ -30,3 +30,12 @@ realm=rtc.chat.guziohub.ovh
 The value of `static-auth-secret=` from `mxturnfull.conf`.
 
 *The world would've been such a great place if everyone had followed the damn specs..... I wouldn't need to split this stupid secret into 2 different files.*
+
+## `ldap_key.txt`
+The seed for LDAP's secret key. Should be generated using [`./generate_secrets.sh`](https://github.com/lldap/lldap/blob/main/generate_secrets.sh).
+
+## `ldap_jwt.txt`
+A JSON Web Token secret for LDAP. Should be generated using [`./generate_secrets.sh`](https://github.com/lldap/lldap/blob/main/generate_secrets.sh).
+
+## `ldap_pass.txt`
+A password of the `admin` account on LDAP.
