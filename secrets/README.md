@@ -15,6 +15,7 @@ Shared secret between Nextcloud and ExApps DSP
 
 ## `mxregkey.txt`
 The password used for registration on Matrix.
+*Note: Registration is disabled for now, due to LDAP being used for accounts instead. This is kept for future reference, tho.*
 
 ## `mxturnfull.conf`
 A full config for COTURN. Unfortunatley, it's not possible to just pass the actual secret values as `_FILE` envars - or any envars, for that matter - becasue Coturn doesn't support those.
