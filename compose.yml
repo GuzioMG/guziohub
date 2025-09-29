@@ -165,7 +165,7 @@ services:
       - mxturn
     volumes:
       - ./db/matrix:/var/lib/tuwunel
-      - ./tuwunel:/tuwunel-patched:ro
+      - ./tuwunel:/bin/tuwunel-patched:ro
     entrypoint: ["tuwunel-patched"]
     depends_on:
       web:
