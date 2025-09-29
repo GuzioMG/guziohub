@@ -198,7 +198,7 @@ services:
       TUWUNEL_ALLOW_LEGACY_MEDIA: 'true'
       TUWUNEL_BLURHASHING__COMPONENTS_X: 6
       TUWUNEL_BLURHASHING__COMPONENTS_Y: 6
-      TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB  („a bit more than the upload limit”, as the documentation recommends - interpretetion of „a bit” left to the user, so I went with just under 2x lol)
+      TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB  („a bit more than the upload limit”, as the documentation recommends - interpretation of „a bit” left to the user, so I went with just under 2x lol)
       # DNS
       TUWUNEL_QUERY_OVER_TCP_ONLY: 'true' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run)
       TUWUNEL_IP_LOOKUP_STRATEGY: 3
@@ -211,23 +211,23 @@ services:
       TUWUNEL_TYPING_CLIENT_TIMEOUT_MIN_S: 5
       TUWUNEL_TYPING_CLIENT_TIMEOUT_MAX_S: 900
       TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_ALLOWLIST: '["*"]'
-      TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: '["localhost"]' # Localhost ought to be blocked, to prevent people from accidentially leaking their personal projects and stuff. As for the actual security - I'll ask around in the community (once I actually become a part of it, aka get this thing up and running), which addresses are known to be malicious. I'd rather not set up an explicit allow-list (hence the "*" above) and only block known-malicious ones becasue - as (probably) one of the only few users of this homeserver - I'm willing to take the risk of someone accidentially maybe-hypothetically seeing my ISP's IP somewhere (I'm behind a pretty strong NAT (hence why I said „ISP's IP” not „my IP”), which (as annoying as it is for self hosting) makes IP exposures much less of a problem to me), over the inconveince of having embeds (which I absolutely LOVE - my Discord past is showing, ig) be broken.
+      TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: '["localhost"]' # Localhost ought to be blocked, to prevent people from accidentally leaking their personal projects and stuff. As for the actual security - I'll ask around in the community (once I actually become a part of it, aka get this thing up and running), which addresses are known to be malicious. I'd rather not set up an explicit allow-list (hence the "*" above) and only block known-malicious ones becasue - as (probably) one of the only few users of this homeserver - I'm willing to take the risk of someone accidentially maybe-hypothetically seeing my ISP's IP somewhere (I'm behind a pretty strong NAT (hence why I said „ISP's IP” not „my IP”), which (as annoying as it is for self hosting) makes IP exposures much less of a problem to me), over the inconveince of having embeds (which I absolutely LOVE - my Discord past is showing, ig) be broken.
       TUWUNEL_URL_PREVIEW_CHECK_ROOT_DOMAIN: 'true' # This is set in advance, for the very unlikely event that I switch to an explicit allow-list instead of a deny-list (which - as stated above - I much prefer).
       TUWUNEL_DELETE_ROOMS_AFTER_LEAVE: 'false' # This technically defaults to false already, but the docs state that this may change in the future.
       TUWUNEL_GRANT_ADMIN_TO_FIRST_USER: 'false'
       # Federation
       TUWUNEL_ALLOW_FEDERATION: 'true'
       TUWUNEL_ALLOW_PUBLIC_ROOM_DIRECTORY_OVER_FEDERATION: 'true'
-      TUWUNEL_LOCKDOWN_PUBLIC_ROOM_DIRECTOIRY: 'true'
+      TUWUNEL_LOCKDOWN_PUBLIC_ROOM_DIRECTORY: 'true'
       TUWUNEL_REQUIRE_AUTH_FOR_PROFILE_REQUESTS: 'true'
       TUWUNEL_TYPING_FEDERATION_TIMEOUT_S: 900
       TUWUNEL_TRUSTED_SERVERS: '["matrix.org"]'
       # LDAP
       TUWUNEL_LDAP__ENABLE: 'true'
-      TURUNEL_LDAP__URI: 'ldap://ldap:3890'
+      TUWUNEL_LDAP__URI: 'ldap://ldap:3890'
       TUWUNEL_LDAP__BASE_DN: 'ou=people,dc=guziohub,dc=ovh'
       TUWUNEl_LDAP__FILTER: '(&(objectclass=person)(memberOf=cn=matrix,ou=groups,dc=guziohub,dc=ovh))'
-      TUWUNEL_LDAP__UID_ATTRIBUTE: 'uuid' # Yes, "uuid". NOT "uid". LLDAP has built-in support for UUIDs, so I didn't want it to go to waste (*it can't be disabled). Especially since I'm more familar with UUIDs than whatever LDAP does.
+      TUWUNEL_LDAP__UID_ATTRIBUTE: 'uuid' # Yes, "uuid". NOT "uid". LLDAP has built-in support for UUIDs, so I didn't want it to go to waste (*it can't be disabled). Especially since I'm more familiar with UUIDs than whatever LDAP does.
       TUWUNEL_LDAP__NAME_ATTRIBUTE: 'displayname'
       TUWUNEL_LDAP__MAIL_ATTRIBUTE: 'email'
       #TURN
