@@ -230,16 +230,16 @@ services:
       TUWUNEL_LDAP__BIND_DN: 'cn=admin,ou=people,dc=guziohub,dc=ovh'
       TUWUNEL_LDAP__BIND_PASSWORD_FILE: /run/secrets/ldap_pass
       TUWUNEl_LDAP__FILTER: '(&(objectclass=person)(memberOf=cn=matrix,ou=groups,dc=guziohub,dc=ovh))'
-      TUWUNEL_LDAP__UID_ATTRIBUTE: 'uuid' # Yes, "uuid". NOT "uid". LLDAP has built-in support for UUIDs, so I didn't want it to go to waste (*it can't be disabled). Especially since I'm more familiar with UUIDs than whatever LDAP does.
+      TUWUNEL_LDAP__UID_ATTRIBUTE: 'uid'
       TUWUNEL_LDAP__NAME_ATTRIBUTE: 'displayname'
       TUWUNEL_LDAP__MAIL_ATTRIBUTE: 'email'
       #TURN
       TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
       TUEUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
       # Support
-      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/PLACEHOLDER'
-      TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'PLACEHOLDER'
-      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: '@PLACEHOLDER:guziohub.ovh'
+      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/'
+      TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'Admin'
+      TUWUNEL_WELL_KNOWN__SUPPORT_MXID: '@guzio:guziohub.ovh'
       TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'guzekk@protonmail.com'
   
   mxturn:
