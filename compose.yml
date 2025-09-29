@@ -275,6 +275,15 @@ services:
       TZ: Europe/Warsaw
       ELEMENT_WEB_PORT: 8080
   
+  mxbot-meta:
+    image: dock.mau.dev/mautrix/meta:latest
+    depends_on:
+      mxtuwunel:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+    - ./db/matrix/_CLANKERS/meta:/data
+  
   ldap:
     image: ghcr.io/lldap/lldap:latest-alpine
     volumes:
