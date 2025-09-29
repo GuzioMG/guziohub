@@ -23,12 +23,30 @@
 	}
 }
 
+(cors) {
+	@cors_preflight method OPTIONS
+
+	header {
+		Access-Control-Allow-Origin "{header.origin}"
+		Vary Origin
+		Access-Control-Expose-Headers "Authorization"
+		Access-Control-Allow-Credentials "true"
+	}
+
+	handle @cors_preflight {
+		header {
+			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE"
+			Access-Control-Max-Age "3600"
+		}
+		respond "" 204
+	}
+}
 
 https://guziohub.ovh:443, http://guziohub.ovh:80 {
+	import cors {header.origin}
     root * /srv
     encode
 	header /.well-known/matrix/* Content-Type "application/json"
-	header * Access-Control-Allow-Origin: "*"
     file_server browse
 }
 
