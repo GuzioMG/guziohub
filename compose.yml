@@ -263,7 +263,7 @@ services:
       web:
         condition: service_healthy
     expose:
-      - 80
+      - 8080
     healthcheck:
       test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:80/version || exit 1"] # FROM: https://github.com/element-hq/element-docker-demo/blob/main/compose.yml#L243-L247
       start_period: "5s"
@@ -271,6 +271,9 @@ services:
       timeout: "5s"
     volumes:
       - ./element-config.json:/app/config.json:ro
+    environment:
+      TZ: Europe/Warsaw
+      ELEMENT_WEB_PORT: 8080
   
   ldap:
     image: ghcr.io/lldap/lldap:latest-alpine
