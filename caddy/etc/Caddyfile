@@ -229,7 +229,7 @@ https://matrix.guziohub.ovh:443, matrix.guziohub.ovh:8448, https://api.chat.guzi
 }
 
 https://chat.guziohub.ovh:443, http://chat.guziohub.ovh:80 {
-    reverse_proxy mxelement:80
+    reverse_proxy mxelement:8080
 }
 
 https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
