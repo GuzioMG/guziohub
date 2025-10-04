@@ -286,6 +286,17 @@ services:
     volumes:
     - ./db/matrix/_CLANKERS/meta:/data
   
+  mxbot-discord:
+    image: dock.mau.dev/mautrix/discord:latest
+    depends_on:
+      mxtuwunel:
+        condition: service_healthy
+    restart: unless-stopped
+    expose:
+      - 29319
+    volumes:
+    - ./db/matrix/_CLANKERS/discord:/data
+  
   ldap:
     image: ghcr.io/lldap/lldap:latest-alpine
     volumes:
