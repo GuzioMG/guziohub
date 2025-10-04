@@ -201,9 +201,9 @@ services:
       TUWUNEL_BLURHASHING__COMPONENTS_Y: 6
       TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB  („a bit more than the upload limit”, as the documentation recommends - interpretation of „a bit” left to the user, so I went with just under 2x lol)
       # DNS
-      TUWUNEL_QUERY_OVER_TCP_ONLY: 'false' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run)
-      TUWUNEL_IP_LOOKUP_STRATEGY: 5
-      TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'false'
+      TUWUNEL_QUERY_OVER_TCP_ONLY: 'false' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run), this need to be set to true. Can't do it now, though, because AppServices will break - regarless of TUWUNEL_DNS_PASSTHRU_APPSERVICES.
+      TUWUNEL_IP_LOOKUP_STRATEGY: 3
+      TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'true'
       # Users
       TUWUNEL_ALLOW_REGISTRATION: 'false'
       TUWUNEL_REGISTRATION_TOKEN_FILE: '/run/secrets/mxregkey'
