@@ -203,7 +203,7 @@ services:
       # DNS
       TUWUNEL_QUERY_OVER_TCP_ONLY: 'true' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run)
       TUWUNEL_IP_LOOKUP_STRATEGY: 3
-      TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'true'
+      TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'false'
       # Users
       TUWUNEL_ALLOW_REGISTRATION: 'false'
       TUWUNEL_REGISTRATION_TOKEN_FILE: '/run/secrets/mxregkey'
