@@ -29,7 +29,7 @@ services:
       - ./caddy/etc:/etc/caddy
       - ./caddy/data:/data
       - ./caddy/config:/config
-      - ./caddy/placeholder-website:/srv:ro
+      - ./caddy/website-public:/srv:ro
       - ./nc:/var/www/html:ro
       - ../files/drive:/var/www/html/data:ro
     ports:
@@ -166,6 +166,7 @@ services:
       - ldap_pass
     volumes:
       - ./db/matrix:/var/lib/tuwunel
+      - ../files/chat:/var/lib/tuwunel/media
     depends_on:
       web:
         condition: service_healthy
@@ -320,7 +321,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - "../minecraft/server:/data"
+      - "../minecraft/servers/[NAME]:/data"
       - "../minecraft/builds:/modpacks:ro"
     ports:
       - "25565:25565"
