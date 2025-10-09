@@ -356,8 +356,8 @@ services:
       # Misc
       TZ: "Europe/Warsaw"
       LOG_TIMESTAMP: "true"
-      GID: "1001"
-      UID: "1001"
+      GID: "0"
+      UID: "0"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
       DATAPACKS: "/data/datapacks"
       LEVEL: "world"
