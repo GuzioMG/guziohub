@@ -238,7 +238,7 @@ services:
       TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
       TUEUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
       # Support
-      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/'
+      TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/matrix/help.html'
       TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'Admin'
       TUWUNEL_WELL_KNOWN__SUPPORT_MXID: '@guzio:guziohub.ovh'
       TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'guzekk@protonmail.com'

@@ -5,8 +5,11 @@
 #
 # To use your own domain name (with automatic HTTPS), first make
 # sure your domain's A/AAAA DNS records are properly pointed to
-# this machine's public IP, then replace ":80" below with your
+# this machine's public IP, then add a new handler below with your
 # domain name.
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfilex
 
 {
 	log default {
@@ -49,9 +52,6 @@ https://guziohub.ovh:443, http://guziohub.ovh:80 {
 	header /.well-known/matrix/* Content-Type "application/json"
     file_server browse
 }
-
-# Refer to the Caddy docs for more information:
-# https://caddyserver.com/docs/caddyfilex
 
 https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 	request_body {

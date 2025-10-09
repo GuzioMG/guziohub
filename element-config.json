@@ -18,7 +18,7 @@
         ]
     },
     "embedded_pages": {
-        "home_url": "https://guziohub.ovh/matrix.html",
+        "home_url": "https://guziohub.ovh/matrix/homepage.html",
         "login_for_welcome": true
     },
     "integrations_ui_url": "https://scalar.vector.im/",
