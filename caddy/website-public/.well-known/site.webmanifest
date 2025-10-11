@@ -56,14 +56,155 @@
         }
     ],
     
+    "screenshots": [
+        {
+            "src": "/assets/pwa_screen_pc.png",
+            "label": "The homepage of this website on a PC, after all text fully types itself out.",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/assets/pwa_screen.png",
+            "label": "The homepage of this website on a phone, after all text fully types itself out.",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ],
+    
+    "related_applications": [
+        {
+            "platform": "webapp",
+            "url": "https://chat.guziohub.ovh"
+        },
+        {
+            "platform": "webapp",
+            "url": "https://app.element.io/"
+        },
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=im.vector.app",
+            "id": "im.vector.app"
+        },
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=io.element.android.x",
+            "id": "io.element.android.x"
+        },
+        {
+            "platform": "f-droid",
+            "url": "https://f-droid.org/en/packages/im.vector.app/",
+            "id": "im.vector.app"
+        },
+        {
+            "platform": "f-droid",
+            "url": "https://f-droid.org/en/packages/io.element.android.x/",
+            "id": "io.element.android.x"
+        },
+        {
+            "platform": "flathub",
+            "url": "https://flathub.org/en/apps/im.riot.Riot",
+            "id": "im.riot.Riot"
+        },
+        {
+            "platform": "linux-flathub",
+            "url": "https://flathub.org/en/apps/im.riot.Riot",
+            "id": "im.riot.Riot"
+        },
+        
+        {
+            "platform": "webapp",
+            "url": "https://drive.guziohub.ovh"
+        },
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=com.nextcloud.client",
+            "id": "com.nextcloud.client"
+        },
+        {
+            "platform": "f-droid",
+            "url": "https://f-droid.org/en/packages/com.nextcloud.client/",
+            "id": "com.nextcloud.client"
+        },
+        {
+            "platform": "flathub",
+            "url": "https://flathub.org/en/apps/com.nextcloud.desktopclient.nextcloud",
+            "id": "com.nextcloud.desktopclient.nextcloud"
+        },
+        {
+            "platform": "linux-flathub",
+            "url": "https://flathub.org/en/apps/com.nextcloud.desktopclient.nextcloud",
+            "id": "com.nextcloud.desktopclient.nextcloud"
+        },
+        
+        {
+            "platform": "webapp",
+            "url": "https://account.guziohub.ovh"
+        },
+        
+        {
+            "platform": "webapp",
+            "url": "https://guziohub.ovh",
+            "id": "gzhb-landingpage"
+        },
+        
+        {
+            "platform": "windows",
+            "url": "https://www.xbox.com/pl-PL/games/store/minecraft-launcher/9pgw18npbzv5?ocid=storeforweb"
+        },
+        {
+            "platform": "windows",
+            "url": "https://www.xbox.com/pl-PL/games/store/minecraft-java-edition/9PJ8266BHFWN/0010?ocid=storeforweb"
+        },
+        {
+            "platform": "windows",
+            "url": "https://www.xbox.com/pl-PL/games/store/minecraft-java-bedrock-edition-for-pc/9NXP44L49SHJ/0010?ocid=storeforweb"
+        },
+        {
+            "platform": "windows",
+            "url": "https://www.xbox.com/pl-PL/games/store/minecraft-deluxe-collection-na-pc-z-java-i-bedrock/9NQGKTXR9BZF/0010?ocid=storeforweb"
+        },
+        {
+            "platform": "flathub",
+            "url": "https://flathub.org/en/apps/com.mojang.Minecraft",
+            "id": "com.mojang.Minecraft"
+        },
+        {
+            "platform": "linux-flathub",
+            "url": "https://flathub.org/en/apps/com.mojang.Minecraft",
+            "id": "com.mojang.Minecraft"
+        },
+        {
+            "platform": "flathub",
+            "url": "https://flathub.org/en/apps/org.prismlauncher.PrismLauncher",
+            "id": "org.prismlauncher.PrismLauncher"
+        },
+        {
+            "platform": "linux-flathub",
+            "url": "https://flathub.org/en/apps/org.prismlauncher.PrismLauncher",
+            "id": "org.prismlauncher.PrismLauncher"
+        },
+        {
+            "platform": "flathub",
+            "url": "https://flathub.org/en/apps/com.modrinth.ModrinthApp",
+            "id": "com.modrinth.ModrinthApp"
+        },
+        {
+            "platform": "linux-flathub",
+            "url": "https://flathub.org/en/apps/com.modrinth.ModrinthApp",
+            "id": "com.modrinth.ModrinthApp"
+        }
+    ],
+    
     "name": "GuzioHub",
     "short_name": "GuzioHub",
-    "description": "GuzioHub - A personal website project + self-hosting of services by Guzio.",
+    "description": "GuzioHub - A personal website project of Guzio (incl. a blog-like-thingy for yapping) + self-hosting of various services that Guzio uses for a lot of stuff in life.",
     "start_url": "/",
     "scope": "/",
     "id": "gzhb-landingpage",
     "theme_color": "#e1e31a",
     "background_color": "#e1e31a",
     "display": "minimal-ui",
-    "display_override": ["tabbed", "minimal-ui", "browser", "window-controls-overlay", "standalone", "fullscreen"]
+    "display_override": ["tabbed", "minimal-ui", "browser", "window-controls-overlay", "standalone", "fullscreen"],
+    "categories": ["social", "productivity", "utilities", "entertainment", "finance", "fitness", "education", "lifestyle", "business", "health", "medical", "food", "books", "games", "personalization", "photo", "politics", "security"]
 }
