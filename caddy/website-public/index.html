@@ -4,9 +4,127 @@
         <meta charset="UTF-8">
         <title>GuzioHub</title>
         <link rel="icon" type="image/x-icon" href="/assets/logo.png">
+        
+        <style>
+            body {
+                margin: max(14px, 1em);
+                padding: 0;
+                background-color: #333;
+            }
+            
+            /*Makes this look like an old CRT monitor*/
+            body::after {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: #444;
+              opacity: 0;
+              z-index: 2;
+              pointer-events: none;
+              animation: flicker 5ms ease-out 0s infinite alternate none; /*Simulates flicker from a 50Hz (EU) power grid. First 5ms: voltage rises from 0V (represented as 0% opacity) to 325V (15% opacity) - sharply at first, then calms down (ease-out) near the end because of how Sine waves work. Next 5ms: it is reversed (falls from 325V to 0V)*/
+            }
+            body::before {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+              z-index: 2;
+              background-size: 100% 2px, 3px 100%;
+              pointer-events: none;
+            }
+            
+            .termtxt {
+                font-family: "Courier";
+                font-size: max(14px, 1em);
+                white-space: nowrap;
+                overflow: hidden;
+                display: inline-block;
+                width: 0;
+                margin: 0;
+                padding: 0;
+                interpolate-size: allow-keywords;
+                
+                /*Makes this look like an old CRT monitor*/
+                text-shadow: -1px 0px 1px rgba(255,0,0,2),
+                             1px 0px 1px rgba(0,0,255,2);
+                color: #BBFFBB;
+            }
+            
+            .termtxt-static {
+                opacity: 1;
+                width: max-content;
+                overflow: auto;
+            }
+            
+            .termtxt:not(.termtxt-static):nth-child(2) {
+                animation: type 2s steps(11) 1s 1 normal forwards;
+            }
+            
+            .termtxt:not(.termtxt-static):nth-child(3) {
+                animation: blinker 0.5s steps(1) 0s 8 normal forwards;
+            }
+            
+            .termtxt:not(.termtxt-static):nth-child(5) {
+                animation: type 2s steps(26) 5s normal forwards;
+            }
+            
+            .termtxt:not(.termtxt-static):nth-child(6) {
+                animation: blinker 0.5s steps(1) 4s 8 normal forwards;
+            }
+            
+            .termtxt:not(.termtxt-static):nth-child(8) {
+                animation: type 2s steps(41) 9s normal forwards;
+            }
+            
+            .termtxt:not(.termtxt-static):nth-child(9) {
+                animation: blinker 0.5s steps(1) 8s 12 normal forwards;
+            }
+            
+            @keyframes type {
+                to {
+                    width: max-content;
+                }
+            }
+            
+            @keyframes blinker {
+                from {
+                    width: max-content;
+                }
+                
+                50%, to {
+                    width: max-content;
+                    display: none;
+                }
+            }
+            
+            /* Animation data for the 50Hz Flicker Effect mentioned above. Very subtle (at just 1%) becasue even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunatley, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refersh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying becasue they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
+            @media (prefers-reduced-motion), (prefers-reduced-transparency) {
+                body::after {
+                    animation: none !important; /*I don't think !important is actually needed here (@media has a higher specificity), but better safe than sorry (sorry in a literal sense - I don't wanna be the one aplogising to a family, in case someone were to get epilepsied to death because of this).*/
+                }
+            }
+            @keyframes flicker {
+                from {
+                    opacity: 0%;
+                }
+                to {
+                    opacity: 1%;
+                }
+            }
+        </style>
     </head>
+    
     <body>
-        <h1>Work in progress...</h1>
-        <p>This is a placeholder page.</p>
+        <p class="termtxt termtxt-static">$&nbsp;</p><p class="termtxt">guziohub -v</p><p class="termtxt">_</p>
+        <br/><p class="termtxt">GuzioHub | version: IN-DEV</p><p class="termtxt">_</p>
+        <br/><p class="termtxt">This is an early W.I.P., come back later.</p><p class="termtxt">_</p>        
     </body>
 </html>
