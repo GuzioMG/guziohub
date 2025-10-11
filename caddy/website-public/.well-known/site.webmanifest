@@ -2,7 +2,7 @@
     "icons": [
         {
             "purpose": "any",
-            "sizes": "2880x2880",
+            "sizes": "2880x2880 144x144",
             "src": "/assets/logo.png",
             "type": "image/png"
         },
