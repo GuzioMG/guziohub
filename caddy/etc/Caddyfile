@@ -50,6 +50,7 @@ https://guziohub.ovh:443, http://guziohub.ovh:80 {
     root * /srv
     encode
 	header /.well-known/matrix/* Content-Type "application/json"
+	header /.well-known/site.webmanifest Content-Type "application/manifest+json"
     file_server browse
 }
 

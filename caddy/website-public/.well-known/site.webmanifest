@@ -1,6 +1,10 @@
 {
     "name": "GuzioHub",
     "short_name": "GuzioHub",
+    "description": "GuzioHub - A personal website project + self-hosting of services by Guzio.",
+    "start_url": "/",
+    "scope": "/",
+    "id": "gzhb-landingpage",
     "icons": [
         {
             "src": "/assets/logo/web-app-manifest-192x192.png",
@@ -17,5 +21,6 @@
     ],
     "theme_color": "#e1e31a",
     "background_color": "#e1e31a",
-    "display": "standalone"
+    "display": "minimal-ui",
+    "display_override": ["tabbed", "minimal-ui", "browser", "window-controls-overlay", "standalone", "fullscreen"]
 }
