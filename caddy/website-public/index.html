@@ -19,7 +19,34 @@
         <link rel="canonical" href="https://guziohub.ovh/">
         
         <style>
+            
+            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search.*/
+            @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Regular"), local("Hack Regular"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Bold"), local("Hack Bold"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Italic"), local("Hack Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: italic;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-BoldItalic"), local("Hack BoldItalic"), local("Hack Bold Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: italic;
+            }         
+            
+            
             body {
+                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier, but nevertheless - this (or - more speciically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nahh! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a conveinient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                
                 margin: max(14px, 1em);
                 padding: 0;
                 background-color: #333;
@@ -55,8 +82,7 @@
             }
             
             .termtxt {
-                font-family: "Courier";
-                font-size: max(14px, 1em);
+                font-family: var(--we-have-courier-at-home);
                 white-space: nowrap;
                 overflow: hidden;
                 display: inline-block;
@@ -67,8 +93,24 @@
                 
                 /*Makes this look like an old CRT monitor*/
                 text-shadow: -1px 0px 1px rgba(255,0,0,2),
-                             1px 0px 1px rgba(0,0,255,2);
-                color: #BBFFBB;
+                              1px 0px 1px rgba(0,0,255,2);
+                color: #BFB;
+            }
+            
+            p.termtxt {
+                font-size: max(14px, 1em);
+            }
+            
+            /* Can't just be a.termtxt becasue Firefox was making it look wrong (it was shifted upwards by several pixels; no idea why). */
+            .termtxt-link {
+                color: #2CF;
+                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
+                              1px 0px 1px rgba(0, 0, 255, 2);
+                text-decoration: none;
+            }
+            
+            .termtxt-link:hover {
+                text-decoration: underline;
             }
             
             .termtxt-static {
@@ -76,6 +118,22 @@
                 width: max-content;
                 overflow: auto;
             }
+            
+            @supports (interpolate-size: allow-keywords){
+                .support-warning-size-interpolation {
+                    display: none;
+                }
+            }
+            
+            .support-warning-size-interpolation {
+                color: #F44;
+                white-space: normal;
+                overflow: visible;
+                width: fit-content;
+                text-shadow: -1px 0px 1px rgba(0,255,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
             
             .termtxt:not(.termtxt-static):nth-child(2) {
                 animation: type 2s steps(11) 1s 1 normal forwards;
@@ -101,6 +159,7 @@
                 animation: blinker 0.5s steps(1) 8s 12 normal forwards;
             }
             
+            
             @keyframes type {
                 to {
                     width: max-content;
@@ -118,6 +177,7 @@
                 }
             }
             
+            
             /* Animation data for the 50Hz Flicker Effect mentioned above. Very subtle (at just 1%) becasue even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunatley, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refersh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying becasue they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
             @media (prefers-reduced-motion), (prefers-reduced-transparency) {
                 body::after {
@@ -132,12 +192,19 @@
                     opacity: 1%;
                 }
             }
+            
         </style>
     </head>
     
     <body>
-        <p class="termtxt termtxt-static">$&nbsp;</p><p class="termtxt">guziohub -v</p><p class="termtxt">_</p>
-        <br><p class="termtxt">GuzioHub | version: IN-DEV</p><p class="termtxt">_</p>
-        <br><p class="termtxt">This is an early W.I.P., come back later.</p><p class="termtxt">_</p>        
+        <header>
+            <h1 class="termtxt termtxt-static">👋 Hello, there!</h1>
+            <br><p class="termtxt termtxt-static support-warning-size-interpolation">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-link termtxt-static">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't avaliable in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-link termtxt-static">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
+        </header>
+        <div>
+            <p class="termtxt termtxt-static">$&nbsp;</p><p class="termtxt">guziohub -v</p><p class="termtxt">_</p>
+            <br><p class="termtxt">GuzioHub | version: IN-DEV</p><p class="termtxt">_</p>
+            <br><p class="termtxt">This is an early W.I.P., come back later.</p><p class="termtxt">_</p>
+        </div>
     </body>
 </html>
