@@ -12,220 +12,220 @@
 # https://caddyserver.com/docs/caddyfilex
 
 {
-	log default {
-		output stdout
-		format console
-		level DEBUG
+    log default {
+        output stdout
+        format console
+        level DEBUG
         exclude admin.api
-	}
+    }
     
-	log adminapi {
-		output stdout
-		format console
+    log adminapi {
+        output stdout
+        format console
         include admin.api
-	}
-	
+    }
+    
     order minifier after encode
 }
 
 (cors) {
-	@cors_preflight method OPTIONS
+    @cors_preflight method OPTIONS
 
-	header {
-		Access-Control-Allow-Origin "{header.origin}"
-		Vary Origin
-		Access-Control-Expose-Headers "Authorization"
-		Access-Control-Allow-Credentials "true"
-	}
+    header {
+        Access-Control-Allow-Origin "{header.origin}"
+        Vary Origin
+        Access-Control-Expose-Headers "Authorization"
+        Access-Control-Allow-Credentials "true"
+    }
 
-	handle @cors_preflight {
-		header {
-			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE"
-			Access-Control-Max-Age "3600"
-		}
-		respond "" 204
-	}
+    handle @cors_preflight {
+        header {
+            Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE"
+            Access-Control-Max-Age "3600"
+        }
+        respond "" 204
+    }
 }
 
 https://guziohub.ovh:443, http://guziohub.ovh:80 {
-	import cors {header.origin}
+    import cors {header.origin}
     root * /srv
     encode
-	minifier
-	header /.well-known/matrix/* Content-Type "application/json"
-	header /.well-known/site.webmanifest Content-Type "application/manifest+json"
+    minifier
+    header /.well-known/matrix/* Content-Type "application/json"
+    header /.well-known/site.webmanifest Content-Type "application/manifest+json"
     file_server browse
 }
 
 https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
-	request_body {
-		max_size 10G
-	}
+    request_body {
+        max_size 10G
+    }
 
-	# Enable gzip but do not remove ETag headers
-	encode {
-		zstd
-		gzip 4
+    # Enable gzip but do not remove ETag headers
+    encode {
+        zstd
+        gzip 4
 
-		minimum_length 256
+        minimum_length 256
 
-		match {
-			header Content-Type application/atom+xml
-			header Content-Type application/javascript
-			header Content-Type application/json
-			header Content-Type application/ld+json
-			header Content-Type application/manifest+json
-			header Content-Type application/rss+xml
-			header Content-Type application/vnd.geo+json
-			header Content-Type application/vnd.ms-fontobject
-			header Content-Type application/wasm
-			header Content-Type application/x-font-ttf
-			header Content-Type application/x-web-app-manifest+json
-			header Content-Type application/xhtml+xml
-			header Content-Type application/xml
-			header Content-Type font/opentype
-			header Content-Type image/bmp
-			header Content-Type image/svg+xml
-			header Content-Type image/x-icon
-			header Content-Type text/cache-manifest
-			header Content-Type text/css
-			header Content-Type text/plain
-			header Content-Type text/vcard
-			header Content-Type text/vnd.rim.location.xloc
-			header Content-Type text/vtt
-			header Content-Type text/x-component
-			header Content-Type text/x-cross-domain-policy
-		}
-	}
+        match {
+            header Content-Type application/atom+xml
+            header Content-Type application/javascript
+            header Content-Type application/json
+            header Content-Type application/ld+json
+            header Content-Type application/manifest+json
+            header Content-Type application/rss+xml
+            header Content-Type application/vnd.geo+json
+            header Content-Type application/vnd.ms-fontobject
+            header Content-Type application/wasm
+            header Content-Type application/x-font-ttf
+            header Content-Type application/x-web-app-manifest+json
+            header Content-Type application/xhtml+xml
+            header Content-Type application/xml
+            header Content-Type font/opentype
+            header Content-Type image/bmp
+            header Content-Type image/svg+xml
+            header Content-Type image/x-icon
+            header Content-Type text/cache-manifest
+            header Content-Type text/css
+            header Content-Type text/plain
+            header Content-Type text/vcard
+            header Content-Type text/vnd.rim.location.xloc
+            header Content-Type text/vtt
+            header Content-Type text/x-component
+            header Content-Type text/x-cross-domain-policy
+        }
+    }
 
-	header {
-		# Based on following source:
-		# https://raw.githubusercontent.com/nextcloud/docker/refs/heads/master/.examples/docker-compose/insecure/mariadb/fpm/web/nginx.conf
-		# 
-		# HSTS settings
-		# WARNING: Only add the preload option once you read about
-		# the consequences in https://hstspreload.org/. This option
-		# will add the domain to a hardcoded list that is shipped
-		# in all major browsers and getting removed from this list
-		# could take several months.
-		# Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;"
-		Strict-Transport-Security: "max-age=31536000; includeSubDomains;"
+    header {
+        # Based on following source:
+        # https://raw.githubusercontent.com/nextcloud/docker/refs/heads/master/.examples/docker-compose/insecure/mariadb/fpm/web/nginx.conf
+        # 
+        # HSTS settings
+        # WARNING: Only add the preload option once you read about
+        # the consequences in https://hstspreload.org/. This option
+        # will add the domain to a hardcoded list that is shipped
+        # in all major browsers and getting removed from this list
+        # could take several months.
+        # Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;"
+        Strict-Transport-Security: "max-age=31536000; includeSubDomains;"
 
-		# HTTP response headers borrowed from Nextcloud `.htaccess`
-		Referrer-Policy no-referrer
-		X-Content-Type-Options nosniff
-		X-Download-Options noopen
-		X-Frame-Options SAMEORIGIN
-		X-Permitted-Cross-Domain-Policies none
-		X-Robots-Tag "noindex,nofollow"
-		X-XSS-Protection "1; mode=block"
+        # HTTP response headers borrowed from Nextcloud `.htaccess`
+        Referrer-Policy no-referrer
+        X-Content-Type-Options nosniff
+        X-Download-Options noopen
+        X-Frame-Options SAMEORIGIN
+        X-Permitted-Cross-Domain-Policies none
+        X-Robots-Tag "noindex,nofollow"
+        X-XSS-Protection "1; mode=block"
 
-		Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()"
-	}
+        Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()"
+    }
 
-	# Path to the root of your installation
-	root * /var/www/html
+    # Path to the root of your installation
+    root * /var/www/html
 
-	route {
-		# Rule borrowed from `.htaccess` to handle Microsoft DAV clients
-		@msftdavclient {
-			header User-Agent DavClnt*
-			path /
-		}
-		redir @msftdavclient /remote.php/webdav/ temporary
+    route {
+        # Rule borrowed from `.htaccess` to handle Microsoft DAV clients
+        @msftdavclient {
+            header User-Agent DavClnt*
+            path /
+        }
+        redir @msftdavclient /remote.php/webdav/ temporary
 
-		route /robots.txt {
-			log_skip
-			file_server
-		}
+        route /robots.txt {
+            log_skip
+            file_server
+        }
 
-		# Add exception for `/.well-known` so that clients can still access it
-		# despite the existence of the `error @internal 404` rule which would
-		# otherwise handle requests for `/.well-known` below
-		route /.well-known/* {
-			redir /.well-known/carddav /remote.php/dav/ permanent
-			redir /.well-known/caldav /remote.php/dav/ permanent
+        # Add exception for `/.well-known` so that clients can still access it
+        # despite the existence of the `error @internal 404` rule which would
+        # otherwise handle requests for `/.well-known` below
+        route /.well-known/* {
+            redir /.well-known/carddav /remote.php/dav/ permanent
+            redir /.well-known/caldav /remote.php/dav/ permanent
 
-			@well-known-static {
- 				path /.well-known/acme-challenge /.well-known/acme-challenge/*
- 				path /.well-known/pki-validation /.well-known/pki-validation/*
- 			}
-			
-			route @well-known-static {
-				try_files {path} {path}/ =404
-				file_server
-			}
+            @well-known-static {
+                 path /.well-known/acme-challenge /.well-known/acme-challenge/*
+                 path /.well-known/pki-validation /.well-known/pki-validation/*
+             }
+            
+            route @well-known-static {
+                try_files {path} {path}/ =404
+                file_server
+            }
 
-			redir * /index.php{path} permanent
-		}
+            redir * /index.php{path} permanent
+        }
 
-		@internal {
- 			path /build /build/*
- 			path /tests /tests/*
- 			path /config /config/*
- 			path /lib /lib/*
- 			path /3rdparty /3rdparty/*
- 			path /templates /templates/*
- 			path /data /data/*
- 			path /.*
- 			path /autotest*
- 			path /occ*
- 			path /issue*
- 			path /indie*
- 			path /db_*
- 			path /console*
-		}
-		error @internal 403
+        @internal {
+             path /build /build/*
+             path /tests /tests/*
+             path /config /config/*
+             path /lib /lib/*
+             path /3rdparty /3rdparty/*
+             path /templates /templates/*
+             path /data /data/*
+             path /.*
+             path /autotest*
+             path /occ*
+             path /issue*
+             path /indie*
+             path /db_*
+             path /console*
+        }
+        error @internal 403
 
-		@assets {
-			path *.css *.js *.svg *.gif *.png *.jpg *.jpeg *.ico *.wasm *.tflite *.map *.wasm2 *.mjs *.cjs *.woff *.woff2 *.eot *.ttf *.otf
-			file {path} # Only if requested file exists on disk, otherwise /index.php will take care of it
-		}
-		route @assets {
-			header /* Cache-Control "max-age=15552000" # Cache-Control policy borrowed from `.htaccess`
-			header /*.woff2 Cache-Control "max-age=604800" # Cache-Control policy borrowed from `.htaccess`
-			log_skip # Optional: Don't log access to assets
-			file_server {
-				precompressed gzip
-			}
-		}
+        @assets {
+            path *.css *.js *.svg *.gif *.png *.jpg *.jpeg *.ico *.wasm *.tflite *.map *.wasm2 *.mjs *.cjs *.woff *.woff2 *.eot *.ttf *.otf
+            file {path} # Only if requested file exists on disk, otherwise /index.php will take care of it
+        }
+        route @assets {
+            header /* Cache-Control "max-age=15552000" # Cache-Control policy borrowed from `.htaccess`
+            header /*.woff2 Cache-Control "max-age=604800" # Cache-Control policy borrowed from `.htaccess`
+            log_skip # Optional: Don't log access to assets
+            file_server {
+                precompressed gzip
+            }
+        }
 
-		# Rule borrowed from `.htaccess`
-		redir /remote/* /remote.php{path} permanent
+        # Rule borrowed from `.htaccess`
+        redir /remote/* /remote.php{path} permanent
 
         # WARNING: The following block is commented out because it breaks 80% of functionaliy, incl. most basic features, like file uploads. However, as a trade-off, some assets that aren't manually specified above (eg. the welcome video - which (even though I know it's broken) I didn't fix becasue I have no idea what file is it) will fail to load.
-		# Serve found static files, continuing to the PHP default handler below if not found
-		#   try_files {path} {path}/
-		#@notphpordir not path /*.php /*.php/* / /*/
-		#file_server @notphpordir {
-		#	pass_thru
-		#}
+        # Serve found static files, continuing to the PHP default handler below if not found
+        #   try_files {path} {path}/
+        #@notphpordir not path /*.php /*.php/* / /*/
+        #file_server @notphpordir {
+        #    pass_thru
+        #}
 
-		# Required for legacy support
-		#
-		# Rewrites all other requests to be prepended by “/index.php” unless they match a known-valid PHP file path.
-		@notlegacy {
-			path *.php *.php/
-			not path /index*
-			not path /remote*
-			not path /public*
-			not path /cron*
-			not path /core/ajax/update*
-			not path /status*
-			not path /ocs/v1*
-			not path /ocs/v2*
-			not path /ocs-provider/*
-			not path /updater/*
-			not path */richdocumentscode/proxy*
-		}
-		rewrite @notlegacy /index.php{uri}
+        # Required for legacy support
+        #
+        # Rewrites all other requests to be prepended by “/index.php” unless they match a known-valid PHP file path.
+        @notlegacy {
+            path *.php *.php/
+            not path /index*
+            not path /remote*
+            not path /public*
+            not path /cron*
+            not path /core/ajax/update*
+            not path /status*
+            not path /ocs/v1*
+            not path /ocs/v2*
+            not path /ocs-provider/*
+            not path /updater/*
+            not path */richdocumentscode/proxy*
+        }
+        rewrite @notlegacy /index.php{uri}
 
-		# Let everything else be handled by the PHP-FPM component
-		php_fastcgi nextcloud:9000 {
-			env modHeadersAvailable true # Avoid sending the security headers twice
-			env front_controller_active true # Enable pretty urls
-		}
-	}
+        # Let everything else be handled by the PHP-FPM component
+        php_fastcgi nextcloud:9000 {
+            env modHeadersAvailable true # Avoid sending the security headers twice
+            env front_controller_active true # Enable pretty urls
+        }
+    }
 }
 
 https://matrix.guziohub.ovh:443, matrix.guziohub.ovh:8448, https://api.chat.guziohub.ovh:443, http://api.chat.guziohub.ovh:80 {
