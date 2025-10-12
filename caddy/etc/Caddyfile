@@ -24,6 +24,8 @@
 		format console
         include admin.api
 	}
+	
+    order minifier after encode
 }
 
 (cors) {
