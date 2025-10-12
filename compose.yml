@@ -22,7 +22,9 @@ secrets:
 
 services:
   web:
-    image: caddy:alpine
+    build:
+      context: ./dockerfiles
+      dockerfile: xcaddy.Dockerfile
     pull_policy: always
     restart: unless-stopped
     volumes:
