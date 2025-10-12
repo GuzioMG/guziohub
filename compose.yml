@@ -25,7 +25,6 @@ services:
     build:
       context: ./dockerfiles
       dockerfile: xcaddy.Dockerfile
-    pull_policy: always
     restart: unless-stopped
     volumes:
       - ./caddy/etc:/etc/caddy
