@@ -322,11 +322,11 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - "../minecraft/servers/[NAME]:/data"
+      - "../minecraft/servers/pl-test:/data"
       - "../minecraft/builds:/modpacks:ro"
     ports:
       - "25565:25565"
-    #restart: unless-stopped
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "mc-health"]
       start_period: 210s #3,5min
@@ -339,7 +339,7 @@ services:
     environment:
       # Modpack
       TYPE: "MODRINTH"
-      MODRINTH_MODPACK: "/modpacks/[NAME].mrpack" # Placeholder. For now, mc-docker will try to load it, fail (because there'd be no such file) and (due to `restart: no`) not try again. If I ever run an MC server on this machine in the future, this (along with the restart policy) will of course have to be changed.
+      MODRINTH_MODPACK: "/modpacks/pl-test.mrpack"
       # Minecraft stuff
       GUI: "FALSE"
       EULA: "TRUE"              #  Why are some bools upper-case...
