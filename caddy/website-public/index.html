@@ -50,10 +50,10 @@
                     calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugy in the horizontal viewport.
                     Multiplying that^ by 1/0.61  -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (becasue Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (becasue it's impossile: it isn't any particluar font, but rather an OS-resolved "macro").
                     min()  -->  Ensures that the text never autoscales beyond 18px (becasue it just looks silly at sizes higher than this)...
-                    max()  -->  ...unless the user explicitly want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight) - we know that this would be an explicit decision becasue most browsers default to 16px.
+                    max()  -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
                 */
                 --unholy-formula: min( calc(calc(100vw/calc(var(--content-length) + 2))*calc(1/0.61)),  max(1em, 18px) );
-                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier, but nevertheless - this (or - more speciically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nahh! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a conveinient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier (and the last one isn't even a real font - just an OS-resolved „macro” - so it doesn't look like anything in particular, an certainly not like Courier), but nevertheless - this (or - more speciically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nahh! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a conveinient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
                 
                 margin: 0;
                 padding: 0;
@@ -175,7 +175,7 @@
                 border-top-left-radius: 4px;
                 z-index: 3;
                 user-select: none;
-                display: none; /*Debugging feture - Uncomment to enable*/
+                display: none; /*Debugging feture - Comment-out to enable*/
             }
             
             
@@ -201,7 +201,7 @@
             }
             
             .termtxt:not(.termtxt-static):nth-child(10) {
-                animation: type 2s steps(41) 9s normal forwards;
+                animation: type 2s steps(55) 9s normal forwards;
             }
             
             .termtxt:not(.termtxt-static):nth-child(11) {
@@ -243,13 +243,75 @@
                 }
             }
             
+            
+            /*Obi-Wan Kenobi animation thing*/
+            img {
+                position: fixed;
+                height: 40vh;
+                
+                /*Centers the image horizontally. Transform is needed, becasue left/right not only offset from left/right edge of the viewport, but they also target the left/right edge of the image, so putting only left:50% would make the image START at 50%, not be perfectly centered at 50%. The transform offsets that.*/
+                left: 50%;
+                transform: translateX(-50%);
+                
+                /*Initial state, to be overriden by the animation: Hides the image above the viewport. It will drop down, like Kenobi in that meme, when the animation is triggered.; The image is 100% visible - it will fade-out after the animation finishes.*/
+                bottom: 100%;
+                opacity: 100%;
+            }
+            
+            @keyframes jump {
+                10% {
+                    bottom: -122px;
+                }
+                
+                20% {
+                    bottom: -61px;
+                }
+                
+                40% {
+                    bottom: -61px;
+                }
+                
+                45% {
+                    bottom: -10px;
+                }
+                
+                70% {
+                    bottom: -10px;
+                    opacity: 100%;
+                }
+                
+                to {
+                    bottom: -10px;
+                    opacity: 0%;
+                }
+            }
+            
+            @keyframes hidehello {
+                from {
+                    opacity: 0%;
+                }
+                
+                40% {
+                    opacity: 0%;
+                }
+                
+                45% {
+                    opacity: 100%;
+                }
+                
+                to {
+                    opacity: 100%;
+                }
+            }
+            
         </style>
     </head>
     
     <body>
+        <img src="assets/the_negotiator.jpg" id="kenobi_display">
         <aside class="viewport-marker">100%</aside>
         <header>
-            <h1 class="termtxt termtxt-static">👋 Hello, there!</h1>
+            <h1 class="termtxt termtxt-static" id="kenobi_trigger">👋 Hello, there!</h1>
             <p class="termtxt termtxt-static support-warning-size-interpolation">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-link termtxt-static">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't avaliable in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-link termtxt-static">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
         </header>
         <main>
@@ -257,5 +319,13 @@
             <br><p class="termtxt termtxt-static">&nbsp;</p><p class="termtxt">GuzioHub | version: IN-DEV</p><p class="termtxt">_</p>
             <br><p class="termtxt termtxt-static">&nbsp;</p><p class="termtxt">This is an early W.I.P., come back later...............</p><p class="termtxt">_</p>
         </main>
+        
+        <script>
+            let obiwan = document.getElementById("kenobi_trigger");
+            obiwan.addEventListener("click", () => {
+                document.getElementById("kenobi_display").style.animation = "jump 5s ease-out 0s 1 normal forwards";
+                obiwan.style.animation = "hidehello 5s ease-out 0s 1 normal forwards";
+            });
+        </script>
     </body>
 </html>
