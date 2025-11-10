@@ -18,7 +18,7 @@
         <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
         <link rel="canonical" href="https://guziohub.ovh/">
         
-        <style> /*Font loading.*/
+        <style> /*Fonts*/
         
             /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search.*/
             @font-face {
@@ -43,17 +43,34 @@
                 font-style: italic;
             }
             
-            body{
+            body {
                 --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier (and the last one isn't even a real font - just an OS-resolved „macro” - so it doesn't look like anything in particular, an certainly not like Courier), but nevertheless - this (or - more speciically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nahh! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a conveinient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                font-family: var(--we-have-courier-at-home);
             }
+            
         </style>
         
         <style> /*CRT effects*/
+        
+            /*Changes to <body>*/
+            body::before {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+              z-index: 2;
+              background-size: 100% 2px, 3px 100%;
+              pointer-events: none;
+            }
+            
             body {
                 background-color: #333;
             }
             
-            /*Makes this look like an old CRT monitor*/
             body::after {
               content: " ";
               display: block;
@@ -68,25 +85,39 @@
               pointer-events: none;
               animation: flicker 5ms ease-out 0s infinite alternate none; /*Simulates the flicker from a 50Hz (EU) power grid. First 5ms: voltage rises from 0V (represented as 0% opacity) to 325V (1% opacity) - sharply at first, then calms down (ease-out) near the end because of how Sine waves work. This is when the wave hits its peak, and this is also where the animation ends and starts going in reverse because of how „alternate” works. In the next 5ms it falls from 325V to 0V - softly at first, then accelerates and finnaly crosses 0V at high-speed (ease-in - but because the animation is reversed, that's what ease-out does here) and goes into the negatives. But we don't care about the negatives, so this is where our animation completes a single phase (it will now reverse again, into its normal direction). And we don't care about them becasue - even though the voltage would now go to -325V and then back to 0V (completing a whole phase of AC) to later rise to 325V, and keep cycling like that over and over again - from a CRT brightness perspective, 325V and -325V does the same thing, so our animation's completle phase can be half of what AC does.*/
             }
-            body::before {
-              content: " ";
-              display: block;
-              position: fixed;
-              top: 0;
-              left: 0;
-              bottom: 0;
-              right: 0;
-              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-              z-index: 2;
-              background-size: 100% 2px, 3px 100%;
-              pointer-events: none;
+            
+            
+            /*Colors with chromatic abberation (like on a CRT). Apply them directly to div/p-like tags, or to span/a-like tags (the latter is especially meaningful for .termtxt-links), if within a p-tag already.*/
+            .termtxt-default {
+                color: #BFB;
+                text-shadow: -1px 0px 1px rgba(255,0,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
             }
+            
+            .termtxt-warnings {
+                color: #F44;
+                text-shadow: -1px 0px 1px rgba(0,255,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-links {
+                color: #2CF;
+                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
+                              1px 0px 1px rgba(0, 0, 255, 2);
+            }
+            
+            .termtxt-guzio-signature-yellow {
+                color: #FDFF00;
+                text-shadow: -1px 0px 1px rgba(255, 255, 255, 2),
+                              1px 0px 1px rgba(0, 0, 0, 2);
+            }
+            
         </style>
         
-        <style> /*Anything related to styling the text. TODO: Refactor it even more.*/
+        <style> /*Anything (except color) related to text rendering.*/
             body {
                 /*
-                    calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugy in the horizontal viewport.
+                    calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
                     Multiplying that^ by 1/0.61  -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (becasue Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (becasue it's impossile: it isn't any particluar font, but rather an OS-resolved "macro").
                     min()  -->  Ensures that the text never autoscales beyond 18px (becasue it just looks silly at sizes higher than this)...
                     max()  -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
@@ -99,7 +130,7 @@
                 flex-direction: column;
                 margin: 1ch;
                 
-                /*Needs to be set here to make ch units work correctly. Doesn't actually get used for any text rendering - that's done either by <p> tags that usually also get those same settings from .termtxt, or by <h> tags, that override font sizes, anyway.*/
+                /*Needs to be set here to make ch units work correctly (at least the size - I might be going overkill with family (considering how it's set for the body, anyway), I dunno). Doesn't actually get used for any text rendering - that's done either by <p> tags and <h> tags (that font sizes) or by body{} that set family to --we-have-courier-at-home already.*/
                 font-size: var(--unholy-formula);
                 font-family: var(--we-have-courier-at-home);
             }
@@ -110,49 +141,32 @@
                 margin-bottom: 0.5em;
                 margin-top: 0;
                 font-size: 3em;
-            }
-            
-            .termtxt {
-                font-family: var(--we-have-courier-at-home);
-                white-space: nowrap;
-                overflow-x: hidden;
-                display: inline-block;
-                width: 0;
                 padding: 0;
-                interpolate-size: allow-keywords;
-                
-                /*Makes this look like an old CRT monitor*/
-                text-shadow: -1px 0px 1px rgba(255,0,0,2),
-                              1px 0px 1px rgba(0,0,255,2);
-                color: #BFB;
             }
             
-            p.termtxt {
-                font-size: var(--unholy-formula);
-                margin: 0;
+            .typing-animator {
+                width: 0;
+                white-space: nowrap;
             }
             
-            h1.termtxt {
-                white-space: normal;
-                width: fit-content;
-            }
-            
-            /* Can't just be a.termtxt becasue Firefox was making it look wrong (it was shifted upwards by several pixels; no idea why). */
-            .termtxt-link {
-                color: #2CF;
-                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
-                              1px 0px 1px rgba(0, 0, 255, 2);
+            .custom-link-underlining {
                 text-decoration: none;
             }
             
-            .termtxt-link:hover {
+            .custom-link-underlining:hover {
                 text-decoration: underline;
             }
             
-            .termtxt-static {
-                opacity: 1;
-                width: max-content;
+            p {
+                font-size: var(--unholy-formula);
+                margin: 0;
+                padding: 0;
+                
+                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator becasue it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
+                display: inline-block;
+                overflow-x: hidden;
             }
+            
         </style>
         
         <style> /*Keyframe data*/
@@ -238,6 +252,7 @@
                     opacity: 1%;
                 }
             }
+            
         </style>
         
         <style> /*CSS feature gates*/
@@ -248,17 +263,14 @@
                 }
             }
             
-            .support-warning-size-interpolation {
-                color: #F44;
-                white-space: normal;
-                width: fit-content;
-                text-shadow: -1px 0px 1px rgba(0,255,0,2),
-                              1px 0px 1px rgba(0,0,255,2);
-            }
-            
         </style>
         
         <style> /*Assorted bits of custom CSS*/
+            
+            * {
+                interpolate-size: allow-keywords;
+            }
+        
             body {
                 margin: 0;
                 padding: 0;
@@ -300,27 +312,27 @@
                 --content-length: 55;
             }
             
-            .termtxt:not(.termtxt-static):nth-child(2) {
+            .typing-animator:nth-child(2) {
                 animation: type 2s steps(11) 1s 1 normal forwards;
             }
             
-            .termtxt:not(.termtxt-static):nth-child(3) {
+            .typing-animator:nth-child(3) {
                 animation: blinker 0.5s steps(1) 0s 8 normal forwards;
             }
             
-            .termtxt:not(.termtxt-static):nth-child(6) {
+            .typing-animator:nth-child(6) {
                 animation: type 2s steps(26) 5s normal forwards;
             }
             
-            .termtxt:not(.termtxt-static):nth-child(7) {
+            .typing-animator:nth-child(7) {
                 animation: blinker 0.5s steps(1) 4s 8 normal forwards;
             }
             
-            .termtxt:not(.termtxt-static):nth-child(10) {
+            .typing-animator:nth-child(10) {
                 animation: type 2s steps(55) 9s normal forwards;
             }
             
-            .termtxt:not(.termtxt-static):nth-child(11) {
+            .typing-animator:nth-child(11) {
                 animation: blinker 0.5s steps(1) 8s 12 normal forwards;
             }
         </style>
@@ -330,13 +342,13 @@
         <img src="assets/the_negotiator.jpg" id="kenobi_display">
         <aside class="viewport-marker">100%</aside>
         <header>
-            <h1 class="termtxt termtxt-static" id="kenobi_trigger">👋 Hello, there!</h1>
-            <p class="termtxt termtxt-static support-warning-size-interpolation">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-link termtxt-static">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't avaliable in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-link termtxt-static">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
+            <h1 class="termtxt-default" id="kenobi_trigger">👋 Hello, there!</h1>
+            <p class="termtxt-warnings support-warning-size-interpolation">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't avaliable in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
         </header>
         <main>
-            <p class="termtxt termtxt-static">&nbsp;$&nbsp;</p><p class="termtxt">guziohub -v</p><p class="termtxt">_</p>
-            <br><p class="termtxt termtxt-static">&nbsp;</p><p class="termtxt">GuzioHub | version: IN-DEV</p><p class="termtxt">_</p>
-            <br><p class="termtxt termtxt-static">&nbsp;</p><p class="termtxt">This is an early W.I.P., come back later...............</p><p class="termtxt">_</p>
+            <p class="termtxt-default">&nbsp;$&nbsp;</p><p class="termtxt-default typing-animator">guziohub -v</p><p class="termtxt-default typing-animator">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">GuzioHub | version: IN-DEV</p><p class="termtxt-default typing-animator">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">This is an early W.I.P., come back later...............</p><p class="termtxt-default typing-animator">_</p>
         </main>
         
         <script>
