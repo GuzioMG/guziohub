@@ -1,0 +1,98 @@
+<!DOCTYPE ghtml-v1.0 "human-readable://G-HTML is a special flavour of HTML, used by GuzioHub's custom templating engine (hence the „G”). It has no formal DOCTYPE, due to its tiny target audience, and in place where a link to the DOCTYPE should be (aka in the !DOCTYPE declaration), it instead has this very description text (which is, conveniently, a valid string that can be placed inside the !DOCTYPE declaration, thanks to its URI-style prefix - so various tools won't complain). This text is intended to be understood by models, like Copilot, to help them make better suggestions tailored to this HTML-flavour's spec, which is as follows: 1 - There are no HEAD or BODY tags, everything inside the HTML tag below, is already the body by default and explicit HEAD or BODY declarations are not allowed; 2 - The HTML tag must have these exact attributes, in this exact order: flavor (always „ghtml”), lang (like in vanilla HTML), canonical (a URL that will be placed inside a canonical-rel LINK-tag's href in the generated doc's HEAD), title (its content will be placed inside a TITLE-tag in the generated doc's HEAD), header (the header of the article, that will be injected into the body) and description (a human-readable string that will be placed inside a description-named META-tag's content in the generated doc's HEAD); 3 - the 1st line MUST contain this very !DOCTYPE, the 2nd line MUST contain an opening HTML tag with all the required attributes just specified, and the last line MUST contain a closing HTML tag, and nothing else is allowed on the 1st, 2nd and last lines (not an extra newline character, that certain editors (eg. GNU Nano) like to insert on the last line - this behavior will need to be disabled to effectively edit G-HTML files); 4 - Environment variables can be referenced anywhere in the content, using the %VAR_NAME% syntax, and they will be replaced with their values during generation; 5 - Lines SHOULD NOT be indented (although perfectly valid, doing this will lead to the indentation getting carried over to the final output (it is not stripped), which will look weird); 6 - All other standard HTML syntax rules (eg. no P-tags inside SPAN-tags, the ability to use escaped characters such as $nbsp;, etc.) apply as usual, while keeping in mind that every new contentful line in this file will become its own P-tag in the generated file (so this will affect what things can be placed inside, and how they will interface with each other, eg. you cannot really split an OL/UL across multiple lines because each LI would end up being placed in its own P, which of course isn't valid HTML).">
+<html flavor="ghtml" lang="en" canonical="https://guziohub.com/" title="Oh. Congrats!" header="You found a quirk of this site! This content ends up getting generated twice, once for the index.html (on its own pass) and once along with all other contents (on the main generator pass becasue I coudn't be bothered to implement an exclusion filter). I could remove this artifact from the 2nd pass afterwards, I but decided to keep it as an easter-egg. Anyway, now that you found it, you should probably go back to the main index.html becasue its contents are exacly 1:1 the exact same as those of this sub-page, but by viewing them here, you'd be missing on some more easter-eggs (that only work when some custom JS from that page is loaded), and you clearly enjoy hunting them. Have fun!" description="A page that shouldn't be viewd directly; please just use index.html (or no sub-URL at all) instead.">
+guziofetch
+I'm <span class="termtxt-guzio-signature-yellow">Mateusz „Guzio” Guzek</span>, and this is my
+personal, little corner-of-the-internet-thing.
+-------------------
+* About me:
+&nbsp;&nbsp;|- Age: 19
+&nbsp;&nbsp;|- Timezone: Warsaw/Europe
+&nbsp;&nbsp;|- From: Poland 🇵🇱, Pomarania Region (my beloved)
+&nbsp;&nbsp;|- Languages:
+&nbsp;&nbsp;|&nbsp;&nbsp;|- Polish: (native)
+&nbsp;&nbsp;|&nbsp;&nbsp;|- English: Probably C2 level
+&nbsp;&nbsp;|&nbsp;&nbsp;|- German: Was forced to learn in shool;
+&nbsp;&nbsp;|&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remembers nothing anymore
+&nbsp;&nbsp;|&nbsp;&nbsp;\- <span class="termtxt-warnings">[REDACTED]:</span> In the process of learning.
+&nbsp;&nbsp;|- Fav. color: 💛
+&nbsp;&nbsp;\- Pet: A lovely cat called Ziemnak (Potato). Meow!
+* What do we have here?
+&nbsp;&nbsp;|- <span class="termtxt-guzio-signature-yellow">My personal blog-like place for yapping</span>:
+&nbsp;&nbsp;|&nbsp;&nbsp;You're reading it right now.
+&nbsp;&nbsp;|
+&nbsp;&nbsp;|&nbsp;&nbsp;I'd like to say it's made in „raw HTML” because
+&nbsp;&nbsp;|&nbsp;&nbsp;it sounds crazy, but the truth is arguably 
+&nbsp;&nbsp;|&nbsp;&nbsp;even crazier: I actually developed a whole,
+&nbsp;&nbsp;|&nbsp;&nbsp;custom, <a href="https://github.com/GuzioMG/guziohub-generator" class="custom-link-underlining termtxt-links">HTML+CSS generator</a>, to automate the
+&nbsp;&nbsp;|&nbsp;&nbsp;tedious task of manually making the terminal
+&nbsp;&nbsp;|&nbsp;&nbsp;typing animation for each line. Because - yes -
+&nbsp;&nbsp;|&nbsp;&nbsp;- it needs to be manually adjusted per-line.
+&nbsp;&nbsp;|&nbsp;&nbsp;Turns out that making a multi-line typing anim
+&nbsp;&nbsp;|&nbsp;&nbsp;in pure CSS is actually a huge pain in the ass!
+&nbsp;&nbsp;|&nbsp;&nbsp;JS would make it much easier, but I wanted this
+&nbsp;&nbsp;|&nbsp;&nbsp;page to work without JS, for all the freaks.
+&nbsp;&nbsp;|
+&nbsp;&nbsp;|- <a href="https://chat.guziohub.ovh/" class="custom-link-underlining termtxt-guzio-signature-yellow">GuzioHub Chat</a>:
+&nbsp;&nbsp;|&nbsp;&nbsp;A Matrix homeserver powered by Tuwunel, and an
+&nbsp;&nbsp;|&nbsp;&nbsp;Element-powered frontend for it. One day, I'd
+&nbsp;&nbsp;|&nbsp;&nbsp;love to swap this to a custom-made front-end,
+&nbsp;&nbsp;|&nbsp;&nbsp;but that's not something I have the time for
+&nbsp;&nbsp;|&nbsp;&nbsp;right now, nor in the forseeable future.
+&nbsp;&nbsp;|
+&nbsp;&nbsp;|&nbsp;&nbsp;Currently, it's limited to just me (with an
+&nbsp;&nbsp;|&nbsp;&nbsp;option to exapnd it to my friends if I ever get
+&nbsp;&nbsp;|&nbsp;&nbsp;them to move their asses off of Messenger (to
+&nbsp;&nbsp;|&nbsp;&nbsp;which GuzioHub Chat is bridged, but it'd still
+&nbsp;&nbsp;|&nbsp;&nbsp;be nice to have more of them use Matrix without
+&nbsp;&nbsp;|&nbsp;&nbsp;awkward bridges, so that some of them get to
+&nbsp;&nbsp;|&nbsp;&nbsp;experience that juicy Markdown formatting (rly,
+&nbsp;&nbsp;|&nbsp;&nbsp;how do people live without Markdown?) instead
+&nbsp;&nbsp;|&nbsp;&nbsp;of me being the only one able to see it, which
+&nbsp;&nbsp;|&nbsp;&nbsp;defeats the puropuse of formatting in a chat),
+&nbsp;&nbsp;|&nbsp;&nbsp;and maybe my family, too, but that's unlikely).
+&nbsp;&nbsp;|&nbsp;&nbsp;But maybe, if I ever become succesful online,
+&nbsp;&nbsp;|&nbsp;&nbsp;I might set up something like Patreon. In which
+&nbsp;&nbsp;|&nbsp;&nbsp;case, I would probably offer the ability to use
+&nbsp;&nbsp;|&nbsp;&nbsp;the GuzioHub Chat homeserver (its Element Web-UI
+&nbsp;&nbsp;|&nbsp;&nbsp;is free for anyone, btw (you can literally open
+&nbsp;&nbsp;|&nbsp;&nbsp;it right now) - only the account creation part
+&nbsp;&nbsp;|&nbsp;&nbsp;is currently locked down, but you still can BYO
+&nbsp;&nbsp;|&nbsp;&nbsp;Matrix account from a different homeserver) as a
+&nbsp;&nbsp;|&nbsp;&nbsp;perk, becasue I quite like the idea of small,
+&nbsp;&nbsp;|&nbsp;&nbsp;community-hosted personal cloud services. I got
+&nbsp;&nbsp;|&nbsp;&nbsp;inspired by <a href="https://pub.solar/" class="custom-link-underlining termtxt-links">pub.solar</a>, but unlike them (I hope),
+&nbsp;&nbsp;|&nbsp;&nbsp;I only have a single, small Oracle Free Tier VM
+&nbsp;&nbsp;|&nbsp;&nbsp;to spare at the moment, so just giving this
+&nbsp;&nbsp;|&nbsp;&nbsp;service away for free isn't an option, else my
+&nbsp;&nbsp;|&nbsp;&nbsp;VM could collapse into a black hole.
+&nbsp;&nbsp;|
+&nbsp;&nbsp;|&nbsp;&nbsp;Also features bots:
+&nbsp;&nbsp;|&nbsp;&nbsp;|- Tuwunel Admin (required for Tuwunel to work)
+&nbsp;&nbsp;|&nbsp;&nbsp;|- Mautrix Meta (for Messenger bridging)
+&nbsp;&nbsp;|&nbsp;&nbsp;\- Mautrix Discord (for Discord bridging)
+&nbsp;&nbsp;|
+&nbsp;&nbsp;|- <a href="https://drive.guziohub.ovh/" class="custom-link-underlining termtxt-guzio-signature-yellow">GuzioHub Drive</a>:
+&nbsp;&nbsp;|&nbsp;&nbsp;A NextCloud instance.
+&nbsp;&nbsp;|
+&nbsp;&nbsp;|&nbsp;&nbsp;Currently, it's limited to just me (with an
+&nbsp;&nbsp;|&nbsp;&nbsp;option to exapnd it to my family if I ever feel
+&nbsp;&nbsp;|&nbsp;&nbsp;like it, and maybe my friends, too, but that's
+&nbsp;&nbsp;|&nbsp;&nbsp;unlikely, unless I stumble upon an exceptionall
+&nbsp;&nbsp;|&nbsp;&nbsp;nerd among them, who'd care about NextCloud).
+&nbsp;&nbsp;|&nbsp;&nbsp;In terms of public access, it's the same deal as
+&nbsp;&nbsp;|&nbsp;&nbsp;the Matrix homeserver. Except even more becasue
+&nbsp;&nbsp;|&nbsp;&nbsp;NC is an absolute resource HOG!
+&nbsp;&nbsp;|
+&nbsp;&nbsp;\- <a href="https://account.guziohub.ovh/" class="custom-link-underlining termtxt-guzio-signature-yellow">GuzioHub Account</a>:
+&nbsp;&nbsp;&nbsp;&nbsp; Tying it all together, there's an LLDAP-powered
+&nbsp;&nbsp;&nbsp;&nbsp; central user registry, for all the GuzioHub
+&nbsp;&nbsp;&nbsp;&nbsp; Services. There are only 2 now, but expansion
+&nbsp;&nbsp;&nbsp;&nbsp; is very much on the table (in particular, I'm
+&nbsp;&nbsp;&nbsp;&nbsp; looking into Minecraft, Gitea, SearX-ng, @-proto
+&nbsp;&nbsp;&nbsp;&nbsp; (aka Atomsphere, aka BSky - but I prefer to call
+&nbsp;&nbsp;&nbsp;&nbsp; it by its ecosystem name, not by the name of the
+&nbsp;&nbsp;&nbsp;&nbsp; particular instance, that happens to be the most
+&nbsp;&nbsp;&nbsp;&nbsp; popular) and Fediverse (bridged from Atomsphere)
+&nbsp;&nbsp;&nbsp;&nbsp; self-hosting), at which point a shared account
+&nbsp;&nbsp;&nbsp;&nbsp; system becomes more useful.
+</html>

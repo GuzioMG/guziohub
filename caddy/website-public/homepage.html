@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="GuzioHub - A personal website project + self-hosting of services by Guzio.">
-        <title>GuzioHub</title>
+        <meta name="description" content="A page that shouldn't be viewd directly; please just use index.html (or no sub-URL at all) instead.">
+        <title>Oh. Congrats! - GuzioHub</title>
         
         <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
         <link rel="icon" type="image/png" href="/assets/logo/favicon-96x96.png" sizes="96x96">
@@ -16,7 +16,7 @@
         
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
         <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
-        <link rel="canonical" href="https://guziohub.ovh/">
+        <link rel="canonical" href="https://guziohub.com/">
         
         <style> /*Fonts*/
         
@@ -115,6 +115,7 @@
         </style>
         
         <style> /*Anything (except color) related to text rendering.*/
+            
             body {
                 /*
                     calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
@@ -189,55 +190,6 @@
                 }
             }
             
-            
-            /*Obi-Wan Kenobi jump animation*/
-            @keyframes jump {
-                10% {
-                    bottom: -122px;
-                }
-                
-                20% {
-                    bottom: -61px;
-                }
-                
-                40% {
-                    bottom: -61px;
-                }
-                
-                45% {
-                    bottom: -10px;
-                }
-                
-                70% {
-                    bottom: -10px;
-                    opacity: 100%;
-                }
-                
-                to {
-                    bottom: -10px;
-                    opacity: 0%;
-                }
-            }
-            
-            @keyframes hidehello {
-                from {
-                    opacity: 0%;
-                }
-                
-                40% {
-                    opacity: 0%;
-                }
-                
-                45% {
-                    opacity: 100%;
-                }
-                
-                to {
-                    opacity: 100%;
-                }
-            }
-            
-            
             /* Animation data for the 50Hz Flicker Effect. Very subtle (at just 1%) because even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunately, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refresh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying because they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
             @media (prefers-reduced-motion), (prefers-reduced-transparency) {
                 body::after {
@@ -275,36 +227,7 @@
                 margin: 0;
                 padding: 0;
             }
-            
-            .viewport-marker {
-                position: absolute;
-                bottom: 0;
-                right: 0;
-                font-family: var(--we-have-courier-at-home);
-                font-size: 10px;
-                color: #666;
-                background-color: #222;
-                padding: 2px 4px;
-                border-top-left-radius: 4px;
-                z-index: 3;
-                user-select: none;
-                display: none; /*Debugging feature - Comment-out this line to enable it.*/
-            }
-            
-            /*Obi-Wan Kenobi animation thing*/
-            #kenobi_display {
-                position: fixed;
-                height: 40vh;
-                
-                /*Centers the image horizontally. Transform is needed, because left/right not only offset from left/right edge of the viewport, but they also target the left/right edge of the image, so putting only left:50% would make the image START at 50%, not be perfectly centered at 50%. The transform offsets that.*/
-                left: 50%;
-                transform: translateX(-50%);
-                
-                /*Initial state, to be overridden by the animation: Hides the image above the viewport. It will drop down, like Kenobi in that meme, when the animation is triggered.; The image is 100% visible - it will fade-out after the animation finishes.*/
-                bottom: 100%;
-                opacity: 100%;
-            }
-            
+
         </style>
         
         <style> /*Autogenerated typing animation - see: github.com/GuzioMG/guziohub-generator for details*/
@@ -1172,10 +1095,8 @@
     </head>
     
     <body>
-        <img src="assets/the_negotiator.jpg" id="kenobi_display" alt="General Kenobi „Hello, there!” meme.">
-        <aside class="viewport-marker">100%</aside>
         <header>
-            <h1 class="termtxt-default" id="kenobi_trigger">👋 Hello, there!</h1>
+            <h1 class="termtxt-default">You found a quirk of this site! This content ends up getting generated twice, once for the index.html (on its own pass) and once along with all other contents (on the main generator pass becasue I coudn't be bothered to implement an exclusion filter). I could remove this artifact from the 2nd pass afterwards, I but decided to keep it as an easter-egg. Anyway, now that you found it, you should probably go back to the main index.html becasue its contents are exacly 1:1 the exact same as those of this sub-page, but by viewing them here, you'd be missing on some more easter-eggs (that only work when some custom JS from that page is loaded), and you clearly enjoy hunting them. Have fun!</h1>
             <p class="termtxt-warnings support-warning-size-interpolation">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
         </header>
         <main>
@@ -1275,13 +1196,5 @@
             <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">&nbsp;&nbsp;&nbsp;&nbsp; self-hosting), at which point a shared account</p><p class="termtxt-default typing-animator">_</p>
             <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">&nbsp;&nbsp;&nbsp;&nbsp; system becomes more useful.</p><p class="termtxt-default typing-animator">_</p>
         </main>
-        
-        <script>
-            let obiwan = document.getElementById("kenobi_trigger");
-            obiwan.addEventListener("click", () => {
-                document.getElementById("kenobi_display").style.animation = "jump 5s ease-out 0s 1 normal forwards";
-                obiwan.style.animation = "hidehello 5s ease-out 0s 1 normal forwards";
-            });
-        </script>
     </body>
 </html>

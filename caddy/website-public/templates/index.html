@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="GuzioHub - A personal website project + self-hosting of services by Guzio.">
+        <title>GuzioHub</title>
+        
+        <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
+        <link rel="icon" type="image/png" href="/assets/logo/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="/assets/logo/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-192x192.png" sizes="192x192">
+        <link rel="shortcut icon" href="/assets/logo/favicon.ico" sizes="48x48">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-512x512.png" sizes="512x512">
+        <link rel="icon" type="image/png" href="/assets/logo.png" sizes="2880x2880">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
+        <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
+        <link rel="canonical" href="https://guziohub.ovh/">
+        
+        <style> /*Fonts*/
+        
+            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search.*/
+            @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Regular"), local("Hack Regular"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Bold"), local("Hack Bold"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Italic"), local("Hack Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: italic;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-BoldItalic"), local("Hack BoldItalic"), local("Hack Bold Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: italic;
+            }
+            
+            body {
+                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier (and the last one isn't even a real font - just an OS-resolved „macro” - so it doesn't look like anything in particular, an certainly not like Courier), but nevertheless - this (or - more specifically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nah! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a convenient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+        </style>
+        
+        <style> /*CRT effects*/
+        
+            /*Changes to <body>*/
+            body::before {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+              z-index: 2;
+              background-size: 100% 2px, 3px 100%;
+              pointer-events: none;
+            }
+            
+            body {
+                background-color: #333;
+            }
+            
+            body::after {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: #444;
+              opacity: 0;
+              z-index: 2;
+              pointer-events: none;
+              animation: flicker 5ms ease-out 0s infinite alternate none; /*Simulates the flicker from a 50Hz (EU) power grid. First 5ms: voltage rises from 0V (represented as 0% opacity) to 325V (1% opacity) - sharply at first, then calms down (ease-out) near the end because of how Sine waves work. This is when the wave hits its peak, and this is also where the animation ends and starts going in reverse because of how „alternate” works. In the next 5ms it falls from 325V to 0V - softly at first, then accelerates and finally crosses 0V at high-speed (ease-in - but because the animation is reversed, that's what ease-out does here) and goes into the negatives. But we don't care about the negatives, so this is where our animation completes a single phase (it will now reverse again, into its normal direction). And we don't care about them because - even though the voltage would now go to -325V and then back to 0V (completing a whole phase of AC) to later rise to 325V, and keep cycling like that over and over again - from a CRT brightness perspective, 325V and -325V does the same thing, so our animation's complete phase can be half of what AC does.*/
+            }
+            
+            
+            /*Colors with chromatic aberration (like on a CRT). Apply them directly to div/p-like tags, or to span/a-like tags (the latter is especially meaningful for .termtxt-links), if within a p-tag already.*/
+            .termtxt-default {
+                color: #BFB;
+                text-shadow: -1px 0px 1px rgba(255,0,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-warnings {
+                color: #F44;
+                text-shadow: -1px 0px 1px rgba(0,255,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-links {
+                color: #2CF;
+                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
+                              1px 0px 1px rgba(0, 0, 255, 2);
+            }
+            
+            .termtxt-guzio-signature-yellow {
+                color: #FDFF00;
+                text-shadow: -1px 0px 1px rgba(255, 255, 255, 2),
+                              1px 0px 1px rgba(0, 0, 0, 2);
+            }
+            
+        </style>
+        
+        <style> /*Anything (except color) related to text rendering.*/
+            body {
+                /*
+                    calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
+                    Multiplying that^ by 1/0.61  -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (because Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (because it's impossible: it isn't any particular font, but rather an OS-resolved "macro").
+                    min()  -->  Ensures that the text never autoscales beyond 18px (because it just looks silly at sizes higher than this)...
+                    max()  -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
+                */
+                --unholy-formula: min( calc(calc(100vw/calc(var(--content-length) + 2))*calc(1/0.61)),  max(1em, 18px) );
+            }
+            
+            header {
+                display: flex;
+                flex-direction: column;
+                margin: 1ch;
+                
+                /*Needs to be set here to make ch units work correctly (at least the size - I might be going overkill with family (considering how it's set for the body, anyway), I dunno). Doesn't actually get used for any text rendering - that's done either by <p> tags and <h> tags (that font sizes) or by body{} that set family to --we-have-courier-at-home already.*/
+                font-size: var(--unholy-formula);
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+            header>h1 {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0.5em;
+                margin-top: 0;
+                font-size: 3em;
+                padding: 0;
+            }
+            
+            .typing-animator {
+                width: 0;
+                white-space: nowrap;
+            }
+            
+            .custom-link-underlining {
+                text-decoration: none;
+            }
+            
+            .custom-link-underlining:hover {
+                text-decoration: underline;
+            }
+            
+            p {
+                font-size: var(--unholy-formula);
+                margin: 0;
+                padding: 0;
+                
+                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
+                display: inline-block;
+                overflow-x: hidden;
+            }
+            
+        </style>
+        
+        <style> /*Keyframe data*/
+            
+            /*Typing animation*/
+            @keyframes type {
+                to {
+                    width: max-content;
+                }
+            }
+            
+            @keyframes blinker {
+                from {
+                    width: max-content;
+                }
+                
+                50%, to {
+                    width: max-content;
+                    display: none;
+                }
+            }
+            
+            
+            /*Obi-Wan Kenobi jump animation*/
+            @keyframes jump {
+                10% {
+                    bottom: -122px;
+                }
+                
+                20% {
+                    bottom: -61px;
+                }
+                
+                40% {
+                    bottom: -61px;
+                }
+                
+                45% {
+                    bottom: -10px;
+                }
+                
+                70% {
+                    bottom: -10px;
+                    opacity: 100%;
+                }
+                
+                to {
+                    bottom: -10px;
+                    opacity: 0%;
+                }
+            }
+            
+            @keyframes hidehello {
+                from {
+                    opacity: 0%;
+                }
+                
+                40% {
+                    opacity: 0%;
+                }
+                
+                45% {
+                    opacity: 100%;
+                }
+                
+                to {
+                    opacity: 100%;
+                }
+            }
+            
+            
+            /* Animation data for the 50Hz Flicker Effect. Very subtle (at just 1%) because even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunately, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refresh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying because they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
+            @media (prefers-reduced-motion), (prefers-reduced-transparency) {
+                body::after {
+                    animation: none !important; /*I don't think !important is actually needed here (@media has a higher specificity), but better safe than sorry (sorry in a literal sense - I don't wanna be the one apologizing to a family, in case someone were to get epilepsied to death because of this).*/
+                }
+            }
+            @keyframes flicker {
+                from {
+                    opacity: 0%;
+                }
+                to {
+                    opacity: 1%;
+                }
+            }
+            
+        </style>
+        
+        <style> /*CSS feature gates*/
+            
+            @supports (interpolate-size: allow-keywords){
+                .support-warning-size-interpolation {
+                    display: none;
+                }
+            }
+            
+        </style>
+        
+        <style> /*Assorted bits of custom CSS*/
+            
+            * {
+                interpolate-size: allow-keywords;
+            }
+        
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .viewport-marker {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                font-family: var(--we-have-courier-at-home);
+                font-size: 10px;
+                color: #666;
+                background-color: #222;
+                padding: 2px 4px;
+                border-top-left-radius: 4px;
+                z-index: 3;
+                user-select: none;
+                display: none; /*Debugging feature - Comment-out this line to enable it.*/
+            }
+            
+            /*Obi-Wan Kenobi animation thing*/
+            #kenobi_display {
+                position: fixed;
+                height: 40vh;
+                
+                /*Centers the image horizontally. Transform is needed, because left/right not only offset from left/right edge of the viewport, but they also target the left/right edge of the image, so putting only left:50% would make the image START at 50%, not be perfectly centered at 50%. The transform offsets that.*/
+                left: 50%;
+                transform: translateX(-50%);
+                
+                /*Initial state, to be overridden by the animation: Hides the image above the viewport. It will drop down, like Kenobi in that meme, when the animation is triggered.; The image is 100% visible - it will fade-out after the animation finishes.*/
+                bottom: 100%;
+                opacity: 100%;
+            }
+            
+        </style>
+        
+        <style> /*Slot for auto-generated CSS*/
+        </style>
+    </head>
+    
+    <body>
+        <img src="assets/the_negotiator.jpg" id="kenobi_display" alt="General Kenobi „Hello, there!” meme.">
+        <aside class="viewport-marker">100%</aside>
+        <header>
+            <h1 class="termtxt-default" id="kenobi_trigger">👋 Hello, there!</h1>
+            <p class="termtxt-warnings support-warning-size-interpolation">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
+        </header>
+        <main><p class="termtxt-warnings">If you're reading this - something went very wrong. The page content is SUPPOSED to be here, but - clearly - it is not. Please file an issue at <a href="https://github.com/GuzioMG/guziohub" class="termtxt-links custom-link-underlining">https://github.com/GuzioMG/guziohub</a>.</p>
+        </main>
+        
+        <script>
+            let obiwan = document.getElementById("kenobi_trigger");
+            obiwan.addEventListener("click", () => {
+                document.getElementById("kenobi_display").style.animation = "jump 5s ease-out 0s 1 normal forwards";
+                obiwan.style.animation = "hidehello 5s ease-out 0s 1 normal forwards";
+            });
+        </script>
+    </body>
+</html>
