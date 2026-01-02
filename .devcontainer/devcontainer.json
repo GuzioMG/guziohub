@@ -1,0 +1,15 @@
+{
+	"name": "Devcontainer for GuzioHub",
+	"image": "mcr.microsoft.com/devcontainers/base:noble",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/guziomg/devcontainers/personal:latest": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"matthewpi.caddyfile-support"
+			]
+		}
+	}
+}
