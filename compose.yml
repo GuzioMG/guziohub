@@ -289,7 +289,9 @@ services:
     - ./db/matrix/_CLANKERS/meta:/data
   
   mxbot-patchpanel:
-    image: git.shork.ch/docker-images/out-of-your-element:latest
+    build:
+      context: ./dockerfiles/patchpanel
+      dockerfile: Dockerfile
     depends_on:
       mxtuwunel:
         condition: service_healthy
