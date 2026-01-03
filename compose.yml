@@ -288,14 +288,18 @@ services:
     volumes:
     - ./db/matrix/_CLANKERS/meta:/data
   
-  mxbot-discord:
-    image: dock.mau.dev/mautrix/discord:latest
+  mxbot-patchpanel:
+    image: git.shork.ch/docker-images/out-of-your-element:latest
     depends_on:
       mxtuwunel:
         condition: service_healthy
     restart: unless-stopped
-    volumes:
-    - ./db/matrix/_CLANKERS/discord:/data
+    expose:
+      - 6
+    volum
+      - ./matrix/_CLANKERS/discord/registration.yaml:/usr/src/app/registration.yaml
+      - ./matrix/_CLANKERS/discord/patchpanel.db:/usr/src/app/ooye.db
+    comma sleep 7200 # 2h for setup (podman compose exec mxbot-patchpanel npm run setup) - comment out after completed
   
   ldap:
     image: ghcr.io/lldap/lldap:latest-alpine

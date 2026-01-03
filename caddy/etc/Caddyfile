@@ -236,6 +236,13 @@ https://chat.guziohub.ovh:443, http://chat.guziohub.ovh:80 {
     reverse_proxy mxelement:8080
 }
 
+https://bots.chat.guziohub.ovh:443, http://bots.chat.guziohub.ovh:80 {
+	handle_path /patchpanel/* {
+		encode gzip
+	    reverse_proxy "http://mxbot-patchpanel:6693/"
+	}
+}
+
 https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
     reverse_proxy ldap:17170
 }
