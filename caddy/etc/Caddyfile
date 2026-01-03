@@ -239,7 +239,7 @@ https://chat.guziohub.ovh:443, http://chat.guziohub.ovh:80 {
 https://bots.chat.guziohub.ovh:443, http://bots.chat.guziohub.ovh:80 {
 	handle_path /patchpanel/* {
 		encode gzip
-	    reverse_proxy "http://mxbot-patchpanel:6693/"
+	    reverse_proxy "http://mxbot-patchpanel:6693"
 	}
 }
 
