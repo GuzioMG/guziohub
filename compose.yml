@@ -301,7 +301,7 @@ services:
     volumes:
       - ./db/matrix/_CLANKERS/discord/registration.yaml:/usr/src/app/registration.yaml
       - ./db/matrix/_CLANKERS/discord/patchpanel.db:/usr/src/app/ooye.db
-    command: sleep 7200 # 2h for setup (podman compose exec mxbot-patchpanel npm run setup) - comment out after completed
+    #command: sleep 7200 # 2h for setup (podman compose exec mxbot-patchpanel npm run setup) - comment out after completed
   
   ldap:
     image: ghcr.io/lldap/lldap:latest-alpine
