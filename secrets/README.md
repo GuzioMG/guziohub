@@ -1,5 +1,5 @@
 # Here, create:
-*Note: Anything realted to Minecraft can - right now - be just garbage data: There is no fuctional Minecraft server here, as of now.*
+*Note: Anything related to Minecraft can - right now - be just garbage data: There is no functional Minecraft server here, as of now.*
 
 ## `mc_seed.txt`
 Holds the Minecraft seed. Can be left blank to randomize a seed.
@@ -18,9 +18,9 @@ The password used for registration on Matrix.
 *Note: Registration is disabled for now, due to LDAP being used for accounts instead. This is kept for future reference, tho.*
 
 ## `mxturnfull.conf`
-A full config for COTURN. Unfortunatley, it's not possible to just pass the actual secret values as `_FILE` envars - or any envars, for that matter - becasue Coturn doesn't support those.
+A full config for COTURN. Unfortunately, it's not possible to just pass the actual secret values as `_FILE` envars - or any envars, for that matter - because Coturn doesn't support those.
 
-The file should look like:
+The file should look like this:
 ```conf
 use-auth-secret
 static-auth-secret=<a secret key>
@@ -40,3 +40,15 @@ A JSON Web Token secret for LDAP. Should be generated using [`./generate_secrets
 
 ## `ldap_pass.txt`
 A password of the `admin` account on LDAP.
+
+## bot_patchpanel.txt
+Holds the bot token for the Discord<->Matrix bot.
+
+## bot_patchpanel_oauth2.txt
+Holds the OAuth token for the Discord<->Matrix bot.
+
+## mxpatchpanel_add_pass.txt
+Password required to add the bot above.
+
+## guzio_rcode.txt
+My private Matrix recovery code.

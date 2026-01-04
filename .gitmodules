@@ -1,3 +1,0 @@
-[submodule "dockerfiles/patchpanel"]
-	path = dockerfiles/patchpanel
-	url = https://git.shork.ch/docker-images/out-of-your-element.git
