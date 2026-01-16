@@ -1,0 +1,26 @@
+# The formats to use when sending messages via the relaybot.
+        # Available variables:
+        #   .Sender.UserID - The Matrix user ID of the sender.
+        #   .Sender.Displayname - The display name of the sender (if set).
+        #   .Sender.RequiresDisambiguation - Whether the sender's name may be confused with the name of another user in the ro$
+        #   .Sender.DisambiguatedName - The disambiguated name of the sender. This will be the displayname if set,
+        #                               plus the user ID in parentheses if the displayname is not unique.
+        #                               If the displayname is not set, this is just the user ID.
+        #   .Message - The `formatted_body` field of the message.
+        #   .Caption - The `formatted_body` field of the message, if it's a caption. Otherwise an empty string.
+        #   .FileName - The name of the file being sent.
+        message_formats:
+            m.text: "{{ if .Sender.RequiresDisambiguation }}{{ .Message }}{{ else }}{{ .Message }} ~{{ .Sender.Displayname }}{{ end }}"
+            m.notice: "[NOTICE]: {{ if .Sender.RequiresDisambiguation }}{{ .Message }}{{ else }}{{ .Message }} ~{{ .Sender.Displayname }}{{ end }}"
+            m.emote: "* {{ if .Sender.RequiresDisambiguation }}{{ .Message }}{{ else }}{{ .Message }} ~{{ .Sender.Displayname }}{{ end }}"
+            m.file: "{{ if .Caption }}{{ if .Sender.RequiresDisambiguation }}{{ .Caption }}{{ else }}{{ .Caption }} ~{{ .Sender.Displayname }}{{ end }}{{ else }}{{ if .Sender.RequiresDisambiguation }}{{ else }}{{ .Sender.Displayname }} wysyła plik:{{ end }}{{ end }}"
+            m.image: "{{ if .Caption }}{{ if .Sender.RequiresDisambiguation }}{{ .Caption }}{{ else }}{{ .Caption }} ~{{ .Sender.Displayname }}{{ end }}{{ else }}{{ if .Sender.RequiresDisambiguation }}{{ else }}{{ .Sender.Displayname }} wysyła obraz:{{ end }}{{ end }}"
+            m.audio: "{{ if .Caption }}{{ if .Sender.RequiresDisambiguation }}{{ .Caption }}{{ else }}{{ .Caption }} ~{{ .Sender.Displayname }}{{ end }}{{ else }}{{ if .Sender.RequiresDisambiguation }}{{ else }}{{ .Sender.Displayname }} wysyła głosówkę:{{ end }}{{ end }}"
+            m.video: "{{ if .Caption }}{{ if .Sender.RequiresDisambiguation }}{{ .Caption }}{{ else }}{{ .Caption }} ~{{ .Sender.Displayname }}{{ end }}{{ else }}{{ if .Sender.RequiresDisambiguation }}{{ else }}{{ .Sender.Displayname }} wysyła klip:{{ end }}{{ end }}"
+            m.location: "{{ if .Caption }}{{ if .Sender.RequiresDisambiguation }}{{ .Caption }}{{ else }}{{ .Caption }} ~{{ .Sender.Displayname }}{{ end }}{{ else }}{{ if .Sender.RequiresDisambiguation }}{{ else }}{{ .Sender.Displayname }} wysyła pinezkę:{{ end }}{{ end }}"
+        # For networks that support per-message displaynames (i.e. Slack and Discord), the template for those names.
+        # This has all the Sender variables available under message_formats (but without the .Sender -prefix).
+        # Note that you need to manually remove the displayname from message_formats above.
+        displayname_format: "{{ .DisambiguatedName }}"
+# Jeśli disambiguation jest potrzebne, wiadomość najprawdopodobniej wysyła Guzio (bo są 2 guzie: W Matrix i na Discordzie) - usuń wtedy nick zupełnie.
+# Haczyk: Jeśli pojawi się inna para osób z tym samym nickiem, to będzie wyglądało, jakbym ja pisała.
