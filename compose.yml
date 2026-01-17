@@ -370,5 +370,5 @@ services:
       GID: "0"
       UID: "0"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
-      DATAPACKS: "/data/datapacks"
+      #DATAPACKS: "/data/datapacks"
       LEVEL: "world"
