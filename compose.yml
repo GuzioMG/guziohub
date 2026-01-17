@@ -235,7 +235,7 @@ services:
       TUWUNEL_LDAP__UID_ATTRIBUTE: 'uid'
       TUWUNEL_LDAP__NAME_ATTRIBUTE: 'displayname'
       TUWUNEL_LDAP__MAIL_ATTRIBUTE: 'email'
-      #TURN
+      # TURN
       TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
       TUEUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
       # Support
@@ -330,7 +330,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - "../minecraft/servers/pl-test:/data"
+      - "../minecraft/servers/ldap-test:/data"
       - "../minecraft/builds:/modpacks:ro"
     ports:
       - "25565:25565"
@@ -343,11 +343,12 @@ services:
     secrets:
       - bot_minecraft
       - mc_seed
+      - ldap_pass
     # MC Config
     environment:
       # Modpack
       TYPE: "MODRINTH"
-      MODRINTH_MODPACK: "/modpacks/pl-test.mrpack"
+      MODRINTH_MODPACK: "/modpacks/ldap-test.mrpack"
       # Minecraft stuff
       GUI: "FALSE"
       EULA: "TRUE"              #  Why are some bools upper-case...
@@ -357,6 +358,7 @@ services:
       # Secrets
       CFG_BOT_TOKEN_FILE: "/run/secrets/bot_minecraft"
       CFG_SEED_FILE: "/run/secrets/mc_seed"
+      CFG_LDAP_PASS: "/run/secrets/ldap_pass"
       # Desperatley trying to get Secrets to work
       REPLACE_ENV_VARIABLES: "TRUE"
       ENV_VARIABLE_PREFIX: "CFG_"
