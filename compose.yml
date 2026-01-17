@@ -358,7 +358,7 @@ services:
       # Secrets
       CFG_BOT_TOKEN_FILE: "/run/secrets/bot_minecraft"
       CFG_SEED_FILE: "/run/secrets/mc_seed"
-      CFG_LDAP_PASS: "/run/secrets/ldap_pass"
+      CFG_LDAP_PASS_FILE: "/run/secrets/ldap_pass"
       # Desperatley trying to get Secrets to work
       REPLACE_ENV_VARIABLES: "TRUE"
       ENV_VARIABLE_PREFIX: "CFG_"
