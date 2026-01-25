@@ -6,7 +6,7 @@ Docker Compose configs and related stuff for [my home server](https://guziohub.o
 ...because they weren't in baseline Ubuntu Slim (picked over the regular Ubuntu because I want the host system to be as light-weight as possible - since everything meaningful will happen inside of the container, anyway), nor had any alternatives, despite being some pretty basic system tools. Useful for future reference, I reckon:
 
 ```bash
-sudo apt install git zip unzip htop iputils-ping jed fish podman-compose thermshark dnsutils
+sudo apt install git zip unzip htop iputils-ping jed fish podman-compose termshark dnsutils
 ```
 
 Notes:
@@ -41,6 +41,6 @@ sudo netfilter-persistent save # To save your changes
 Podman has a bizarre bug with its Compose file handling, in that (at least until [this](https://github.com/containers/podman-compose/pull/1283) gets shipped in a release - at least it already got merged) it tried to stop *dependencies* when `podman compose down`ing a service, rather than *dependents*. Which means that, if I want to re-create `mxtuwunel` (for example), I actually need to run the following commands:
 
 ```bash
-podman compose down mxtuwunel mxelement mxbot-meta mxbot-patchpanel # Instead of just `podman compose down mxtuwunel`, or Tuwunel will fail to actually delete itself (it will stop, tho), due to dangling mxelement, mxbot-meta and mxbot-patchpanel dependencies. Also, this command will stop web, mxturn and ldap, as mxelement depends on them - but it won't delete web and ldap, due to some dangling dependencies related to Nextcloud. Also-also, mxtuwunel doesn't actually need to be explicitly mentioned in that command, as all mxelement mxbot-meta mxbot-patchpanel depend on it. Mind you, mxtuwunel is the very service we're ACTUALLY trying to restart here. Absolute madness! That PR needs to find itself in a release ASAP becasue all of this makes zero sense, currently.
+podman compose down mxtuwunel mxelement mxbot-meta mxbot-patchpanel # Instead of just `podman compose down mxtuwunel`, or Tuwunel will fail to actually delete itself (it will stop, tho), due to dangling mxelement, mxbot-meta and mxbot-patchpanel dependencies. Also, this command will stop web, mxturn and ldap, as mxelement depends on them - but it won't delete web and ldap, due to some dangling dependencies related to Nextcloud. Also-also, mxtuwunel doesn't actually need to be explicitly mentioned in that command, as all mxelement mxbot-meta mxbot-patchpanel depend on it. Mind you, mxtuwunel is the very service we're ACTUALLY trying to restart here. Absolute madness! That PR needs to find itself in a release ASAP because all of this makes zero sense, currently.
 podman compose up -d mxtuwunel mxelement mxbot-meta mxbot-patchpanel # web, ldap and mxturn will fail to create (since they already exist), but they'll restart. All other services mentioned there will be fully re-crated.
 ```
