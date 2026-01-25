@@ -237,7 +237,7 @@ services:
       TUWUNEL_LDAP__MAIL_ATTRIBUTE: 'email'
       # TURN
       TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
-      TUEUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
+      TUWUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
       # Support
       TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/matrix/help.html'
       TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'Admin'
