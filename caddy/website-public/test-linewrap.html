@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="You shouldn't be here. ...Or should you?">
+        <title>You shouldn't be here. - GuzioHub</title>
+        
+        <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
+        <link rel="icon" type="image/png" href="/assets/logo/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="/assets/logo/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-192x192.png" sizes="192x192">
+        <link rel="shortcut icon" href="/assets/logo/favicon.ico" sizes="48x48">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-512x512.png" sizes="512x512">
+        <link rel="icon" type="image/png" href="/assets/logo.png" sizes="2880x2880">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
+        <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
+        <link rel="canonical" href="https://guziohub.com/test-linewrap.html">
+        
+        <style> /*Fonts*/
+        
+            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search.*/
+            @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Regular"), local("Hack Regular"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Bold"), local("Hack Bold"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-Italic"), local("Hack Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: italic;
+            } @font-face {
+                font-family: 'Hack';
+                src: local("Hack-BoldItalic"), local("Hack BoldItalic"), local("Hack Bold Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: italic;
+            }
+            
+            body {
+                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier (and the last one isn't even a real font - just an OS-resolved „macro” - so it doesn't look like anything in particular, an certainly not like Courier), but nevertheless - this (or - more specifically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nah! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a convenient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+        </style>
+        
+        <style> /*CRT effects*/
+        
+            /*Changes to <body>*/
+            body::before {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+              z-index: 2;
+              background-size: 100% 2px, 3px 100%;
+              pointer-events: none;
+            }
+            
+            body {
+                background-color: #333;
+            }
+            
+            body::after {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: #444;
+              opacity: 0;
+              z-index: 2;
+              pointer-events: none;
+              animation: flicker 5ms ease-out 0s infinite alternate none; /*Simulates the flicker from a 50Hz (EU) power grid. First 5ms: voltage rises from 0V (represented as 0% opacity) to 325V (1% opacity) - sharply at first, then calms down (ease-out) near the end because of how Sine waves work. This is when the wave hits its peak, and this is also where the animation ends and starts going in reverse because of how „alternate” works. In the next 5ms it falls from 325V to 0V - softly at first, then accelerates and finally crosses 0V at high-speed (ease-in - but because the animation is reversed, that's what ease-out does here) and goes into the negatives. But we don't care about the negatives, so this is where our animation completes a single phase (it will now reverse again, into its normal direction). And we don't care about them because - even though the voltage would now go to -325V and then back to 0V (completing a whole phase of AC) to later rise to 325V, and keep cycling like that over and over again - from a CRT brightness perspective, 325V and -325V does the same thing, so our animation's complete phase can be half of what AC does.*/
+            }
+            
+            
+            /*Colors with chromatic aberration (like on a CRT). Apply them directly to div/p-like tags, or to span/a-like tags (the latter is especially meaningful for .termtxt-links), if within a p-tag already.*/
+            .termtxt-default {
+                color: #BFB;
+                text-shadow: -1px 0px 1px rgba(255,0,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-warnings {
+                color: #F44;
+                text-shadow: -1px 0px 1px rgba(0,255,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-links {
+                color: #2CF;
+                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
+                              1px 0px 1px rgba(0, 0, 255, 2);
+            }
+            
+            .termtxt-guzio-signature-yellow {
+                color: #FDFF00;
+                text-shadow: -1px 0px 1px rgba(255, 255, 255, 2),
+                              1px 0px 1px rgba(0, 0, 0, 2);
+            }
+            
+        </style>
+        
+        <style> /*Anything (except color) related to text rendering.*/
+            
+            body {
+                /*
+                    calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
+                    Multiplying that^ by 1/0.61  -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (because Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (because it's impossible: it isn't any particular font, but rather an OS-resolved "macro").
+                    min()  -->  Ensures that the text never autoscales beyond 18px (because it just looks silly at sizes higher than this)...
+                    max()  -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
+                */
+                --unholy-formula: min( calc(calc(100vw/calc(var(--content-length) + 2))*calc(1/0.61)),  max(1em, 18px) );
+            }
+            
+            header {
+                display: flex;
+                flex-direction: column;
+                margin: 1ch;
+                
+                /*Needs to be set here to make ch units work correctly (at least the size - I might be going overkill with family (considering how it's set for the body, anyway), I dunno). Doesn't actually get used for any text rendering - that's done either by <p> tags and <h> tags (that font sizes) or by body{} that set family to --we-have-courier-at-home already.*/
+                font-size: var(--unholy-formula);
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+            header>h1 {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0.5em;
+                margin-top: 0;
+                font-size: 3em;
+                padding: 0;
+            }
+            
+            .typing-animator {
+                width: 0;
+                white-space: nowrap;
+            }
+            
+            .custom-link-underlining {
+                text-decoration: none;
+            }
+            
+            .custom-link-underlining:hover {
+                text-decoration: underline;
+            }
+            
+            p {
+                font-size: var(--unholy-formula);
+                margin: 0;
+                padding: 0;
+                
+                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
+                display: inline-block;
+                overflow-x: hidden;
+            }
+            
+        </style>
+        
+        <style> /*Keyframe data*/
+            
+            /*Typing animation*/
+            @keyframes type {
+                to {
+                    width: max-content;
+                }
+            }
+            
+            @keyframes blinker {
+                from {
+                    width: max-content;
+                }
+                
+                50%, to {
+                    width: max-content;
+                    display: none;
+                }
+            }
+            
+            /* Animation data for the 50Hz Flicker Effect. Very subtle (at just 1%) because even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunately, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refresh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying because they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
+            @media (prefers-reduced-motion), (prefers-reduced-transparency) {
+                body::after {
+                    animation: none !important; /*I don't think !important is actually needed here (@media has a higher specificity), but better safe than sorry (sorry in a literal sense - I don't wanna be the one apologizing to a family, in case someone were to get epilepsied to death because of this).*/
+                }
+            }
+            @keyframes flicker {
+                from {
+                    opacity: 0%;
+                }
+                to {
+                    opacity: 1%;
+                }
+            }
+            
+        </style>
+        
+        <style> /*CSS feature gates*/
+            
+            @supports (interpolate-size: allow-keywords){
+                .support-warning-size-interpolation {
+                    display: none;
+                }
+            }
+            
+        </style>
+        
+        <style> /*Assorted bits of custom CSS*/
+            
+            * {
+                interpolate-size: allow-keywords;
+            }
+        
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+        </style>
+        
+        <style id="skipper_display"> /*Autogenerated typing animation - see: github.com/GuzioMG/guziohub-generator for details*/
+            
+            body {
+                --content-length: 53;
+            }
+            
+            
+            .typing-animator:nth-child(2) {
+                animation: type 3s steps(13) 1s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(3) {
+                animation: blinker 0.5s steps(1) 0s 10 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(6) {
+                animation: type 3s steps(52) 6s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(7) {
+                animation: blinker 0.5s steps(1) 5s 8 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(10) {
+                animation: type 2s steps(51) 9s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(11) {
+                animation: blinker 0.5s steps(1) 9s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(14) {
+                animation: type 3s steps(53) 11s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(15) {
+                animation: blinker 0.5s steps(1) 11s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(18) {
+                animation: type 2s steps(40) 14s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(19) {
+                animation: blinker 0.5s steps(1) 14s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(22) {
+                animation: type 2s steps(50) 16s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(23) {
+                animation: blinker 0.5s steps(1) 16s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(26) {
+                animation: type 3s steps(53) 18s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(27) {
+                animation: blinker 0.5s steps(1) 18s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(30) {
+                animation: type 3s steps(53) 21s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(31) {
+                animation: blinker 0.5s steps(1) 21s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(34) {
+                animation: type 2s steps(47) 24s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(35) {
+                animation: blinker 0.5s steps(1) 24s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(38) {
+                animation: type 3s steps(53) 26s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(39) {
+                animation: blinker 0.5s steps(1) 26s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(42) {
+                animation: type 2s steps(49) 29s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(43) {
+                animation: blinker 0.5s steps(1) 29s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(46) {
+                animation: type 2s steps(40) 31s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(47) {
+                animation: blinker 0.5s steps(1) 31s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(50) {
+                animation: type 2s steps(50) 33s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(51) {
+                animation: blinker 0.5s steps(1) 33s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(54) {
+                animation: type 3s steps(53) 35s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(55) {
+                animation: blinker 0.5s steps(1) 35s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(58) {
+                animation: type 3s steps(53) 38s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(59) {
+                animation: blinker 0.5s steps(1) 38s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(62) {
+                animation: type 2s steps(47) 41s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(63) {
+                animation: blinker 0.5s steps(1) 41s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(66) {
+                animation: type 2s steps(46) 43s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(67) {
+                animation: blinker 0.5s steps(1) 43s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(70) {
+                animation: type 2s steps(40) 45s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(71) {
+                animation: blinker 0.5s steps(1) 45s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(74) {
+                animation: type 2s steps(50) 47s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(75) {
+                animation: blinker 0.5s steps(1) 47s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(78) {
+                animation: type 3s steps(53) 49s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(79) {
+                animation: blinker 0.5s steps(1) 49s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(82) {
+                animation: type 3s steps(53) 52s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(83) {
+                animation: blinker 0.5s steps(1) 52s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(86) {
+                animation: type 2s steps(47) 55s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(87) {
+                animation: blinker 0.5s steps(1) 55s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(90) {
+                animation: type 2s steps(51) 57s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(91) {
+                animation: blinker 0.5s steps(1) 57s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(94) {
+                animation: type 3s steps(53) 59s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(95) {
+                animation: blinker 0.5s steps(1) 59s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(98) {
+                animation: type 2s steps(35) 62s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(99) {
+                animation: blinker 0.5s steps(1) 62s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(102) {
+                animation: type 3s steps(53) 64s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(103) {
+                animation: blinker 0.5s steps(1) 64s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(106) {
+                animation: type 3s steps(53) 67s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(107) {
+                animation: blinker 0.5s steps(1) 67s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(110) {
+                animation: type 3s steps(52) 70s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(111) {
+                animation: blinker 0.5s steps(1) 70s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(114) {
+                animation: type 2s steps(51) 73s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(115) {
+                animation: blinker 0.5s steps(1) 73s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(118) {
+                animation: type 3s steps(53) 75s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(119) {
+                animation: blinker 0.5s steps(1) 75s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(122) {
+                animation: type 2s steps(40) 78s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(123) {
+                animation: blinker 0.5s steps(1) 78s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(126) {
+                animation: type 2s steps(50) 80s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(127) {
+                animation: blinker 0.5s steps(1) 80s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(130) {
+                animation: type 3s steps(53) 82s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(131) {
+                animation: blinker 0.5s steps(1) 82s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(134) {
+                animation: type 3s steps(53) 85s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(135) {
+                animation: blinker 0.5s steps(1) 85s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(138) {
+                animation: type 2s steps(47) 88s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(139) {
+                animation: blinker 0.5s steps(1) 88s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(142) {
+                animation: type 3s steps(53) 90s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(143) {
+                animation: blinker 0.5s steps(1) 90s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(146) {
+                animation: type 2s steps(49) 93s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(147) {
+                animation: blinker 0.5s steps(1) 93s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(150) {
+                animation: type 2s steps(40) 95s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(151) {
+                animation: blinker 0.5s steps(1) 95s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(154) {
+                animation: type 2s steps(50) 97s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(155) {
+                animation: blinker 0.5s steps(1) 97s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(158) {
+                animation: type 3s steps(53) 99s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(159) {
+                animation: blinker 0.5s steps(1) 99s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(162) {
+                animation: type 3s steps(53) 102s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(163) {
+                animation: blinker 0.5s steps(1) 102s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(166) {
+                animation: type 2s steps(47) 105s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(167) {
+                animation: blinker 0.5s steps(1) 105s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(170) {
+                animation: type 2s steps(46) 107s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(171) {
+                animation: blinker 0.5s steps(1) 107s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(174) {
+                animation: type 2s steps(40) 109s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(175) {
+                animation: blinker 0.5s steps(1) 109s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(178) {
+                animation: type 2s steps(50) 111s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(179) {
+                animation: blinker 0.5s steps(1) 111s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(182) {
+                animation: type 3s steps(53) 113s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(183) {
+                animation: blinker 0.5s steps(1) 113s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(186) {
+                animation: type 3s steps(53) 116s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(187) {
+                animation: blinker 0.5s steps(1) 116s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(190) {
+                animation: type 2s steps(47) 119s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(191) {
+                animation: blinker 0.5s steps(1) 119s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(194) {
+                animation: type 2s steps(51) 121s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(195) {
+                animation: blinker 0.5s steps(1) 121s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(198) {
+                animation: type 3s steps(53) 123s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(199) {
+                animation: blinker 0.5s steps(1) 123s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(202) {
+                animation: type 2s steps(35) 126s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(203) {
+                animation: blinker 0.5s steps(1) 126s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(206) {
+                animation: type 3s steps(53) 128s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(207) {
+                animation: blinker 0.5s steps(1) 128s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(210) {
+                animation: type 3s steps(53) 131s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(211) {
+                animation: blinker 0.5s steps(1) 131s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(214) {
+                animation: type 3s steps(52) 134s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(215) {
+                animation: blinker 0.5s steps(1) 134s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(218) {
+                animation: type 2s steps(51) 137s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(219) {
+                animation: blinker 0.5s steps(1) 137s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(222) {
+                animation: type 3s steps(53) 139s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(223) {
+                animation: blinker 0.5s steps(1) 139s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(226) {
+                animation: type 2s steps(40) 142s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(227) {
+                animation: blinker 0.5s steps(1) 142s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(230) {
+                animation: type 2s steps(50) 144s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(231) {
+                animation: blinker 0.5s steps(1) 144s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(234) {
+                animation: type 3s steps(53) 146s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(235) {
+                animation: blinker 0.5s steps(1) 146s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(238) {
+                animation: type 3s steps(53) 149s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(239) {
+                animation: blinker 0.5s steps(1) 149s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(242) {
+                animation: type 2s steps(47) 152s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(243) {
+                animation: blinker 0.5s steps(1) 152s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(246) {
+                animation: type 3s steps(53) 154s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(247) {
+                animation: blinker 0.5s steps(1) 154s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(250) {
+                animation: type 2s steps(49) 157s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(251) {
+                animation: blinker 0.5s steps(1) 157s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(254) {
+                animation: type 2s steps(40) 159s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(255) {
+                animation: blinker 0.5s steps(1) 159s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(258) {
+                animation: type 2s steps(50) 161s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(259) {
+                animation: blinker 0.5s steps(1) 161s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(262) {
+                animation: type 3s steps(53) 163s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(263) {
+                animation: blinker 0.5s steps(1) 163s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(266) {
+                animation: type 3s steps(53) 166s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(267) {
+                animation: blinker 0.5s steps(1) 166s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(270) {
+                animation: type 2s steps(47) 169s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(271) {
+                animation: blinker 0.5s steps(1) 169s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(274) {
+                animation: type 2s steps(46) 171s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(275) {
+                animation: blinker 0.5s steps(1) 171s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(278) {
+                animation: type 2s steps(40) 173s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(279) {
+                animation: blinker 0.5s steps(1) 173s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(282) {
+                animation: type 2s steps(50) 175s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(283) {
+                animation: blinker 0.5s steps(1) 175s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(286) {
+                animation: type 3s steps(53) 177s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(287) {
+                animation: blinker 0.5s steps(1) 177s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(290) {
+                animation: type 3s steps(53) 180s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(291) {
+                animation: blinker 0.5s steps(1) 180s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(294) {
+                animation: type 2s steps(47) 183s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(295) {
+                animation: blinker 0.5s steps(1) 183s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(298) {
+                animation: type 2s steps(51) 185s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(299) {
+                animation: blinker 0.5s steps(1) 185s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(302) {
+                animation: type 3s steps(53) 187s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(303) {
+                animation: blinker 0.5s steps(1) 187s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(306) {
+                animation: type 2s steps(35) 190s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(307) {
+                animation: blinker 0.5s steps(1) 190s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(310) {
+                animation: type 3s steps(53) 192s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(311) {
+                animation: blinker 0.5s steps(1) 192s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(314) {
+                animation: type 3s steps(53) 195s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(315) {
+                animation: blinker 0.5s steps(1) 195s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(318) {
+                animation: type 3s steps(52) 198s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(319) {
+                animation: blinker 0.5s steps(1) 198s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(322) {
+                animation: type 2s steps(51) 201s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(323) {
+                animation: blinker 0.5s steps(1) 201s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(326) {
+                animation: type 3s steps(53) 203s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(327) {
+                animation: blinker 0.5s steps(1) 203s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(330) {
+                animation: type 2s steps(40) 206s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(331) {
+                animation: blinker 0.5s steps(1) 206s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(334) {
+                animation: type 2s steps(50) 208s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(335) {
+                animation: blinker 0.5s steps(1) 208s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(338) {
+                animation: type 3s steps(53) 210s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(339) {
+                animation: blinker 0.5s steps(1) 210s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(342) {
+                animation: type 3s steps(53) 213s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(343) {
+                animation: blinker 0.5s steps(1) 213s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(346) {
+                animation: type 2s steps(47) 216s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(347) {
+                animation: blinker 0.5s steps(1) 216s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(350) {
+                animation: type 3s steps(53) 218s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(351) {
+                animation: blinker 0.5s steps(1) 218s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(354) {
+                animation: type 2s steps(49) 221s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(355) {
+                animation: blinker 0.5s steps(1) 221s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(358) {
+                animation: type 2s steps(40) 223s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(359) {
+                animation: blinker 0.5s steps(1) 223s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(362) {
+                animation: type 2s steps(50) 225s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(363) {
+                animation: blinker 0.5s steps(1) 225s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(366) {
+                animation: type 3s steps(53) 227s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(367) {
+                animation: blinker 0.5s steps(1) 227s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(370) {
+                animation: type 3s steps(53) 230s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(371) {
+                animation: blinker 0.5s steps(1) 230s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(374) {
+                animation: type 2s steps(47) 233s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(375) {
+                animation: blinker 0.5s steps(1) 233s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(378) {
+                animation: type 2s steps(46) 235s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(379) {
+                animation: blinker 0.5s steps(1) 235s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(382) {
+                animation: type 2s steps(40) 237s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(383) {
+                animation: blinker 0.5s steps(1) 237s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(386) {
+                animation: type 2s steps(50) 239s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(387) {
+                animation: blinker 0.5s steps(1) 239s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(390) {
+                animation: type 3s steps(53) 241s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(391) {
+                animation: blinker 0.5s steps(1) 241s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(394) {
+                animation: type 3s steps(53) 244s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(395) {
+                animation: blinker 0.5s steps(1) 244s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(398) {
+                animation: type 2s steps(47) 247s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(399) {
+                animation: blinker 0.5s steps(1) 247s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(402) {
+                animation: type 2s steps(51) 249s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(403) {
+                animation: blinker 0.5s steps(1) 249s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(406) {
+                animation: type 3s steps(53) 251s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(407) {
+                animation: blinker 0.5s steps(1) 251s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(410) {
+                animation: type 2s steps(35) 254s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(411) {
+                animation: blinker 0.5s steps(1) 254s 4 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(414) {
+                animation: type 3s steps(53) 256s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(415) {
+                animation: blinker 0.5s steps(1) 256s 6 normal forwards;
+            }
+            
+            
+            .typing-animator:nth-child(418) {
+                animation: type 3s steps(53) 259s 1 normal forwards;
+            }
+            
+            .typing-animator:nth-child(419) {
+                animation: blinker 0.5s steps(1) 259s 12 normal forwards;
+            }
+            
+        </style>
+    </head>
+    
+    <body>
+        <header>
+            <h1 class="termtxt-default">...Or should you?</h1>
+            <p class="termtxt-warnings support-warning-size-interpolation skipper_hider">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
+            <p class="termtxt-links skipper_hider custom-link-underlining" id="skipper_trigger">[SKIP ANIMATION<noscript> (JS needed!)</noscript>]</p>
+        </header>
+        <main>
+            <p class="termtxt-default">&nbsp;$&nbsp;</p><p class="termtxt-default typing-animator">test linewrap</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">This is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here.This.is.a.test.of.line wrapping. Nothing evil to</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">see here.This.is.a.test.of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator"><strong>evil to see here. This is</strong> a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see here.</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">This is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here.This.is.a.test.of.line wrapping. Nothing evil to</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">see here.This.is.a.test.of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator"><strong>evil to see here. This is</strong> a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see here.</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">This is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here.This.is.a.test.of.line wrapping. Nothing evil to</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">see here.This.is.a.test.of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator"><strong>evil to see here. This is</strong> a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see here.</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">This is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here.This.is.a.test.of.line wrapping. Nothing evil to</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">see here.This.is.a.test.of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">evil to see here. This is a test of line</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">wrapping. Nothing evil to see here. This is a test</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">of line wrapping. Nothing evil to see here. This is a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">here. This is a test of line wrapping. Nothing evil</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">to see here. This is a test of line wrapping. Nothing</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator"><strong>evil to see here. This is</strong> a</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">test of line wrapping. Nothing evil to see here. This</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator">is a test of line wrapping. Nothing evil to see here.</p><p class="termtxt-default typing-animator skipper_hider">_</p>
+        </main>
+        
+        <script>
+            document.getElementById("skipper_trigger").addEventListener("click", () => {
+                document.getElementById("skipper_display").innerHTML = " /*Autogenerated typing animation - SKIPPED BY USER*/\n            .typing-animator {\n                width: fit-content;\n            }\n            .skipper_hider {\n                display: none;\n            }\n            body {\n                --content-length: "+window.getComputedStyle(document.body).getPropertyValue('--content-length')+";\n            }\n        ";
+            });
+        </script>
+    </body>
+</html>
