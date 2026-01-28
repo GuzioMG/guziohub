@@ -193,7 +193,7 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
         # Rule borrowed from `.htaccess`
         redir /remote/* /remote.php{path} permanent
 
-        # WARNING: The following block is commented out because it breaks 80% of functionality, incl. most basic features, like file uploads. However, as a trade-off, some assets that aren't manually specified above (eg. the welcome video - which (even though I know it's broken) I didn't fix becasue I have no idea what file is it) will fail to load.
+        # WARNING: The following block is commented out because it breaks 80% of functionality, incl. most basic features, like file uploads. However, as a trade-off, some assets that aren't manually specified above (eg. the welcome video - which (even though I know it's broken) I didn't fix because I have no idea what file is it) will fail to load.
         # Serve found static files, continuing to the PHP default handler below if not found
         #   try_files {path} {path}/
         #@notphpordir not path /*.php /*.php/* / /*/

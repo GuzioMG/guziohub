@@ -357,8 +357,9 @@
                 setTimeout(() => {
                     gaydar.innerText = "Lena🏳️‍⚧️?";
                 }, 1000);
+                //Can't merge these two, otherwise people could click the link on accident before they even see what it says.
                 setTimeout(() => {
-                    gaydar.outerHTML = "<a id=\"gaydar\" href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">Lena🏳️‍⚧️?</a>"
+                    gaydar.outerHTML = "<a id=\"gaydar\" href=\"https://guziohub.com/art1_gender.html\" class=\"termtxt-default custom-link-underlining\">Lena🏳️‍⚧️?</a>"
                 }, 1010);
             });
         </script>
