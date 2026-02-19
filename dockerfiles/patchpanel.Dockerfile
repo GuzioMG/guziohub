@@ -6,7 +6,7 @@ FROM ubuntu:latest as downloader
 WORKDIR /usr/src/app
 RUN ["apt", "update"]
 RUN ["apt", "install", "-y", "git", "jq", "curl"]
-RUN ["git", "clone", "https://gitdab.com/cadence/out-of-your-element.git", "."]
+RUN ["git", "clone", "-b", "fuckery", "https://gitdab.com/Guzio/out-of-your-element.git", "."]
 #RUN ["git", "fetch", "--all", "--tags"]
 #RUN git checkout tags/$(curl -s https://gitdab.com/api/v1/repos/cadence/out-of-your-element/releases?limit=1 | jq -r .[0].tag_name)
 
