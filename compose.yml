@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
     depends_on:
       imaginary:
-        condition: service_healthy
+        condition: service_started
       pgdb:
         condition: service_healthy
       web:
@@ -60,9 +60,9 @@ services:
       redis:
         condition: service_healthy
       ncapps:
-        condition: service_healthy
+        condition: service_started
       ldap:
-        condition: service_started # no healthcheck :-(
+        condition: service_started
     secrets:
       - pgpass
     volumes:
@@ -172,9 +172,9 @@ services:
       web:
         condition: service_healthy
       mxturn:
-        condition: service_started # no healthcheck :-(
+        condition: service_started
       ldap:
-        condition: service_started # ...here, too :-(
+        condition: service_started
     ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
       nofile:
         soft: 1048567
@@ -261,7 +261,7 @@ services:
     restart: unless-stopped
     depends_on:
       mxtuwunel:
-        condition: service_healthy
+        condition: service_started
       web:
         condition: service_healthy
     expose:
@@ -281,7 +281,7 @@ services:
     image: dock.mau.dev/mautrix/meta:latest
     depends_on:
       mxtuwunel:
-        condition: service_healthy
+        condition: service_started
     restart: unless-stopped
     expose:
       - 29319
@@ -296,7 +296,7 @@ services:
     stdin_open: true
     depends_on:
       mxtuwunel:
-        condition: service_healthy
+        condition: service_started
     restart: unless-stopped
     expose:
       - 6693
