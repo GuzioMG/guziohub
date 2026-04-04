@@ -370,5 +370,6 @@ services:
       GID: "0"
       UID: "0"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
-      #DATAPACKS: "/data/datapacks"
+      DATAPACKS: "/data/datapacks"
+      INITIAL_ENABLED_PACKS: "vanilla,minecart_improvements,trade_rebalance"
       LEVEL: "world"
