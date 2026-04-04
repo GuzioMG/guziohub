@@ -370,6 +370,6 @@ services:
       GID: "0"
       UID: "0"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
-      DATAPACKS: "/data/datapacks"
-      INITIAL_ENABLED_PACKS: "vanilla,minecart_improvements,trade_rebalance"
+      DATAPACKS: "/data/datapacks/Dungeons and Taverns v5.2.0.zip,/data/datapacks/Nullscape_26.1_v1.2.18.zip,/data/datapacks/Structory_v1.3.15.zip,/data/datapacks/Terralith_26.1_v2.6.2.zip,/data/datapacks/zRemove_SDL_Intro_v1.2.2.zip"
+      INITIAL_ENABLED_PACKS: "vanilla,minecart_improvements,trade_rebalance,Dungeons and Taverns v5.2.0.zip,Nullscape_26.1_v1.2.18.zip,Structory_v1.3.15.zip,Terralith_26.1_v2.6.2.zip,zRemove_SDL_Intro_v1.2.2.zip"
       LEVEL: "world"
