@@ -326,7 +326,7 @@ services:
   
   minecraft:
     # Docker Config
-    image: "itzg/minecraft-server:java21-graalvm"
+    image: "itzg/minecraft-server:java25-graalvm"
     tty: true
     stdin_open: true
     volumes:
