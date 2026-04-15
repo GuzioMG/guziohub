@@ -7,7 +7,7 @@ ENV NODE_ENV=production
 WORKDIR /usr/src/app
 RUN ["apk", "add", "--no-cache", "python3", "make", "build-base", "git"]
 #..., "jq", "curl"]
-RUN ["git", "clone", "-b", "main", "https://gitdab.com/Guzio/out-of-your-element.git", "."]
+RUN ["git", "clone", "-b", "mergable-fr-fr", "https://gitdab.com/Guzio/out-of-your-element.git", "."]
 #RUN ["git", "fetch", "--all", "--tags"]
 #RUN git checkout tags/$(curl -s https://gitdab.com/api/v1/repos/cadence/out-of-your-element/releases?limit=1 | jq -r .[0].tag_name)
 RUN ["npm", "install", "."]
