@@ -233,7 +233,23 @@ https://matrix.guziohub.ovh:443, matrix.guziohub.ovh:8448, https://api.chat.guzi
 }
 
 https://chat.guziohub.ovh:443, http://chat.guziohub.ovh:80 {
-    reverse_proxy mxelement:8080
+    import cors {header.origin}
+    root * /srv-mx
+    encode
+    header /manifest.json Content-Type "application/manifest+json"
+    header /config.json Content-Type "application/json"
+    try_files {path} /index.html
+    file_server browse
+}
+
+https://boykiss.chat.guziohub.ovh:443, http://boykiss.chat.guziohub.ovh:80 {
+    import cors {header.origin}
+    root * /srv-bk
+    encode
+    header /manifest.json Content-Type "application/manifest+json"
+    header /config.json Content-Type "application/json"
+    try_files {path} /index.html
+    file_server browse
 }
 
 https://bots.chat.guziohub.ovh:443, http://bots.chat.guziohub.ovh:80 {

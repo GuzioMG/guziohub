@@ -1,0 +1,24 @@
+{
+  "defaultHomeserver": 0,
+  "homeserverList": ["guziohub.ovh", "matrix.org"],
+  "allowCustomHomeservers": true,
+
+  "featuredCommunities": {
+    "openAsDefault": false,
+    "spaces": [
+      "#cinny:matrix.org",
+      "#community:matrix.org",
+      "#out-of-your-element:cadence.moe",
+      "#stickers-and-emojis:tastytea.de"
+    ],
+    "rooms": [
+      "#tuwunel:grin.hu"
+    ],
+    "servers": ["converser.eu", "xmr.se", "matrixrooms.info", "matrix.org", "mozilla.org", "unredacted.org", "guziohub.ovh", "cadence.moe", "tastytea.de", "grin.hu", "waywardinn.com", "tchncs.de"]
+  },
+
+  "hashRouter": {
+    "enabled": false,
+    "basename": "/"
+  }
+}
