@@ -328,8 +328,9 @@ services:
     # MC Config
     environment:
       # Modpack
-      TYPE: "MODRINTH"
-      MODRINTH_MODPACK: "/modpacks/ghuziostrun.mrpack"
+      VERSION: "SNAPSHOT"
+      #TYPE: "MODRINTH"
+      #MODRINTH_MODPACK: "/modpacks/ghuziostrun.mrpack"
       # Minecraft stuff
       GUI: "FALSE"
       EULA: "TRUE"              #  Why are some bools upper-case...
@@ -351,7 +352,7 @@ services:
       GID: "0"
       UID: "0"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
-      DATAPACKS: "datapacks/"
+      #DATAPACKS: "datapacks/"
       #DATAPACKS: "/data/datapacks/Dungeons_and_Taverns_v5.2.0.zip,/data/datapacks/Nullscape_26.1_v1.2.18.zip,/data/datapacks/Structory_v1.3.15.zip,/data/datapacks/Terralith_26.1_v2.6.2.zip,/data/datapacks/zRemove_SDL_Intro_v1.2.2.zip"
       #INITIAL_ENABLED_PACKS: "vanilla,minecart_improvements,trade_rebalance,Dungeons_and_Taverns_v5.2.0.zip,Nullscape_26.1_v1.2.18.zip,Structory_v1.3.15.zip,Terralith_26.1_v2.6.2.zip,zRemove_SDL_Intro_v1.2.2.zip"
       LEVEL: "world1"
