@@ -129,7 +129,7 @@ services:
       NC_HAPROXY_PASSWORD_FILE: /run/secrets/ncappkey
       TZ: Europe/Warsaw
     volumes:
-      - /run/user/1001/podman/podman.sock:/var/run/docker.sock
+      - /run/user/1000/podman/podman.sock:/var/run/docker.sock
     privileged: true #Security nightmare, but it needs it to be able to manage other containers
   
   redis:
