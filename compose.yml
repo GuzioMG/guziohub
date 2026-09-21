@@ -177,10 +177,10 @@ services:
         condition: service_started
       ldap:
         condition: service_started
-    ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
-      nofile:
-        soft: 1048567
-        hard: 1048567
+#    ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
+#      nofile:
+#        soft: 1048567
+#        hard: 1048567
     environment:
       # Core
       TUWUNEL_SERVER_NAME: guziohub.ovh
