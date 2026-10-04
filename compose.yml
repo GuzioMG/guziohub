@@ -177,6 +177,10 @@ services:
         condition: service_started
       ldap:
         condition: service_started
+#    ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
+#      nofile:
+#        soft: 1048567
+#        hard: 1048567
     environment:
       # Core
       TUWUNEL_SERVER_NAME: guziohub.ovh
@@ -199,9 +203,9 @@ services:
       TUWUNEL_ALLOW_LEGACY_MEDIA: 'true'
       TUWUNEL_BLURHASHING__COMPONENTS_X: 6
       TUWUNEL_BLURHASHING__COMPONENTS_Y: 6
-      TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB
+      TUWUNEL_BLURHASHING__BLURHASH_MAX_RAW_SIZE: 180000000 # B  =  180 MB  („a bit more than the upload limit”, as the documentation recommends - interpretation of „a bit” left to the user, so I went with just under 2x lol)
       # DNS
-      TUWUNEL_QUERY_OVER_TCP_ONLY: 'false'
+      TUWUNEL_QUERY_OVER_TCP_ONLY: 'false' # For better performance under Docker (and presumably Podman too, which is where this is actually supposed to be run), this need to be set to true. Can't do it now, though, because AppServices will break - regardless of TUWUNEL_DNS_PASSTHRU_APPSERVICES.
       TUWUNEL_IP_LOOKUP_STRATEGY: 3
       TUWUNEL_DNS_PASSTHRU_APPSERVICES: 'true'
       # Users
@@ -212,9 +216,9 @@ services:
       TUWUNEL_TYPING_CLIENT_TIMEOUT_MIN_S: 5
       TUWUNEL_TYPING_CLIENT_TIMEOUT_MAX_S: 900
       TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_ALLOWLIST: '["*"]'
-      TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: '["localhost"]'
-      TUWUNEL_URL_PREVIEW_CHECK_ROOT_DOMAIN: 'true'
-      TUWUNEL_DELETE_ROOMS_AFTER_LEAVE: 'false'
+      TUWUNEL_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: '["localhost"]' # Localhost ought to be blocked, to prevent people from accidentally leaking their personal projects and stuff. As for the actual security - I'll ask around in the community (once I actually become a part of it, aka get this thing up and running), which addresses are known to be malicious. I'd rather not set up an explicit allow-list (hence the "*" above) and only block known-malicious ones because - as (probably) one of the only few users of this homeserver - I'm willing to take the risk of someone accidentally maybe-hypothetically seeing my ISP's IP somewhere (I'm behind a pretty strong NAT (hence why I said „ISP's IP” not „my IP”), which (as annoying as it is for self hosting) makes IP exposures much less of a problem to me), over the inconvenience of having embeds (which I absolutely LOVE - my Discord past is showing, ig) be broken.
+      TUWUNEL_URL_PREVIEW_CHECK_ROOT_DOMAIN: 'true' # This is set in advance, for the very unlikely event that I switch to an explicit allow-list instead of a deny-list (which - as stated above - I much prefer).
+      TUWUNEL_DELETE_ROOMS_AFTER_LEAVE: 'false' # This technically defaults to false already, but the docs state that this may change in the future.
       TUWUNEL_GRANT_ADMIN_TO_FIRST_USER: 'false'
       # Federation
       TUWUNEL_ALLOW_FEDERATION: 'true'
@@ -245,13 +249,13 @@ services:
   mxturn:
     image: coturn/coturn:alpine
     restart: unless-stopped
-    network_mode: "host"
+    network_mode: "host" # Coturn needs to be able to bind to many ports, so - even if it's security nightmare - it needs host networking to perform well (According to their docs, Docker is bad with large port ranges. Dunno if this also applies to Podman, but I'd rather not risk it. Especially with how I have no real way of debugging TURN performance, so unless it was obscenely bad, I wouldn't've even known if I'm leaving performance on the table.).
     volumes:
       - type: bind
         source: ./secrets/mxturnfull.conf
         target: /etc/coturn/turnserver.conf
         read_only: true
-      - type: tmpfs
+      - type: tmpfs # Provides a speed boost, according to https://github.com/coturn/coturn/blob/master/docker/coturn/README.md?plain=1#L118-L125  Why they don't just do this by default is beyond me. I'm pretty sure TURN servers don't need persistent storage (from my own understanding of WebRTC - and from how they recommend to use tmpfs for a speed bump in their own docs, which they probably wouldn't advise (not without a warning, anyway) if they knew they were risks involved), so it should've been fine for them to do.
         target: /var/lib/coturn
   
   mxbot-meta:
@@ -263,7 +267,7 @@ services:
     expose:
       - 29319
     volumes:
-      - ./db/matrix/_CLANKERS/meta:/data
+    - ./db/matrix/_CLANKERS/meta:/data
   
   mxbot-patchpanel:
     build:
@@ -280,6 +284,7 @@ services:
     volumes:
       - ./db/matrix/_CLANKERS/discord/registration.yaml:/usr/src/app/registration.yaml
       - ./db/matrix/_CLANKERS/discord/patchpanel.db:/usr/src/app/ooye.db
+    #command: sleep 7200 # 2h for setup (podman compose exec mxbot-patchpanel npm run setup) - comment out after completed
   
   ldap:
     image: ghcr.io/lldap/lldap:latest-alpine
@@ -301,6 +306,7 @@ services:
       LLDAP_LDAP_BASE_DN: dc=guziohub,dc=ovh
   
   minecraft:
+    # Docker Config
     image: "itzg/minecraft-server:java25-graalvm"
     tty: true
     stdin_open: true
@@ -312,82 +318,41 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "mc-health"]
-      start_period: 210s
+      start_period: 210s #3,5min
       interval: 3s
-      retries: 40
+      retries: 40 #extra 2min
     secrets:
       - bot_minecraft
       - mc_seed
       - ldap_pass
+    # MC Config
     environment:
+      # Modpack
+      #VERSION: "SNAPSHOT"
       TYPE: "MODRINTH"
       MODRINTH_MODPACK: "/modpacks/surveyor-test.mrpack"
+      # Minecraft stuff
       GUI: "FALSE"
-      EULA: "TRUE"
+      EULA: "TRUE"              #  Why are some bools upper-case...
+      # Java stuff
       MEMORY: "18G"
-      USE_AIKAR_FLAGS: "true"
+      USE_AIKAR_FLAGS: "true"   #  ...and others lower-case? No fucking idea! I'm just following the docs, that's all.
+      # Secrets
       CFG_BOT_TOKEN_FILE: "/run/secrets/bot_minecraft"
       CFG_SEED_FILE: "/run/secrets/mc_seed"
       CFG_LDAP_PASS_FILE: "/run/secrets/ldap_pass"
+      # Desperately trying to get Secrets to work
       REPLACE_ENV_VARIABLES: "TRUE"
       ENV_VARIABLE_PREFIX: "CFG_"
       REPLACE_ENV_IN_PLACE: "true"
       REPLACE_ENV_DURING_SYNC: "true"
+      # Misc
       TZ: "Europe/Warsaw"
       LOG_TIMESTAMP: "true"
       GID: "0"
       UID: "0"
       MODRINTH_FORCE_SYNCHRONIZE: "true"
+      #DATAPACKS: "datapacks/"
+      #DATAPACKS: "/data/datapacks/Dungeons_and_Taverns_v5.2.0.zip,/data/datapacks/Nullscape_26.1_v1.2.18.zip,/data/datapacks/Structory_v1.3.15.zip,/data/datapacks/Terralith_26.1_v2.6.2.zip,/data/datapacks/zRemove_SDL_Intro_v1.2.2.zip"
+      #INITIAL_ENABLED_PACKS: "vanilla,minecart_improvements,trade_rebalance,Dungeons_and_Taverns_v5.2.0.zip,Nullscape_26.1_v1.2.18.zip,Structory_v1.3.15.zip,Terralith_26.1_v2.6.2.zip,zRemove_SDL_Intro_v1.2.2.zip"
       LEVEL: "world"
-
-  # ============================================================================
-  # Kraków bez barier Services (Cloned at /home/guzio/BZM-projekt1)
-  # ============================================================================
-  krakow-frontend:
-    build:
-      context: /home/guzio/BZM-projekt1
-      dockerfile: backend/Dockerfile.frontend
-      network: host
-    container_name: krakow-frontend
-    restart: unless-stopped
-    expose:
-      - "80"
-
-  krakow-api:
-    build:
-      context: /home/guzio/BZM-projekt1
-      dockerfile: backend/Dockerfile.api
-      network: host
-    container_name: krakow-api
-    restart: unless-stopped
-    environment:
-      - PORT=3000
-      - HOST=0.0.0.0
-      - NODE_ENV=production
-      - UPLOADS_DIR=/app/uploads
-      - STORAGE_DIR=/app/data/reports
-    expose:
-      - "3000"
-    volumes:
-      - /home/guzio/BZM-projekt1/backend/data/uploads:/app/uploads
-      - /home/guzio/BZM-projekt1/backend/data/reports:/app/data/reports
-
-  krakow-graphhopper:
-    image: israelhikingmap/graphhopper:latest
-    container_name: krakow-graphhopper
-    restart: unless-stopped
-    expose:
-      - "8989"
-    environment:
-      - JAVA_OPTS=-Xmx2g -Xms1g
-    volumes:
-      - /home/guzio/BZM-projekt1/backend/config.yml:/config.yml:ro
-      - /home/guzio/BZM-projekt1/backend/entrypoint.sh:/entrypoint.sh:ro
-      - /home/guzio/BZM-projekt1/backend/data:/data
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8989/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 15s
