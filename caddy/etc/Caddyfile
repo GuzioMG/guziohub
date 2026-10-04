@@ -1,3 +1,13 @@
+# The Caddyfile is an easy way to configure your Caddy web server.
+#
+# Unless the file starts with a global options block, the first
+# uncommented line is always the address of your site.
+#
+# To use your own domain name (with automatic HTTPS), first make
+# sure your domain's A/AAAA DNS records are properly pointed to
+# this machine's public IP, then add a new handler below with your
+# domain name.
+
 # Refer to the Caddy docs for more information:
 # https://caddyserver.com/docs/caddyfilex
 
@@ -89,6 +99,16 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
     }
 
     header {
+        # Based on following source:
+        # https://raw.githubusercontent.com/nextcloud/docker/refs/heads/master/.examples/docker-compose/insecure/mariadb/fpm/web/nginx.conf
+        # 
+        # HSTS settings
+        # WARNING: Only add the preload option once you read about
+        # the consequences in https://hstspreload.org/. This option
+        # will add the domain to a hardcoded list that is shipped
+        # in all major browsers and getting removed from this list
+        # could take several months.
+        # Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;"
         Strict-Transport-Security: "max-age=31536000; includeSubDomains;"
 
         # HTTP response headers borrowed from Nextcloud `.htaccess`
@@ -159,19 +179,31 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 
         @assets {
             path *.css *.js *.svg *.gif *.png *.jpg *.jpeg *.ico *.wasm *.tflite *.map *.wasm2 *.mjs *.cjs *.woff *.woff2 *.eot *.ttf *.otf
-            file {path}
+            file {path} # Only if requested file exists on disk, otherwise /index.php will take care of it
         }
         route @assets {
-            header /* Cache-Control "max-age=15552000"
-            header /*.woff2 Cache-Control "max-age=604800"
-            log_skip
+            header /* Cache-Control "max-age=15552000" # Cache-Control policy borrowed from `.htaccess`
+            header /*.woff2 Cache-Control "max-age=604800" # Cache-Control policy borrowed from `.htaccess`
+            log_skip # Optional: Don't log access to assets
             file_server {
                 precompressed gzip
             }
         }
 
+        # Rule borrowed from `.htaccess`
         redir /remote/* /remote.php{path} permanent
 
+        # WARNING: The following block is commented out because it breaks 80% of functionality, incl. most basic features, like file uploads. However, as a trade-off, some assets that aren't manually specified above (eg. the welcome video - which (even though I know it's broken) I didn't fix because I have no idea what file is it) will fail to load.
+        # Serve found static files, continuing to the PHP default handler below if not found
+        #   try_files {path} {path}/
+        #@notphpordir not path /*.php /*.php/* / /*/
+        #file_server @notphpordir {
+        #    pass_thru
+        #}
+
+        # Required for legacy support
+        #
+        # Rewrites all other requests to be prepended by “/index.php” unless they match a known-valid PHP file path.
         @notlegacy {
             path *.php *.php/
             not path /index*
@@ -190,8 +222,8 @@ https://drive.guziohub.ovh:443, http://drive.guziohub.ovh:80 {
 
         # Let everything else be handled by the PHP-FPM component
         php_fastcgi nextcloud:9000 {
-            env modHeadersAvailable true
-            env front_controller_active true
+            env modHeadersAvailable true # Avoid sending the security headers twice
+            env front_controller_active true # Enable pretty urls
         }
     }
 }
@@ -229,48 +261,4 @@ https://bots.chat.guziohub.ovh:443, http://bots.chat.guziohub.ovh:80 {
 
 https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
     reverse_proxy ldap:17170
-}
-
-# ==============================================================================
-# Kraków bez barier - Production Ingress Gateway
-# ==============================================================================
-
-# 1. Web Frontend (Expo Production Build)
-https://accessible.krakow.guziohub.ovh:443, http://accessible.krakow.guziohub.ovh:80 {
-    import cors {header.origin}
-
-    handle /api/* {
-        reverse_proxy krakow-api:3000
-    }
-
-    handle /uploads/* {
-        reverse_proxy krakow-api:3000
-    }
-
-    handle {
-        reverse_proxy krakow-frontend:80
-    }
-}
-
-# 2. REST API Backend (Hono / Node.js)
-https://api.accessible.krakow.guziohub.ovh:443, http://api.accessible.krakow.guziohub.ovh:80 {
-    reverse_proxy krakow-api:3000
-}
-
-# 3. GraphHopper Routing Engine (With CORS preflight headers)
-https://hopper.accessible.krakow.guziohub.ovh:443, http://hopper.accessible.krakow.guziohub.ovh:80 {
-    @options method OPTIONS
-    handle @options {
-        header Access-Control-Allow-Origin "*"
-        header Access-Control-Allow-Methods "GET, POST, OPTIONS"
-        header Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
-        header Access-Control-Max-Age "86400"
-        respond "" 204
-    }
-
-    header Access-Control-Allow-Origin "*"
-    header Access-Control-Allow-Methods "GET, POST, OPTIONS"
-    header Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
-
-    reverse_proxy krakow-graphhopper:8989
 }
