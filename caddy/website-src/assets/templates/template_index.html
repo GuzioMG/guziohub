@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{PAGE_LANG}}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="GuzioHub - A personal website project + self-hosting of services by Guzio.">
-        <title>GuzioHub</title>
+        <meta name="description" content="{{PAGE_DESCRIPTION}}">
+        <title>{{PAGE_TITLE}}</title>
         
         <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
         <link rel="icon" type="image/png" href="/assets/logo/favicon-96x96.png" sizes="96x96">
@@ -16,29 +16,29 @@
         
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
         <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
-        <link rel="canonical" href="https://guziohub.ovh/">
+        <link rel="canonical" href="{{CANONICAL_URL}}">
         
         <style> /*Fonts*/
         
-            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search.*/
+            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search. UPDATE: Actually... I removed the local searches (wouldn't want a situation where someone has a different font with the same name).*/
             @font-face {
                 font-family: 'Hack';
-                src: local("Hack-Regular"), local("Hack Regular"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
                 font-weight: 400;
                 font-style: normal;
             } @font-face {
                 font-family: 'Hack';
-                src: local("Hack-Bold"), local("Hack Bold"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
                 font-weight: 700;
                 font-style: normal;
             } @font-face {
                 font-family: 'Hack';
-                src: local("Hack-Italic"), local("Hack Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
                 font-weight: 400;
                 font-style: italic;
             } @font-face {
                 font-family: 'Hack';
-                src: local("Hack-BoldItalic"), local("Hack BoldItalic"), local("Hack Bold Italic"), local("Hack"), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
                 font-weight: 700;
                 font-style: italic;
             }
@@ -115,12 +115,13 @@
         </style>
         
         <style> /*Anything (except color) related to text rendering.*/
+            
             body {
                 /*
                     calc(100vw/calc(var(--content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
-                    Multiplying that^ by 1/0.61  -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (because Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (because it's impossible: it isn't any particular font, but rather an OS-resolved "macro").
-                    min()  -->  Ensures that the text never autoscales beyond 18px (because it just looks silly at sizes higher than this)...
-                    max()  -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
+                    ^*calc(1/0.61)                               -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (because Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (because it's impossible: it isn't any particular font, but rather an OS-resolved "macro").
+                    min(^, 18p)                                  -->  Ensures that the text never autoscales beyond 18px (because it just looks silly at sizes higher than this)...
+                    max(1em, 18p) [instead of just 18p in^]      -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
                 */
                 --unholy-formula: min( calc(calc(100vw/calc(var(--content-length) + 2))*calc(1/0.61)),  max(1em, 18px) );
             }
@@ -144,7 +145,7 @@
                 padding: 0;
             }
             
-            .typing-animator {
+            .typing-animator-main {
                 width: 0;
                 white-space: nowrap;
             }
@@ -162,7 +163,7 @@
                 margin: 0;
                 padding: 0;
                 
-                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
+                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator-main because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
                 display: inline-block;
                 overflow-x: hidden;
             }
@@ -330,11 +331,11 @@
         <img src="assets/the_negotiator.jpg" id="kenobi_display" alt="General Kenobi „Hello, there!” meme.">
         <aside class="viewport-marker">100%</aside>
         <header>
-            <h1 class="termtxt-default" id="kenobi_trigger">👋 Hello, there!</h1>
-            <p class="termtxt-warnings support-warning-size-interpolation skipper_hider">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
-            <p class="termtxt-links skipper_hider custom-link-underlining" id="skipper_trigger">[SKIP ANIMATION<noscript> (JS needed!)</noscript>]</p>
+            <h1 class="termtxt-default" id="kenobi_trigger">{{PAGE_HEADER}}</h1>
+            <p class="termtxt-warnings support-warning-size-interpolation skipping-hides">[ *WARNING!* You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over a year since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox user, btw), updating Chrome (if you're using it already), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). ]</p>
+            <p class="termtxt-links skipping-hides custom-link-underlining" id="skipper_trigger">[SKIP ANIMATION<noscript> (JS needed!)</noscript>]</p>
         </header>
-        <main><p class="termtxt-warnings">If you're reading this - something went very wrong. The page content is SUPPOSED to be here, but - clearly - it is not. Please file an issue at <a href="https://github.com/GuzioMG/guziohub" class="termtxt-links custom-link-underlining">https://github.com/GuzioMG/guziohub</a>.</p>
+        <main>{{PAGE_CONTENT}}
         </main>
         
         <script>
@@ -345,7 +346,7 @@
             });
 
             document.getElementById("skipper_trigger").addEventListener("click", () => {
-                document.getElementById("skipper_display").innerHTML = " /*Autogenerated typing animation - SKIPPED BY USER*/\n            .typing-animator {\n                width: fit-content;\n            }\n            .skipper_hider {\n                display: none;\n            }\n            body {\n                --content-length: "+window.getComputedStyle(document.body).getPropertyValue('--content-length')+";\n            }\n        ";
+                document.getElementById("skipper_display").innerHTML = " /*Autogenerated typing animation - SKIPPED BY USER*/\n            .typing-animator-main {\n                width: fit-content;\n            }\n            .skipping-hides {\n                display: none;\n            }\n            .typing-animator-cursor {\n                display: none;\n            }\n            body {\n                --content-length: "+window.getComputedStyle(document.body).getPropertyValue('--content-length')+";\n            }\n        ";
             });
 
             let gaydar_tripped = false;
