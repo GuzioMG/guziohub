@@ -335,7 +335,7 @@ services:
       GUI: "FALSE"
       EULA: "TRUE"              #  Why are some bools upper-case...
       # Java stuff
-      MEMORY: "18G"
+      MEMORY: "12G"
       USE_AIKAR_FLAGS: "true"   #  ...and others lower-case? No fucking idea! I'm just following the docs, that's all.
       # Secrets
       CFG_BOT_TOKEN_FILE: "/run/secrets/bot_minecraft"
