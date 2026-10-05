@@ -234,7 +234,7 @@ https://matrix.guziohub.ovh:443, matrix.guziohub.ovh:8448, https://api.chat.guzi
 
 https://chat.guziohub.ovh:443, http://chat.guziohub.ovh:80 {
     import cors {header.origin}
-    root * /srv-mx
+    root * /srv/assets/externally-deployed-apps/guziohub-chat
     encode
     header /manifest.json Content-Type "application/manifest+json"
     header /config.json Content-Type "application/json"
@@ -244,7 +244,7 @@ https://chat.guziohub.ovh:443, http://chat.guziohub.ovh:80 {
 
 https://boykiss.chat.guziohub.ovh:443, http://boykiss.chat.guziohub.ovh:80 {
     import cors {header.origin}
-    root * /srv-bk
+    root * /srv/assets/externally-deployed-apps/boykiss-chat
     encode
     header /manifest.json Content-Type "application/manifest+json"
     header /config.json Content-Type "application/json"
