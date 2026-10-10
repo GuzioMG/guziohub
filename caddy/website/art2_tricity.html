@@ -1,0 +1,2317 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="On how and why the Pomerania Region / Tricity Metropolis used to be an absolute joke, and why it has finally gotten better.">
+        <title>Dear Pomerania Region... - GuzioHub</title>
+        
+        <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
+        <link rel="icon" type="image/png" href="/assets/logo/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="/assets/logo/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-192x192.png" sizes="192x192">
+        <link rel="shortcut icon" href="/assets/logo/favicon.ico" sizes="48x48">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-512x512.png" sizes="512x512">
+        <link rel="icon" type="image/png" href="/assets/logo.png" sizes="2880x2880">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
+        <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
+        <link rel="canonical" href="https://guziohub.ovh/art2_tricity.html">
+        
+        <style> /*Fonts*/
+        
+            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search. UPDATE: Actually... I removed the local searches (wouldn't want a situation where someone has a different font with the same name).*/
+            @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: italic;
+            } @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: italic;
+            }
+            
+            body {
+                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier (and the last one isn't even a real font - just an OS-resolved „macro” - so it doesn't look like anything in particular, an certainly not like Courier), but nevertheless - this (or - more specifically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nah! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a convenient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+        </style>
+        
+        <style> /*CRT effects*/
+        
+            /*Changes to <body>*/
+            body::before {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+              z-index: 2;
+              background-size: 100% 2px, 3px 100%;
+              pointer-events: none;
+            }
+            
+            body {
+                background-color: #333;
+            }
+            
+            body::after {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: #444;
+              opacity: 0;
+              z-index: 2;
+              pointer-events: none;
+              animation: flicker 5ms ease-out 0s infinite alternate none; /*Simulates the flicker from a 50Hz (EU) power grid. First 5ms: voltage rises from 0V (represented as 0% opacity) to 325V (1% opacity) - sharply at first, then calms down (ease-out) near the end because of how Sine waves work. This is when the wave hits its peak, and this is also where the animation ends and starts going in reverse because of how „alternate” works. In the next 5ms it falls from 325V to 0V - softly at first, then accelerates and finally crosses 0V at high-speed (ease-in - but because the animation is reversed, that's what ease-out does here) and goes into the negatives. But we don't care about the negatives, so this is where our animation completes a single phase (it will now reverse again, into its normal direction). And we don't care about them because - even though the voltage would now go to -325V and then back to 0V (completing a whole phase of AC) to later rise to 325V, and keep cycling like that over and over again - from a CRT brightness perspective, 325V and -325V does the same thing, so our animation's complete phase can be half of what AC does.*/
+            }
+            
+            
+            /*Colors with chromatic aberration (like on a CRT). Apply them directly to div/p-like tags, or to span/a-like tags (the latter is especially meaningful for .termtxt-links), if within a p-tag already.*/
+            .termtxt-default {
+                color: #BFB;
+                text-shadow: -1px 0px 1px rgba(255,0,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-warnings {
+                color: #F44;
+                text-shadow: -1px 0px 1px rgba(0,255,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-links {
+                color: #2CF;
+                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
+                              1px 0px 1px rgba(0, 0, 255, 2);
+            }
+            
+            .termtxt-guzio-signature-yellow {
+                color: #FDFF00;
+                text-shadow: -1px 0px 1px rgba(255, 255, 255, 2),
+                              1px 0px 1px rgba(0, 0, 0, 2);
+            }
+            
+        </style>
+        
+        <style> /*Anything (except color) related to text rendering.*/
+            
+            body {
+                /*
+                    calc(100vw/calc(var(--max-content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
+                    calc(^*calc(1/0.61))                         -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (because Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (because it's impossible: it isn't any particular font, but rather an OS-resolved "macro").
+                    min(^, 18p)                                  -->  Ensures that the text never autoscales beyond 18px (because it just looks silly at sizes higher than this)...
+                    max(1em, 18p) [instead of just 18p in^]      -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
+                */
+                --unholy-formula: min( calc(calc(100vw/calc(var(--max-content-length) + 2))*calc(1/0.61)),  max(1em, 18px) );
+            }
+            
+            header {
+                display: flex;
+                flex-direction: column;
+                margin: 1ch;
+                
+                /*Needs to be set here to make ch units work correctly (at least the size - I might be going overkill with family (considering how it's set for the body, anyway), I dunno). Doesn't actually get used for any text rendering - that's done either by <p> tags and <h> tags (that font sizes) or by body{} that set family to --we-have-courier-at-home already.*/
+                font-size: var(--unholy-formula);
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+            header>h1 {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0.5em;
+                margin-top: 0;
+                font-size: 3em;
+                padding: 0;
+            }
+            
+            .typing-animator-main {
+                width: 0;
+                white-space: nowrap;
+            }
+            
+            .custom-link-underlining {
+                text-decoration: none;
+            }
+            
+            .custom-link-underlining:hover {
+                text-decoration: underline;
+            }
+            
+            p {
+                font-size: var(--unholy-formula);
+                margin: 0;
+                padding: 0;
+                
+                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator-main because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
+                display: inline-block;
+                overflow-x: hidden;
+            }
+            
+        </style>
+        
+        <style> /*Keyframe data*/
+            
+            /*Typing animation*/
+            @keyframes type {
+                to {
+                    width: max-content;
+                }
+            }
+            
+            @keyframes blinker {
+                from {
+                    width: max-content;
+                }
+                
+                50%, to {
+                    width: max-content;
+                    display: none;
+                }
+            }
+            
+            /* Animation data for the 50Hz Flicker Effect. Very subtle (at just 1%) because even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunately, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refresh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying because they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
+            @media (prefers-reduced-motion), (prefers-reduced-transparency) {
+                body::after {
+                    animation: none !important; /*I don't think !important is actually needed here (@media has a higher specificity), but better safe than sorry (sorry in a literal sense - I don't wanna be the one apologizing to a family, in case someone were to get epilepsied to death because of this).*/
+                }
+            }
+            @keyframes flicker {
+                from {
+                    opacity: 0%;
+                }
+                to {
+                    opacity: 1%;
+                }
+            }
+            
+        </style>
+        
+        <style> /*CSS feature gates*/
+            
+            @supports (interpolate-size: allow-keywords){
+                .support-warning-size-interpolation {
+                    display: none;
+                }
+            }
+            
+        </style>
+        
+        <style> /*Assorted bits of custom CSS*/
+            
+            * {
+                interpolate-size: allow-keywords;
+            }
+        
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+        </style>
+        
+        <style id="skipper_display"> /*Autogenerated typing animation - see: github.com/GuzioMG/guziohub-generator for details*/
+            
+            body {
+                --max-content-length: 54;
+            }
+            
+            
+            .typing-animator-main:nth-child(2) {
+                animation: type 3s steps(29) 1s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(3) {
+                animation: blinker 0.5s steps(1) 0s 10 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(6) {
+                animation: type 1s steps(0) 6s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(7) {
+                animation: blinker 0.5s steps(1) 5s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(10) {
+                animation: type 1s steps(13) 7s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(11) {
+                animation: blinker 0.5s steps(1) 7s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(14) {
+                animation: type 1s steps(0) 8s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(15) {
+                animation: blinker 0.5s steps(1) 8s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(18) {
+                animation: type 1s steps(28) 9s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(19) {
+                animation: blinker 0.5s steps(1) 9s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(22) {
+                animation: type 1s steps(15) 10s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(23) {
+                animation: blinker 0.5s steps(1) 10s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(26) {
+                animation: type 1s steps(19) 11s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(27) {
+                animation: blinker 0.5s steps(1) 11s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(30) {
+                animation: type 1s steps(36) 12s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(31) {
+                animation: blinker 0.5s steps(1) 12s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(34) {
+                animation: type 2s steps(54) 13s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(35) {
+                animation: blinker 0.5s steps(1) 13s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(38) {
+                animation: type 1s steps(12) 15s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(39) {
+                animation: blinker 0.5s steps(1) 15s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(42) {
+                animation: type 1s steps(0) 16s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(43) {
+                animation: blinker 0.5s steps(1) 16s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(46) {
+                animation: type 1s steps(34) 17s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(47) {
+                animation: blinker 0.5s steps(1) 17s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(50) {
+                animation: type 2s steps(52) 18s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(51) {
+                animation: blinker 0.5s steps(1) 18s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(54) {
+                animation: type 2s steps(54) 20s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(55) {
+                animation: blinker 0.5s steps(1) 20s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(58) {
+                animation: type 2s steps(50) 22s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(59) {
+                animation: blinker 0.5s steps(1) 22s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(62) {
+                animation: type 1s steps(36) 24s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(63) {
+                animation: blinker 0.5s steps(1) 24s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(66) {
+                animation: type 2s steps(51) 25s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(67) {
+                animation: blinker 0.5s steps(1) 25s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(70) {
+                animation: type 2s steps(54) 27s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(71) {
+                animation: blinker 0.5s steps(1) 27s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(74) {
+                animation: type 2s steps(54) 29s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(75) {
+                animation: blinker 0.5s steps(1) 29s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(78) {
+                animation: type 2s steps(50) 31s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(79) {
+                animation: blinker 0.5s steps(1) 31s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(82) {
+                animation: type 2s steps(50) 33s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(83) {
+                animation: blinker 0.5s steps(1) 33s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(86) {
+                animation: type 2s steps(50) 35s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(87) {
+                animation: blinker 0.5s steps(1) 35s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(90) {
+                animation: type 2s steps(53) 37s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(91) {
+                animation: blinker 0.5s steps(1) 37s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(94) {
+                animation: type 2s steps(54) 39s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(95) {
+                animation: blinker 0.5s steps(1) 39s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(98) {
+                animation: type 2s steps(53) 41s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(99) {
+                animation: blinker 0.5s steps(1) 41s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(102) {
+                animation: type 2s steps(50) 43s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(103) {
+                animation: blinker 0.5s steps(1) 43s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(106) {
+                animation: type 2s steps(53) 45s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(107) {
+                animation: blinker 0.5s steps(1) 45s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(110) {
+                animation: type 2s steps(54) 47s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(111) {
+                animation: blinker 0.5s steps(1) 47s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(114) {
+                animation: type 1s steps(45) 49s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(115) {
+                animation: blinker 0.5s steps(1) 49s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(118) {
+                animation: type 2s steps(51) 50s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(119) {
+                animation: blinker 0.5s steps(1) 50s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(122) {
+                animation: type 2s steps(53) 52s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(123) {
+                animation: blinker 0.5s steps(1) 52s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(126) {
+                animation: type 1s steps(47) 54s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(127) {
+                animation: blinker 0.5s steps(1) 54s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(130) {
+                animation: type 1s steps(46) 55s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(131) {
+                animation: blinker 0.5s steps(1) 55s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(134) {
+                animation: type 1s steps(43) 56s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(135) {
+                animation: blinker 0.5s steps(1) 56s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(138) {
+                animation: type 2s steps(53) 57s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(139) {
+                animation: blinker 0.5s steps(1) 57s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(142) {
+                animation: type 2s steps(51) 59s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(143) {
+                animation: blinker 0.5s steps(1) 59s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(146) {
+                animation: type 2s steps(52) 61s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(147) {
+                animation: blinker 0.5s steps(1) 61s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(150) {
+                animation: type 1s steps(46) 63s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(151) {
+                animation: blinker 0.5s steps(1) 63s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(154) {
+                animation: type 2s steps(51) 64s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(155) {
+                animation: blinker 0.5s steps(1) 64s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(158) {
+                animation: type 2s steps(54) 66s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(159) {
+                animation: blinker 0.5s steps(1) 66s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(162) {
+                animation: type 1s steps(49) 68s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(163) {
+                animation: blinker 0.5s steps(1) 68s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(166) {
+                animation: type 2s steps(52) 69s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(167) {
+                animation: blinker 0.5s steps(1) 69s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(170) {
+                animation: type 2s steps(51) 71s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(171) {
+                animation: blinker 0.5s steps(1) 71s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(174) {
+                animation: type 2s steps(51) 73s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(175) {
+                animation: blinker 0.5s steps(1) 73s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(178) {
+                animation: type 1s steps(46) 75s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(179) {
+                animation: blinker 0.5s steps(1) 75s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(182) {
+                animation: type 2s steps(54) 76s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(183) {
+                animation: blinker 0.5s steps(1) 76s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(186) {
+                animation: type 2s steps(53) 78s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(187) {
+                animation: blinker 0.5s steps(1) 78s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(190) {
+                animation: type 2s steps(50) 80s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(191) {
+                animation: blinker 0.5s steps(1) 80s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(194) {
+                animation: type 2s steps(50) 82s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(195) {
+                animation: blinker 0.5s steps(1) 82s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(198) {
+                animation: type 2s steps(53) 84s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(199) {
+                animation: blinker 0.5s steps(1) 84s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(202) {
+                animation: type 2s steps(52) 86s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(203) {
+                animation: blinker 0.5s steps(1) 86s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(206) {
+                animation: type 2s steps(53) 88s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(207) {
+                animation: blinker 0.5s steps(1) 88s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(210) {
+                animation: type 1s steps(48) 90s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(211) {
+                animation: blinker 0.5s steps(1) 90s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(214) {
+                animation: type 2s steps(51) 91s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(215) {
+                animation: blinker 0.5s steps(1) 91s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(218) {
+                animation: type 1s steps(47) 93s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(219) {
+                animation: blinker 0.5s steps(1) 93s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(222) {
+                animation: type 2s steps(51) 94s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(223) {
+                animation: blinker 0.5s steps(1) 94s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(226) {
+                animation: type 2s steps(52) 96s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(227) {
+                animation: blinker 0.5s steps(1) 96s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(230) {
+                animation: type 1s steps(39) 98s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(231) {
+                animation: blinker 0.5s steps(1) 98s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(234) {
+                animation: type 1s steps(0) 99s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(235) {
+                animation: blinker 0.5s steps(1) 99s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(238) {
+                animation: type 1s steps(43) 100s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(239) {
+                animation: blinker 0.5s steps(1) 100s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(242) {
+                animation: type 1s steps(44) 101s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(243) {
+                animation: blinker 0.5s steps(1) 101s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(246) {
+                animation: type 1s steps(38) 102s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(247) {
+                animation: blinker 0.5s steps(1) 102s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(250) {
+                animation: type 2s steps(54) 103s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(251) {
+                animation: blinker 0.5s steps(1) 103s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(254) {
+                animation: type 1s steps(49) 105s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(255) {
+                animation: blinker 0.5s steps(1) 105s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(258) {
+                animation: type 2s steps(50) 106s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(259) {
+                animation: blinker 0.5s steps(1) 106s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(262) {
+                animation: type 1s steps(49) 108s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(263) {
+                animation: blinker 0.5s steps(1) 108s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(266) {
+                animation: type 2s steps(52) 109s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(267) {
+                animation: blinker 0.5s steps(1) 109s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(270) {
+                animation: type 2s steps(51) 111s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(271) {
+                animation: blinker 0.5s steps(1) 111s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(274) {
+                animation: type 2s steps(52) 113s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(275) {
+                animation: blinker 0.5s steps(1) 113s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(278) {
+                animation: type 2s steps(52) 115s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(279) {
+                animation: blinker 0.5s steps(1) 115s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(282) {
+                animation: type 1s steps(48) 117s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(283) {
+                animation: blinker 0.5s steps(1) 117s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(286) {
+                animation: type 2s steps(54) 118s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(287) {
+                animation: blinker 0.5s steps(1) 118s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(290) {
+                animation: type 2s steps(53) 120s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(291) {
+                animation: blinker 0.5s steps(1) 120s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(294) {
+                animation: type 1s steps(47) 122s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(295) {
+                animation: blinker 0.5s steps(1) 122s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(298) {
+                animation: type 2s steps(54) 123s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(299) {
+                animation: blinker 0.5s steps(1) 123s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(302) {
+                animation: type 2s steps(51) 125s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(303) {
+                animation: blinker 0.5s steps(1) 125s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(306) {
+                animation: type 1s steps(48) 127s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(307) {
+                animation: blinker 0.5s steps(1) 127s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(310) {
+                animation: type 2s steps(54) 128s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(311) {
+                animation: blinker 0.5s steps(1) 128s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(314) {
+                animation: type 2s steps(54) 130s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(315) {
+                animation: blinker 0.5s steps(1) 130s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(318) {
+                animation: type 2s steps(54) 132s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(319) {
+                animation: blinker 0.5s steps(1) 132s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(322) {
+                animation: type 2s steps(53) 134s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(323) {
+                animation: blinker 0.5s steps(1) 134s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(326) {
+                animation: type 2s steps(51) 136s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(327) {
+                animation: blinker 0.5s steps(1) 136s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(330) {
+                animation: type 2s steps(50) 138s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(331) {
+                animation: blinker 0.5s steps(1) 138s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(334) {
+                animation: type 2s steps(52) 140s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(335) {
+                animation: blinker 0.5s steps(1) 140s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(338) {
+                animation: type 1s steps(45) 142s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(339) {
+                animation: blinker 0.5s steps(1) 142s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(342) {
+                animation: type 2s steps(54) 143s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(343) {
+                animation: blinker 0.5s steps(1) 143s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(346) {
+                animation: type 2s steps(52) 145s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(347) {
+                animation: blinker 0.5s steps(1) 145s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(350) {
+                animation: type 1s steps(45) 147s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(351) {
+                animation: blinker 0.5s steps(1) 147s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(354) {
+                animation: type 2s steps(54) 148s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(355) {
+                animation: blinker 0.5s steps(1) 148s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(358) {
+                animation: type 2s steps(54) 150s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(359) {
+                animation: blinker 0.5s steps(1) 150s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(362) {
+                animation: type 2s steps(54) 152s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(363) {
+                animation: blinker 0.5s steps(1) 152s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(366) {
+                animation: type 2s steps(54) 154s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(367) {
+                animation: blinker 0.5s steps(1) 154s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(370) {
+                animation: type 2s steps(51) 156s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(371) {
+                animation: blinker 0.5s steps(1) 156s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(374) {
+                animation: type 1s steps(49) 158s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(375) {
+                animation: blinker 0.5s steps(1) 158s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(378) {
+                animation: type 2s steps(52) 159s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(379) {
+                animation: blinker 0.5s steps(1) 159s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(382) {
+                animation: type 2s steps(52) 161s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(383) {
+                animation: blinker 0.5s steps(1) 161s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(386) {
+                animation: type 2s steps(54) 163s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(387) {
+                animation: blinker 0.5s steps(1) 163s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(390) {
+                animation: type 2s steps(51) 165s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(391) {
+                animation: blinker 0.5s steps(1) 165s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(394) {
+                animation: type 2s steps(53) 167s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(395) {
+                animation: blinker 0.5s steps(1) 167s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(398) {
+                animation: type 2s steps(53) 169s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(399) {
+                animation: blinker 0.5s steps(1) 169s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(402) {
+                animation: type 1s steps(43) 171s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(403) {
+                animation: blinker 0.5s steps(1) 171s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(406) {
+                animation: type 1s steps(44) 172s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(407) {
+                animation: blinker 0.5s steps(1) 172s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(410) {
+                animation: type 1s steps(47) 173s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(411) {
+                animation: blinker 0.5s steps(1) 173s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(414) {
+                animation: type 1s steps(49) 174s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(415) {
+                animation: blinker 0.5s steps(1) 174s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(418) {
+                animation: type 2s steps(53) 175s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(419) {
+                animation: blinker 0.5s steps(1) 175s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(422) {
+                animation: type 2s steps(54) 177s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(423) {
+                animation: blinker 0.5s steps(1) 177s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(426) {
+                animation: type 1s steps(47) 179s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(427) {
+                animation: blinker 0.5s steps(1) 179s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(430) {
+                animation: type 2s steps(53) 180s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(431) {
+                animation: blinker 0.5s steps(1) 180s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(434) {
+                animation: type 1s steps(45) 182s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(435) {
+                animation: blinker 0.5s steps(1) 182s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(438) {
+                animation: type 2s steps(52) 183s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(439) {
+                animation: blinker 0.5s steps(1) 183s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(442) {
+                animation: type 2s steps(54) 185s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(443) {
+                animation: blinker 0.5s steps(1) 185s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(446) {
+                animation: type 2s steps(53) 187s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(447) {
+                animation: blinker 0.5s steps(1) 187s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(450) {
+                animation: type 2s steps(53) 189s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(451) {
+                animation: blinker 0.5s steps(1) 189s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(454) {
+                animation: type 2s steps(51) 191s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(455) {
+                animation: blinker 0.5s steps(1) 191s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(458) {
+                animation: type 2s steps(52) 193s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(459) {
+                animation: blinker 0.5s steps(1) 193s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(462) {
+                animation: type 2s steps(54) 195s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(463) {
+                animation: blinker 0.5s steps(1) 195s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(466) {
+                animation: type 2s steps(51) 197s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(467) {
+                animation: blinker 0.5s steps(1) 197s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(470) {
+                animation: type 2s steps(53) 199s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(471) {
+                animation: blinker 0.5s steps(1) 199s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(474) {
+                animation: type 2s steps(51) 201s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(475) {
+                animation: blinker 0.5s steps(1) 201s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(478) {
+                animation: type 1s steps(49) 203s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(479) {
+                animation: blinker 0.5s steps(1) 203s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(482) {
+                animation: type 2s steps(50) 204s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(483) {
+                animation: blinker 0.5s steps(1) 204s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(486) {
+                animation: type 2s steps(50) 206s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(487) {
+                animation: blinker 0.5s steps(1) 206s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(490) {
+                animation: type 2s steps(50) 208s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(491) {
+                animation: blinker 0.5s steps(1) 208s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(494) {
+                animation: type 2s steps(50) 210s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(495) {
+                animation: blinker 0.5s steps(1) 210s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(498) {
+                animation: type 2s steps(52) 212s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(499) {
+                animation: blinker 0.5s steps(1) 212s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(502) {
+                animation: type 2s steps(54) 214s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(503) {
+                animation: blinker 0.5s steps(1) 214s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(506) {
+                animation: type 2s steps(54) 216s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(507) {
+                animation: blinker 0.5s steps(1) 216s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(510) {
+                animation: type 2s steps(50) 218s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(511) {
+                animation: blinker 0.5s steps(1) 218s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(514) {
+                animation: type 2s steps(53) 220s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(515) {
+                animation: blinker 0.5s steps(1) 220s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(518) {
+                animation: type 2s steps(51) 222s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(519) {
+                animation: blinker 0.5s steps(1) 222s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(522) {
+                animation: type 2s steps(53) 224s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(523) {
+                animation: blinker 0.5s steps(1) 224s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(526) {
+                animation: type 1s steps(49) 226s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(527) {
+                animation: blinker 0.5s steps(1) 226s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(530) {
+                animation: type 1s steps(49) 227s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(531) {
+                animation: blinker 0.5s steps(1) 227s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(534) {
+                animation: type 2s steps(52) 228s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(535) {
+                animation: blinker 0.5s steps(1) 228s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(538) {
+                animation: type 2s steps(50) 230s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(539) {
+                animation: blinker 0.5s steps(1) 230s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(542) {
+                animation: type 2s steps(52) 232s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(543) {
+                animation: blinker 0.5s steps(1) 232s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(546) {
+                animation: type 2s steps(52) 234s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(547) {
+                animation: blinker 0.5s steps(1) 234s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(550) {
+                animation: type 2s steps(53) 236s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(551) {
+                animation: blinker 0.5s steps(1) 236s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(554) {
+                animation: type 2s steps(51) 238s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(555) {
+                animation: blinker 0.5s steps(1) 238s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(558) {
+                animation: type 2s steps(54) 240s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(559) {
+                animation: blinker 0.5s steps(1) 240s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(562) {
+                animation: type 2s steps(51) 242s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(563) {
+                animation: blinker 0.5s steps(1) 242s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(566) {
+                animation: type 2s steps(52) 244s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(567) {
+                animation: blinker 0.5s steps(1) 244s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(570) {
+                animation: type 1s steps(48) 246s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(571) {
+                animation: blinker 0.5s steps(1) 246s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(574) {
+                animation: type 2s steps(54) 247s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(575) {
+                animation: blinker 0.5s steps(1) 247s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(578) {
+                animation: type 2s steps(52) 249s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(579) {
+                animation: blinker 0.5s steps(1) 249s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(582) {
+                animation: type 2s steps(53) 251s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(583) {
+                animation: blinker 0.5s steps(1) 251s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(586) {
+                animation: type 2s steps(52) 253s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(587) {
+                animation: blinker 0.5s steps(1) 253s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(590) {
+                animation: type 2s steps(51) 255s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(591) {
+                animation: blinker 0.5s steps(1) 255s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(594) {
+                animation: type 2s steps(54) 257s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(595) {
+                animation: blinker 0.5s steps(1) 257s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(598) {
+                animation: type 2s steps(53) 259s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(599) {
+                animation: blinker 0.5s steps(1) 259s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(602) {
+                animation: type 1s steps(7) 261s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(603) {
+                animation: blinker 0.5s steps(1) 261s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(606) {
+                animation: type 1s steps(0) 262s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(607) {
+                animation: blinker 0.5s steps(1) 262s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(610) {
+                animation: type 2s steps(51) 263s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(611) {
+                animation: blinker 0.5s steps(1) 263s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(614) {
+                animation: type 2s steps(51) 265s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(615) {
+                animation: blinker 0.5s steps(1) 265s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(618) {
+                animation: type 2s steps(52) 267s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(619) {
+                animation: blinker 0.5s steps(1) 267s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(622) {
+                animation: type 2s steps(54) 269s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(623) {
+                animation: blinker 0.5s steps(1) 269s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(626) {
+                animation: type 2s steps(53) 271s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(627) {
+                animation: blinker 0.5s steps(1) 271s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(630) {
+                animation: type 2s steps(52) 273s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(631) {
+                animation: blinker 0.5s steps(1) 273s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(634) {
+                animation: type 2s steps(50) 275s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(635) {
+                animation: blinker 0.5s steps(1) 275s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(638) {
+                animation: type 2s steps(52) 277s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(639) {
+                animation: blinker 0.5s steps(1) 277s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(642) {
+                animation: type 2s steps(50) 279s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(643) {
+                animation: blinker 0.5s steps(1) 279s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(646) {
+                animation: type 1s steps(48) 281s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(647) {
+                animation: blinker 0.5s steps(1) 281s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(650) {
+                animation: type 2s steps(52) 282s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(651) {
+                animation: blinker 0.5s steps(1) 282s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(654) {
+                animation: type 2s steps(53) 284s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(655) {
+                animation: blinker 0.5s steps(1) 284s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(658) {
+                animation: type 1s steps(49) 286s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(659) {
+                animation: blinker 0.5s steps(1) 286s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(662) {
+                animation: type 2s steps(54) 287s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(663) {
+                animation: blinker 0.5s steps(1) 287s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(666) {
+                animation: type 2s steps(53) 289s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(667) {
+                animation: blinker 0.5s steps(1) 289s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(670) {
+                animation: type 2s steps(52) 291s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(671) {
+                animation: blinker 0.5s steps(1) 291s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(674) {
+                animation: type 1s steps(44) 293s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(675) {
+                animation: blinker 0.5s steps(1) 293s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(678) {
+                animation: type 1s steps(49) 294s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(679) {
+                animation: blinker 0.5s steps(1) 294s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(682) {
+                animation: type 2s steps(51) 295s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(683) {
+                animation: blinker 0.5s steps(1) 295s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(686) {
+                animation: type 2s steps(53) 297s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(687) {
+                animation: blinker 0.5s steps(1) 297s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(690) {
+                animation: type 2s steps(50) 299s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(691) {
+                animation: blinker 0.5s steps(1) 299s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(694) {
+                animation: type 2s steps(53) 301s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(695) {
+                animation: blinker 0.5s steps(1) 301s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(698) {
+                animation: type 2s steps(50) 303s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(699) {
+                animation: blinker 0.5s steps(1) 303s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(702) {
+                animation: type 1s steps(44) 305s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(703) {
+                animation: blinker 0.5s steps(1) 305s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(706) {
+                animation: type 2s steps(51) 306s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(707) {
+                animation: blinker 0.5s steps(1) 306s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(710) {
+                animation: type 2s steps(53) 308s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(711) {
+                animation: blinker 0.5s steps(1) 308s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(714) {
+                animation: type 1s steps(48) 310s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(715) {
+                animation: blinker 0.5s steps(1) 310s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(718) {
+                animation: type 2s steps(52) 311s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(719) {
+                animation: blinker 0.5s steps(1) 311s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(722) {
+                animation: type 1s steps(49) 313s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(723) {
+                animation: blinker 0.5s steps(1) 313s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(726) {
+                animation: type 2s steps(54) 314s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(727) {
+                animation: blinker 0.5s steps(1) 314s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(730) {
+                animation: type 1s steps(22) 316s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(731) {
+                animation: blinker 0.5s steps(1) 316s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(734) {
+                animation: type 1s steps(0) 317s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(735) {
+                animation: blinker 0.5s steps(1) 317s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(738) {
+                animation: type 1s steps(13) 318s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(739) {
+                animation: blinker 0.5s steps(1) 318s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(742) {
+                animation: type 2s steps(50) 319s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(743) {
+                animation: blinker 0.5s steps(1) 319s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(746) {
+                animation: type 2s steps(52) 321s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(747) {
+                animation: blinker 0.5s steps(1) 321s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(750) {
+                animation: type 1s steps(42) 323s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(751) {
+                animation: blinker 0.5s steps(1) 323s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(754) {
+                animation: type 1s steps(45) 324s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(755) {
+                animation: blinker 0.5s steps(1) 324s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(758) {
+                animation: type 1s steps(47) 325s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(759) {
+                animation: blinker 0.5s steps(1) 325s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(762) {
+                animation: type 1s steps(43) 326s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(763) {
+                animation: blinker 0.5s steps(1) 326s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(766) {
+                animation: type 1s steps(46) 327s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(767) {
+                animation: blinker 0.5s steps(1) 327s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(770) {
+                animation: type 2s steps(52) 328s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(771) {
+                animation: blinker 0.5s steps(1) 328s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(774) {
+                animation: type 2s steps(54) 330s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(775) {
+                animation: blinker 0.5s steps(1) 330s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(778) {
+                animation: type 2s steps(52) 332s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(779) {
+                animation: blinker 0.5s steps(1) 332s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(782) {
+                animation: type 1s steps(48) 334s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(783) {
+                animation: blinker 0.5s steps(1) 334s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(786) {
+                animation: type 1s steps(47) 335s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(787) {
+                animation: blinker 0.5s steps(1) 335s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(790) {
+                animation: type 2s steps(50) 336s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(791) {
+                animation: blinker 0.5s steps(1) 336s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(794) {
+                animation: type 2s steps(54) 338s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(795) {
+                animation: blinker 0.5s steps(1) 338s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(798) {
+                animation: type 2s steps(53) 340s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(799) {
+                animation: blinker 0.5s steps(1) 340s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(802) {
+                animation: type 2s steps(53) 342s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(803) {
+                animation: blinker 0.5s steps(1) 342s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(806) {
+                animation: type 2s steps(54) 344s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(807) {
+                animation: blinker 0.5s steps(1) 344s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(810) {
+                animation: type 1s steps(47) 346s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(811) {
+                animation: blinker 0.5s steps(1) 346s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(814) {
+                animation: type 1s steps(49) 347s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(815) {
+                animation: blinker 0.5s steps(1) 347s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(818) {
+                animation: type 1s steps(49) 348s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(819) {
+                animation: blinker 0.5s steps(1) 348s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(822) {
+                animation: type 1s steps(20) 349s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(823) {
+                animation: blinker 0.5s steps(1) 349s 8 normal forwards ;
+            }
+            
+        </style>
+    </head>
+    
+    <body>
+        <header>
+            <h1 class="termtxt-default">Nothing ever happens... [*gasp*] CHUDDA, SOMETHING HAPPENED!</h1>
+            <p class="termtxt-warnings support-warning-size-interpolation skipping-hides">[ <strong>*WARNING!*</strong> You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over two years since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox fork (Zen browser) user, btw; I suffer here as much as you), updating Chrome or your Chromium-based-thing of choice (if you're using it already), not having the severe skill-issue called „being an Apple user” (on iPhones, this site WILL be broken because App Store Chrome is just Safari with a Google skin, because big daddy Tim Uncooked has insecurities about his shitty engine, and compensates by forcing all apps on the App Store to use it), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). Also, you have the Skip button below, if the broken animation is annoying to you. ]</p>
+            <p class="termtxt-links skipping-hides custom-link-underlining" id="skipper_trigger">[SKIP ANIMATION<noscript> (JS needed!)</noscript>]</p>
+        </header>
+        <main>
+            <p class="termtxt-default">&nbsp;$&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">curl&nbsp;v6.ipinfo.io|grep&nbsp;region</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>Beep,&nbsp;boop...</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow"><strong>Oh,&nbsp;no!&nbsp;You're&nbsp;in&nbsp;Pomerania!</strong></span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><strong>My&nbsp;condolences!</strong></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">-------------------</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-warnings"><em>...Or&nbsp;is&nbsp;it</em></span>&nbsp;[worthy&nbsp;of&nbsp;condolences]<span class="termtxt-warnings"><em>?</em></span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Well...&nbsp;It&nbsp;was,&nbsp;until&nbsp;recently.&nbsp;But&nbsp;let's&nbsp;start&nbsp;at&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">beginning...</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">What&nbsp;even&nbsp;is&nbsp;the&nbsp;Pomerania&nbsp;Region?</span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Pomerania&nbsp;is&nbsp;<em>vague&nbsp;area</em>&nbsp;of&nbsp;northern&nbsp;Poland.&nbsp;Some&nbsp;2/3</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">of&nbsp;the&nbsp;northern&nbsp;Polish&nbsp;border&nbsp;is&nbsp;aquatic,&nbsp;and&nbsp;the&nbsp;name</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">reflects&nbsp;that&nbsp;(Po(st)-Mer&nbsp;=&nbsp;„after&nbsp;the&nbsp;sea”).&nbsp;It's</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">officially&nbsp;split&nbsp;into&nbsp;3&nbsp;warlordships</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">(states/Landen/prefectures/however-you-call-it;&nbsp;And</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">yes:&nbsp;they&nbsp;really&nbsp;are&nbsp;called&nbsp;warlordships&nbsp;in&nbsp;Polish.&nbsp;We</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">tried&nbsp;to&nbsp;culture-wash&nbsp;for&nbsp;internationals&nbsp;by&nbsp;making&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">official&nbsp;translation&nbsp;sound&nbsp;phonetically&nbsp;like&nbsp;their</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Polish&nbsp;name&nbsp;„województwo”&nbsp;(which&nbsp;also&nbsp;conveniently</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">happens&nbsp;to&nbsp;mask&nbsp;the&nbsp;name's&nbsp;brutal&nbsp;origins),&nbsp;so&nbsp;you</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">won't&nbsp;see&nbsp;Pomeranian&nbsp;Warlordship&nbsp;in&nbsp;any&nbsp;international</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">shipping&nbsp;details,&nbsp;but&nbsp;us&nbsp;Poles&nbsp;will&nbsp;still&nbsp;know&nbsp;(and&nbsp;I,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">as&nbsp;a&nbsp;Pole,&nbsp;decided&nbsp;to&nbsp;let&nbsp;you&nbsp;know,&nbsp;too&nbsp;-&nbsp;totally&nbsp;not</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">because&nbsp;I&nbsp;can't&nbsp;spell&nbsp;the&nbsp;official&nbsp;translation&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">would&nbsp;rather&nbsp;type&nbsp;this&nbsp;for&nbsp;3min&nbsp;than&nbsp;spend&nbsp;3s&nbsp;looking</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">it&nbsp;up).&nbsp;Although,&nbsp;obviously,&nbsp;the&nbsp;warlord&nbsp;(wojewoda)&nbsp;is</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">nowadays&nbsp;a&nbsp;democratically-elected&nbsp;office,&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">acquiring&nbsp;this&nbsp;title&nbsp;doesn't&nbsp;involve&nbsp;conquering&nbsp;any</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">lands&nbsp;or&nbsp;burning&nbsp;and&nbsp;slaughtering&nbsp;any&nbsp;villages.),&nbsp;but</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">this&nbsp;official&nbsp;division&nbsp;is&nbsp;kinda&nbsp;BS.&nbsp;We&nbsp;have&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://maps.app.goo.gl/jYwQWTX2LpAjRsjy8" class="custom-link-underlining termtxt-links">Pomeranian&nbsp;Warlordship</a>,&nbsp;the&nbsp;Western&nbsp;Pomeranian</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Warlordship&nbsp;and&nbsp;-&nbsp;for&nbsp;some&nbsp;reason&nbsp;beyond&nbsp;my</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">understanding&nbsp;-&nbsp;Kujawy-Pomeranian&nbsp;Warlordship.&nbsp;Kujawy</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Region&nbsp;is&nbsp;a&nbsp;cultural&nbsp;region&nbsp;of&nbsp;central-northern&nbsp;(on</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">the&nbsp;north-south&nbsp;axis;&nbsp;just&nbsp;central&nbsp;on&nbsp;the&nbsp;east-west)</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Poland,&nbsp;and&nbsp;it&nbsp;lines&nbsp;up&nbsp;pretty&nbsp;nicely&nbsp;with&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Kujawy-Pomeranian&nbsp;Warlordship.&nbsp;Which&nbsp;does&nbsp;NOT&nbsp;touch</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">the&nbsp;sea&nbsp;in&nbsp;any&nbsp;way.&nbsp;So&nbsp;why&nbsp;isn't&nbsp;that&nbsp;warlordship&nbsp;just</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">named&nbsp;after&nbsp;Kujawy&nbsp;Region,&nbsp;and&nbsp;instead&nbsp;they&nbsp;stuck</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Pomerania&nbsp;in&nbsp;there,&nbsp;is&nbsp;beyond&nbsp;me.&nbsp;The&nbsp;whole&nbsp;point&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">the&nbsp;name&nbsp;Pomerania&nbsp;is&nbsp;to&nbsp;describe&nbsp;something&nbsp;next&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">the&nbsp;sea;&nbsp;it's&nbsp;a&nbsp;geographical,&nbsp;not&nbsp;a&nbsp;cultural,&nbsp;term.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">With&nbsp;that,&nbsp;I'd&nbsp;honestly&nbsp;argue&nbsp;that&nbsp;some&nbsp;60&percnt;&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://maps.app.goo.gl/jYwQWTX2LpAjRsjy8" class="custom-link-underlining termtxt-links">Pomeranian&nbsp;Warlordship</a>&nbsp;(which,&nbsp;btw,&nbsp;is&nbsp;strictly&nbsp;what&nbsp;I</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">mean&nbsp;any&nbsp;time&nbsp;I&nbsp;mention&nbsp;the&nbsp;Pomerania&nbsp;Region&nbsp;(capital</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">P,&nbsp;capital&nbsp;R&nbsp;-&nbsp;like&nbsp;in&nbsp;the&nbsp;section&nbsp;title),&nbsp;in&nbsp;this</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">article&nbsp;or&nbsp;anywhere&nbsp;else,&nbsp;unless&nbsp;otherwise&nbsp;stated)</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">isn't&nbsp;even&nbsp;Pomerania&nbsp;anymore.&nbsp;But&nbsp;it&nbsp;makes&nbsp;sense&nbsp;that</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">they&nbsp;named&nbsp;the&nbsp;warlordship&nbsp;after&nbsp;Pomerania&nbsp;(and&nbsp;not,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">say&nbsp;Kaszubia&nbsp;-&nbsp;Kaszuby&nbsp;is&nbsp;the&nbsp;cultural&nbsp;region&nbsp;roughly</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">lined&nbsp;up&nbsp;with&nbsp;the&nbsp;Pomerania&nbsp;Region)&nbsp;because&nbsp;most</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">cultural&nbsp;and&nbsp;economical&nbsp;activity&nbsp;of&nbsp;the&nbsp;warlordship</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">happens&nbsp;in&nbsp;the&nbsp;Tricity&nbsp;Metropolis,&nbsp;which&nbsp;indeed</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">touches&nbsp;the&nbsp;sea&nbsp;directly&nbsp;(and&nbsp;the&nbsp;closer&nbsp;to&nbsp;the&nbsp;sea</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">you&nbsp;get&nbsp;in&nbsp;Tricity,&nbsp;the&nbsp;more&nbsp;economically&nbsp;active&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">culturally&nbsp;relevant&nbsp;the&nbsp;cities&nbsp;become).</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">So...&nbsp;What&nbsp;is&nbsp;the&nbsp;Tricity&nbsp;Metropolis,&nbsp;then?</span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>Short&nbsp;answer,&nbsp;up&nbsp;until&nbsp;recently?</em>&nbsp;<strong>FUCK&nbsp;KNOWS!</strong></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Long&nbsp;answer?&nbsp;<em>Depends&nbsp;on&nbsp;who&nbsp;you&nbsp;ask...</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">There&nbsp;are:&nbsp;the&nbsp;Declaration&nbsp;of&nbsp;Tricity,&nbsp;Little&nbsp;Tricity,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">MZKZG,&nbsp;Tristar,&nbsp;Trójmiasto.PL,&nbsp;PKM,&nbsp;SKM,&nbsp;PolRegio</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">(area&nbsp;Gdynia),&nbsp;Pomeranian&nbsp;Warlordship,&nbsp;SystemFALA,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">OMGGS,&nbsp;and&nbsp;Mevo.&nbsp;They're&nbsp;all&nbsp;on&nbsp;various&nbsp;levels&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">officiality&nbsp;and&nbsp;legal&nbsp;legitimacy,&nbsp;and&nbsp;they&nbsp;all&nbsp;claim</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">to&nbsp;either&nbsp;outright&nbsp;<em>be</em>&nbsp;Tricity,&nbsp;be&nbsp;[something&nbsp;(eg.&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">transit&nbsp;agency)]&nbsp;for/of&nbsp;Tricity,&nbsp;or&nbsp;try&nbsp;to&nbsp;establish</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">themselves&nbsp;as&nbsp;the&nbsp;de-facto&nbsp;metropolitan&nbsp;authority&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Tricity,&nbsp;in&nbsp;absence&nbsp;of&nbsp;a&nbsp;real&nbsp;legally-legitimate</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">governing&nbsp;body.&nbsp;Which&nbsp;(that&nbsp;absence),&nbsp;in&nbsp;itself,&nbsp;would</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">be&nbsp;fine!&nbsp;I&nbsp;am,&nbsp;generally,&nbsp;a&nbsp;federalist.&nbsp;I&nbsp;acknowledge</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">that&nbsp;a&nbsp;central&nbsp;governing&nbsp;authority&nbsp;isn't&nbsp;always</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">needed.&nbsp;And&nbsp;while&nbsp;a&nbsp;federation&nbsp;is&nbsp;usually&nbsp;defined&nbsp;as&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">union&nbsp;of&nbsp;<em>regions</em>&nbsp;(countries,&nbsp;counties,&nbsp;anything),&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">federation&nbsp;of&nbsp;organizations&nbsp;(that&nbsp;themselves&nbsp;are</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">owned/cooperate&nbsp;with&nbsp;the&nbsp;regions)&nbsp;also&nbsp;works&nbsp;perfectly</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">fine.&nbsp;The&nbsp;problem&nbsp;is&nbsp;that&nbsp;-&nbsp;while&nbsp;I&nbsp;acknowledge&nbsp;that&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">central&nbsp;governing&nbsp;authority&nbsp;isn't&nbsp;always&nbsp;needed&nbsp;-&nbsp;this</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">requires&nbsp;a&nbsp;lot&nbsp;of&nbsp;discipline,&nbsp;trust,&nbsp;and&nbsp;cooperation.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Some&nbsp;agreed-upon&nbsp;leading&nbsp;entity&nbsp;(it&nbsp;doesn't&nbsp;have&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">hold&nbsp;any&nbsp;„official”&nbsp;power;&nbsp;all&nbsp;others&nbsp;just&nbsp;have&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">trust&nbsp;it&nbsp;and&nbsp;listen&nbsp;to&nbsp;it&nbsp;-&nbsp;and&nbsp;optionally&nbsp;change&nbsp;it</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">out&nbsp;for&nbsp;a&nbsp;new&nbsp;leader&nbsp;(by&nbsp;just...&nbsp;trusting&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">listening&nbsp;to&nbsp;the&nbsp;old&nbsp;one&nbsp;less),&nbsp;if&nbsp;they&nbsp;end&nbsp;up&nbsp;broadly</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">discontent),&nbsp;for&nbsp;the&nbsp;sake&nbsp;of&nbsp;efficient&nbsp;coordination,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">issuing&nbsp;new&nbsp;standards,&nbsp;or&nbsp;conflict&nbsp;arbitrage,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">especially&nbsp;in&nbsp;looser&nbsp;federations,&nbsp;is&nbsp;usually&nbsp;good.&nbsp;The</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">problem&nbsp;with&nbsp;Tricity,&nbsp;is&nbsp;that&nbsp;all&nbsp;these&nbsp;organizations,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">all&nbsp;with&nbsp;various&nbsp;levels&nbsp;of&nbsp;legal&nbsp;power&nbsp;and&nbsp;legitimacy,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">are&nbsp;VERY&nbsp;MUCH&nbsp;<strong>NOT</strong>&nbsp;cooperating&nbsp;well.&nbsp;As&nbsp;I&nbsp;said:&nbsp;some&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">them&nbsp;claim&nbsp;to&nbsp;either&nbsp;outright&nbsp;<em>be</em>&nbsp;Tricity,&nbsp;or&nbsp;try&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">establish&nbsp;themselves&nbsp;as&nbsp;the&nbsp;de-facto&nbsp;metropolitan</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">authority&nbsp;of&nbsp;Tricity.&nbsp;This&nbsp;isn't&nbsp;cooperation,&nbsp;it's&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Game&nbsp;of&nbsp;Thrones.&nbsp;And&nbsp;for&nbsp;the&nbsp;other&nbsp;group,&nbsp;those&nbsp;that</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">claim&nbsp;to&nbsp;be&nbsp;[something]&nbsp;for/of&nbsp;Tricity,&nbsp;they&nbsp;often&nbsp;end</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">up&nbsp;stepping&nbsp;on&nbsp;each&nbsp;other's&nbsp;toes,&nbsp;in&nbsp;terms&nbsp;of&nbsp;their</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">competence.&nbsp;Which&nbsp;is&nbsp;how&nbsp;Gdynia&nbsp;and&nbsp;Gdańsk&nbsp;(2&nbsp;largest</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">cities&nbsp;here)&nbsp;ended&nbsp;up&nbsp;with&nbsp;fully&nbsp;incompatible&nbsp;Citizen</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Card&nbsp;systems;&nbsp;how&nbsp;Tricity&nbsp;ended&nbsp;up&nbsp;with&nbsp;two</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">incompatible&nbsp;<em>(well,&nbsp;they&nbsp;are&nbsp;TECHNOLOGICALLY</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>compatible,&nbsp;in&nbsp;that&nbsp;they&nbsp;both&nbsp;use&nbsp;national&nbsp;rail</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>standards,&nbsp;and&nbsp;are&nbsp;both&nbsp;hooked&nbsp;up&nbsp;to&nbsp;the&nbsp;national</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>railway&nbsp;network&nbsp;at&nbsp;numerous&nbsp;points,&nbsp;so&nbsp;you&nbsp;COULD&nbsp;send</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>an&nbsp;SKM&nbsp;train&nbsp;onto&nbsp;PKM&nbsp;tracks&nbsp;and&nbsp;not&nbsp;explode&nbsp;(it's&nbsp;not</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>like&nbsp;some&nbsp;american&nbsp;„metros”&nbsp;that&nbsp;are&nbsp;just&nbsp;trams</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>underground,&nbsp;and&nbsp;you&nbsp;absolutely&nbsp;do&nbsp;NOT&nbsp;want&nbsp;a&nbsp;tram&nbsp;on</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>a&nbsp;heavy-rail&nbsp;right-of-way,&nbsp;for&nbsp;a&nbsp;multitude&nbsp;of</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>reasons),&nbsp;but&nbsp;they're&nbsp;OPERATIONALLY&nbsp;incompatible&nbsp;for</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>numerous&nbsp;reasons)</em>&nbsp;metro&nbsp;(one&nbsp;claims&nbsp;to&nbsp;be&nbsp;a&nbsp;metro,&nbsp;but</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">fails&nbsp;at&nbsp;it&nbsp;dramatically&nbsp;(piss-poor&nbsp;frequencies,&nbsp;many</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">level-crossings,&nbsp;incomplete&nbsp;electrification);&nbsp;another</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">swears&nbsp;to&nbsp;not&nbsp;be&nbsp;a&nbsp;metro,&nbsp;but&nbsp;is&nbsp;93&percnt;&nbsp;there&nbsp;and&nbsp;they</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">just&nbsp;gotta&nbsp;remove&nbsp;3&nbsp;remaining&nbsp;level-crossings&nbsp;and&nbsp;up</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">the&nbsp;frequency&nbsp;a&nbsp;<em>tiny</em>&nbsp;bit)&nbsp;systems&nbsp;and&nbsp;changing&nbsp;between</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">them&nbsp;is&nbsp;seemingly-deliberately&nbsp;frustrating;&nbsp;why&nbsp;our</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">transit&nbsp;tickets&nbsp;are&nbsp;the&nbsp;most&nbsp;expensive&nbsp;in&nbsp;Poland;&nbsp;why</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">our&nbsp;urban&nbsp;bikes&nbsp;are&nbsp;not&nbsp;integrated&nbsp;into&nbsp;our&nbsp;transit</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">app&nbsp;(like&nbsp;they&nbsp;are&nbsp;in&nbsp;any&nbsp;serious&nbsp;city&nbsp;that&nbsp;has&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">first-party&nbsp;bike&nbsp;network&nbsp;and&nbsp;a&nbsp;first-party&nbsp;transit</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">app);&nbsp;why&nbsp;our&nbsp;Transit&nbsp;Signal&nbsp;Priority&nbsp;system&nbsp;works</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">well&nbsp;in&nbsp;Gdańsk&nbsp;(unless&nbsp;you're&nbsp;on&nbsp;a&nbsp;Gdynian&nbsp;bus,&nbsp;in</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">which&nbsp;case&nbsp;it&nbsp;doesn't&nbsp;work&nbsp;at&nbsp;all),&nbsp;works&nbsp;badly&nbsp;in</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Gdynia&nbsp;(unless&nbsp;you're&nbsp;on&nbsp;a&nbsp;Gdańsk&nbsp;bus,&nbsp;in&nbsp;which&nbsp;case</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">it&nbsp;doesn't&nbsp;work&nbsp;at&nbsp;all),&nbsp;doesn't&nbsp;work&nbsp;outside&nbsp;of&nbsp;these</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">two&nbsp;cities&nbsp;(even&nbsp;in&nbsp;Sopot&nbsp;that&nbsp;sits&nbsp;between&nbsp;them),&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">for&nbsp;API&nbsp;access,&nbsp;you&nbsp;have&nbsp;2&nbsp;different&nbsp;domains,&nbsp;even</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">though&nbsp;it&nbsp;was&nbsp;developed&nbsp;as&nbsp;a&nbsp;single&nbsp;system&nbsp;for&nbsp;all&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Tricity&nbsp;and&nbsp;is&nbsp;still&nbsp;branded&nbsp;as&nbsp;such&nbsp;(<strong>Tri</strong>star);&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">how&nbsp;all&nbsp;but&nbsp;the&nbsp;3&nbsp;core&nbsp;cities&nbsp;(Gdynia,&nbsp;Sopot,&nbsp;Gdańsk;</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">that's&nbsp;where&nbsp;the&nbsp;Tri&nbsp;comes&nbsp;from)&nbsp;are&nbsp;in&nbsp;a&nbsp;quantum</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">superposition&nbsp;because&nbsp;they're&nbsp;SOMETIMES&nbsp;a&nbsp;part&nbsp;of</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Tricity&nbsp;and&nbsp;sometimes&nbsp;not,&nbsp;depending&nbsp;on&nbsp;who&nbsp;you&nbsp;ask,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">because&nbsp;<strong>OH,&nbsp;YEA,&nbsp;I&nbsp;FORGOT&nbsp;TO&nbsp;MENTION!&nbsp;All&nbsp;of&nbsp;these</strong></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><strong>quasi-official&nbsp;(except&nbsp;Trójmiasto.PL,&nbsp;they're&nbsp;just&nbsp;a</strong></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><strong>private&nbsp;company)&nbsp;organizations,&nbsp;CANNOT&nbsp;EVEN&nbsp;AGREE&nbsp;ON</strong></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><strong>TRICITY'S&nbsp;FUCKING&nbsp;BORDERS!</strong>,&nbsp;which&nbsp;leads&nbsp;to&nbsp;situations</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">like&nbsp;„Kartuzy&nbsp;are&nbsp;hooked&nbsp;into&nbsp;the&nbsp;metro&nbsp;system,&nbsp;but</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">they&nbsp;pay&nbsp;intercity&nbsp;train&nbsp;ticket&nbsp;prices&nbsp;for&nbsp;their&nbsp;metro</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">rides,&nbsp;and&nbsp;the&nbsp;metro&nbsp;ticket&nbsp;is&nbsp;sold&nbsp;separately&nbsp;from</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">their&nbsp;bus&nbsp;rides,&nbsp;because&nbsp;the&nbsp;agency&nbsp;that&nbsp;coordinates</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">ticketing&nbsp;among&nbsp;the&nbsp;clusterfuck&nbsp;of&nbsp;a&nbsp;dozen&nbsp;or&nbsp;so</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">city-level&nbsp;transit&nbsp;agencies,&nbsp;doesn't&nbsp;recognize&nbsp;Kartuzy</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">as&nbsp;part&nbsp;of&nbsp;Tricity,&nbsp;while&nbsp;one&nbsp;of&nbsp;our&nbsp;metro&nbsp;operators</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">did.”!!!&nbsp;Yes,&nbsp;that&nbsp;was&nbsp;a&nbsp;single&nbsp;sentence.&nbsp;Yes,&nbsp;it&nbsp;has</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">2495&nbsp;chars&nbsp;(including&nbsp;HTML&nbsp;tags).&nbsp;No,&nbsp;I'm&nbsp;not&nbsp;angry.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Yes,&nbsp;I&nbsp;was&nbsp;VERY&nbsp;angry&nbsp;up&nbsp;until&nbsp;recently.&nbsp;Yes,&nbsp;I'm&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">transit&nbsp;nerd&nbsp;(yes,&nbsp;I&nbsp;know&nbsp;Adam&nbsp;Something),&nbsp;how&nbsp;did&nbsp;you</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">know?&nbsp;No,&nbsp;I&nbsp;don't&nbsp;live&nbsp;in&nbsp;Kartuzy,&nbsp;I&nbsp;live&nbsp;in&nbsp;the&nbsp;core</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">cities.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">So&nbsp;saying&nbsp;I'm&nbsp;from&nbsp;the&nbsp;Tricity&nbsp;Metropolis&nbsp;should&nbsp;be</span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">easy&nbsp;for&nbsp;me,&nbsp;right?</span>&nbsp;I&nbsp;mean...&nbsp;I&nbsp;don't&nbsp;have&nbsp;to&nbsp;worry</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">that,&nbsp;if&nbsp;I&nbsp;say&nbsp;„I'm&nbsp;from&nbsp;Tricity”,&nbsp;someone&nbsp;will&nbsp;only</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">think&nbsp;of&nbsp;the&nbsp;core&nbsp;cities,&nbsp;and&nbsp;not&nbsp;omit&nbsp;my&nbsp;city.&nbsp;But&nbsp;up</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">until&nbsp;recently,&nbsp;I&nbsp;was&nbsp;refusing&nbsp;to&nbsp;do&nbsp;so.&nbsp;I&nbsp;was&nbsp;saying</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">I'm&nbsp;from&nbsp;the&nbsp;Pomerania&nbsp;Region.&nbsp;Why?&nbsp;Well,&nbsp;I'd&nbsp;rather</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">avoid&nbsp;revealing&nbsp;my&nbsp;city&nbsp;outright&nbsp;to&nbsp;people&nbsp;outside</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Pomerania&nbsp;(I&nbsp;have&nbsp;no&nbsp;problem&nbsp;telling&nbsp;that&nbsp;to&nbsp;locals,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">tho)&nbsp;and/or&nbsp;who&nbsp;I&nbsp;only&nbsp;know&nbsp;online&nbsp;(trying&nbsp;to&nbsp;hold</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">onto&nbsp;any&nbsp;last&nbsp;bit&nbsp;of&nbsp;privacy&nbsp;I&nbsp;can).&nbsp;So&nbsp;just&nbsp;say</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">„Tricity”,&nbsp;right?&nbsp;Well,&nbsp;as&nbsp;I&nbsp;said,&nbsp;I&nbsp;was&nbsp;refusing&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">do&nbsp;so&nbsp;-&nbsp;because&nbsp;Tricity&nbsp;simply&nbsp;<em>didn't&nbsp;exist</em>.&nbsp;We&nbsp;had&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">loose&nbsp;clusterfuck&nbsp;of&nbsp;quasi-official&nbsp;agencies.&nbsp;The</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">real,&nbsp;coherent,&nbsp;Tricity&nbsp;was&nbsp;only&nbsp;in&nbsp;our&nbsp;hearts.&nbsp;And&nbsp;my</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">heart&nbsp;was&nbsp;angry&nbsp;at&nbsp;all&nbsp;the&nbsp;mess,&nbsp;so&nbsp;it&nbsp;wasn't&nbsp;letting</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">me&nbsp;say&nbsp;Tricity&nbsp;in&nbsp;good&nbsp;conscience.&nbsp;At&nbsp;the&nbsp;same&nbsp;time,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">despite&nbsp;all&nbsp;the&nbsp;flaws,&nbsp;I&nbsp;really&nbsp;do&nbsp;love&nbsp;this</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">region-that-will-soon-become-the-real-Tricity&nbsp;(it</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">ticks&nbsp;EVERY&nbsp;box&nbsp;that&nbsp;I&nbsp;could&nbsp;desire&nbsp;for&nbsp;a&nbsp;region&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">live&nbsp;in;&nbsp;nothing&nbsp;else&nbsp;in&nbsp;Poland&nbsp;even&nbsp;comes&nbsp;close,&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">internationally&nbsp;there's&nbsp;a&nbsp;precious&nbsp;few&nbsp;places&nbsp;that</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">do).&nbsp;So&nbsp;to&nbsp;show&nbsp;my&nbsp;pride&nbsp;at&nbsp;being&nbsp;from&nbsp;here,&nbsp;while&nbsp;at</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">the&nbsp;same&nbsp;time&nbsp;protesting&nbsp;Tricity's&nbsp;disarray,&nbsp;I&nbsp;was</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">referring&nbsp;to&nbsp;the&nbsp;lowest&nbsp;level&nbsp;that's&nbsp;legally</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">recognized&nbsp;-&nbsp;and&nbsp;that's&nbsp;the&nbsp;Pomeranian&nbsp;Warlordship.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">But&nbsp;nobody&nbsp;cares&nbsp;about&nbsp;that&nbsp;second&nbsp;part&nbsp;(it's&nbsp;assumed</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">automatically,&nbsp;when&nbsp;you&nbsp;mention&nbsp;a&nbsp;warlordship&nbsp;by</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">name),&nbsp;so&nbsp;in&nbsp;Polish&nbsp;I'd&nbsp;say&nbsp;that&nbsp;I'm&nbsp;from&nbsp;Pomerania.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">And&nbsp;in&nbsp;English,&nbsp;because&nbsp;someone&nbsp;may&nbsp;not&nbsp;know&nbsp;what</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Pomerania&nbsp;is,&nbsp;I'd&nbsp;say&nbsp;I'm&nbsp;from&nbsp;the&nbsp;Pomerania&nbsp;Region.&nbsp;I</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">now&nbsp;no&nbsp;longer&nbsp;do&nbsp;that.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">What&nbsp;changed?</span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">I'm&nbsp;pleased&nbsp;to&nbsp;announce&nbsp;that&nbsp;our&nbsp;useless&nbsp;president</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">finally&nbsp;signed&nbsp;something&nbsp;for&nbsp;once&nbsp;instead&nbsp;of&nbsp;vetoing</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">it&nbsp;(it&nbsp;only&nbsp;took&nbsp;9&nbsp;years),&nbsp;and&nbsp;<a href="https://www.metropoliagdansk.pl/ustawa-metropolitalna" class="custom-link-underlining termtxt-links">the&nbsp;Tricity</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://www.metropoliagdansk.pl/ustawa-metropolitalna" class="custom-link-underlining termtxt-links">Metropolitan&nbsp;Area&nbsp;is&nbsp;now&nbsp;a&nbsp;legally-recognized</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://www.metropoliagdansk.pl/ustawa-metropolitalna" class="custom-link-underlining termtxt-links">association&nbsp;of&nbsp;counties&nbsp;(*the&nbsp;3&nbsp;core&nbsp;cities&nbsp;are</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://www.metropoliagdansk.pl/ustawa-metropolitalna" class="custom-link-underlining termtxt-links">counties&nbsp;on&nbsp;their&nbsp;own)&nbsp;in&nbsp;Pomerania</a>,&nbsp;with&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://en.metropoliagdansk.pl/who-are-we/metropolitan-area-gdansk-gdynia-sopot-members/" class="custom-link-underlining termtxt-links">properly-defined&nbsp;(but&nbsp;extendable&nbsp;at&nbsp;the&nbsp;mutual</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://en.metropoliagdansk.pl/who-are-we/metropolitan-area-gdansk-gdynia-sopot-members/" class="custom-link-underlining termtxt-links">agreement&nbsp;of&nbsp;Metropolitan&nbsp;Council&nbsp;(which&nbsp;now&nbsp;exists)</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://en.metropoliagdansk.pl/who-are-we/metropolitan-area-gdansk-gdynia-sopot-members/" class="custom-link-underlining termtxt-links">and&nbsp;the&nbsp;county&nbsp;getting&nbsp;expanded&nbsp;into)&nbsp;border&nbsp;(and&nbsp;yes,</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><a href="https://en.metropoliagdansk.pl/who-are-we/metropolitan-area-gdansk-gdynia-sopot-members/" class="custom-link-underlining termtxt-links">it&nbsp;includes&nbsp;Kartuzy,&nbsp;JUSTICE&nbsp;FOR&nbsp;KARTUZY&nbsp;CAME,&nbsp;YAY!)</a></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">and&nbsp;various&nbsp;unified&nbsp;responsibilities&nbsp;(that&nbsp;would</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">normally&nbsp;be&nbsp;a&nbsp;responsibility&nbsp;of&nbsp;each&nbsp;individual</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">county),&nbsp;like&nbsp;providing&nbsp;public&nbsp;transit&nbsp;(the&nbsp;single</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">operator&nbsp;is&nbsp;scheduled&nbsp;to&nbsp;take&nbsp;over&nbsp;our&nbsp;current&nbsp;transit</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">mess&nbsp;next&nbsp;year;&nbsp;<strong>My&nbsp;God,&nbsp;finally!&nbsp;I've&nbsp;been&nbsp;waiting&nbsp;my</strong></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><strong>whole&nbsp;politically-conscious&nbsp;life&nbsp;for&nbsp;this!</strong>)&nbsp;or&nbsp;social</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">housing,&nbsp;or&nbsp;managing&nbsp;urban&nbsp;planning&nbsp;and&nbsp;development.&nbsp;<em>I</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>will&nbsp;now&nbsp;be&nbsp;proudly&nbsp;announcing&nbsp;that&nbsp;I&nbsp;come&nbsp;from</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><em>Tricity,&nbsp;whenever&nbsp;I&nbsp;get&nbsp;asked&nbsp;about&nbsp;my&nbsp;roots</em>&nbsp;(and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">probably,&nbsp;like...&nbsp;Yap&nbsp;about&nbsp;this&nbsp;law&nbsp;that&nbsp;passed,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">every&nbsp;time&nbsp;I&nbsp;do&nbsp;it).</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+        </main>
+        
+        <script>
+            document.getElementById("skipper_trigger").addEventListener("click", () => {
+                document.getElementById("skipper_display").innerHTML = " /*Autogenerated typing animation - SKIPPED BY USER*/\n            .typing-animator-main {\n                width: fit-content;\n            }\n            .skipping-hides {\n                display: none;\n            }\n            .typing-animator-cursor {\n                display: none;\n            }\n            body {\n                --max-content-length: "+window.getComputedStyle(document.body).getPropertyValue('--max-content-length')+";\n            }\n        ";
+            });
+        </script>
+    </body>
+</html>
