@@ -1,20 +1,25 @@
-# Heavily adapted from https://git.shork.ch/docker-images/out-of-your-element
-# Couldn't use their image directly as it doesn't support ARM
-# Couldn't use their Dockerfile directly as it does the repo-cloning step outside of the build process (they use Forgejo Workflows for that instead) so I had to glue a downloader to the builder.
+FROM scratch as downloader
+WORKDIR /repo
+ADD https://gitdab.com/Guzio/out-of-your-element.git#mergable-fr-fr .
+# ADD https://gitdab.com/cadence/out-of-your-element.git .
 
 FROM node:alpine as builder
 ENV NODE_ENV=production
 WORKDIR /usr/src/app
-RUN ["apk", "add", "--no-cache", "python3", "make", "build-base", "git"]
-#..., "jq", "curl"]
-RUN ["git", "clone", "-b", "mergable-fr-fr", "https://gitdab.com/Guzio/out-of-your-element.git", "."]
-#RUN ["git", "clone", "-b", "main", "https://gitdab.com/cadence/out-of-your-element.git", "."]
-#RUN ["git", "fetch", "--all", "--tags"]
-#RUN git checkout tags/$(curl -s https://gitdab.com/api/v1/repos/cadence/out-of-your-element/releases?limit=1 | jq -r .[0].tag_name)
-RUN ["npm", "install", "."]
+RUN ["apk", "add", "--no-cache", "python3", "make", "build-base"]
+COPY --from=downloader /repo/jsconfig.json ./jsconfig.json
+COPY --from=downloader /repo/package-lock.json ./package-lock.json
+COPY --from=downloader /repo/package.json ./package.json
+RUN ["npm", "ci"]
+COPY --from=downloader /repo .
+RUN ["npm", "install"]
 
 FROM node:alpine
+ENV NODE_ENV=production
 WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/jsconfig.json ./jsconfig.json
+COPY --from=builder /usr/src/app/package-lock.json ./package-lock.json
+COPY --from=builder /usr/src/app/package.json ./package.json
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app .
 CMD ["npm", "run", "start"]
