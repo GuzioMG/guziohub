@@ -1,6 +1,6 @@
 FROM scratch AS downloader
 WORKDIR /repo
-ADD https://gitdab.com/Guzio/out-of-your-element.git#mergable-fr-fr .
+ADD https://gitdab.com/Guzio/out-of-your-element.git#guzio .
 # ADD https://gitdab.com/cadence/out-of-your-element.git .
 
 FROM node:26.10.0-alpine AS builder
