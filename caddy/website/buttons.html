@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="My internet neighbors.">
+        <meta name="description" content="My internet neighbors (and unrelated cool buttons).">
         <title>Buttons! - GuzioHub</title>
         
         <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
@@ -136,6 +136,16 @@
                 font-family: var(--we-have-courier-at-home);
             }
             
+            main {
+                display: flex;
+                margin: 1ch;
+                flex-wrap: wrap;
+                
+                /*Needs to be set here to make ch units work correctly (at least the size - I might be going overkill with family (considering how it's set for the body, anyway), I dunno). Doesn't actually get used for any text rendering - that's done either by <p> tags and <h> tags (that font sizes) or by body{} that set family to --we-have-courier-at-home already.*/
+                font-size: var(--unholy-formula);
+                font-family: var(--we-have-courier-at-home);
+            }
+            
             header>h1 {
                 margin-left: auto;
                 margin-right: auto;
@@ -162,34 +172,27 @@
                 font-size: var(--unholy-formula);
                 margin: 0;
                 padding: 0;
-                
-                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator-main because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
-                display: inline-block;
-                overflow-x: hidden;
+            }
+
+            article {
+                display: flex;
+                padding-right: 1.5ch;
+                padding-bottom: 0.5ch;
+            }
+
+            img {
+                padding-right: 0.8ch;
+                scale: 1.1;
+                translate: 0 2px;
+            }
+
+            details>summary {
+                min-width: max-content;
             }
             
         </style>
         
         <style> /*Keyframe data*/
-            
-            /*Typing animation*/
-            @keyframes type {
-                to {
-                    width: max-content;
-                }
-            }
-            
-            @keyframes blinker {
-                from {
-                    width: max-content;
-                }
-                
-                50%, to {
-                    width: max-content;
-                    display: none;
-                }
-            }
-            
             /* Animation data for the 50Hz Flicker Effect. Very subtle (at just 1%) because even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunately, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refresh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying because they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
             @media (prefers-reduced-motion), (prefers-reduced-transparency) {
                 body::after {
@@ -206,38 +209,317 @@
             }
             
         </style>
-        
-        <style> /*CSS feature gates*/
-            
-            @supports (interpolate-size: allow-keywords){
-                .support-warning-size-interpolation {
-                    display: none;
-                }
-            }
-            
-        </style>
-        
-        <style> /*Assorted bits of custom CSS*/
-            
-            * {
-                interpolate-size: allow-keywords;
-            }
-        
-            body {
-                margin: 0;
-                padding: 0;
-            }
-
-        </style>
     </head>
     
     <body>
         <header>
-            <h1 class="termtxt-default">My internet neighbors.</h1>
+            <h1 class="termtxt-default">My internet neighbors (and unrelated cool buttons).</h1>
             <p class="termtxt-links a11y-hides custom-link-underlining" id="a11y_trigger">[EZ-EYES MODE<noscript> (same)</noscript>]</p>
         </header>
         <main class="termtxt-default">
-            I don't have any listed yet, sorry. (I do have a couple of people/projects to whom I'd like to link, just gotta scour Matrix and Discord to find them...)
+            <article>
+                <a href="https://n0va.nekoweb.org/" target="_blank"><img src="https://n0va.nekoweb.org/media/button.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://n0va.nekoweb.org/" class="termtxt-links custom-link-underlining" target="_blank">N0/A</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        Read as „Nova”. A recently-made friend of mine, and a very awesome human being. This is her more-private main site, with blogs and stuff.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://krzak.org/u/n0va/" target="_blank"><img src="https://n0va.nekoweb.org/media/button.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://krzak.org/u/n0va/" class="termtxt-links custom-link-underlining" target="_blank">N0/A²</a>
+                    <details name="buttons">
+                        <summary>Y 2x?</summary>
+                        N0/A, again! That's her professional site, the type of thing that employers or parents may get to see. Tbh, I should learn from her... (My current approach is „don't link more personal/controversial articles, and pray that noone bothers to look through the GitHub”.)
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://siffrin.gay/" target="_blank"><img src="https://magmaus3.eu.org/buttons/magmaus3.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://siffrin.gay/" class="termtxt-links custom-link-underlining" target="_blank">maia</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        (Lowerecase) maia, aka magmaus3, aka (a really cool) botcatgirlthing. It, just like N0/A, has multiple sites, and this one is actually not even the main one. But unlike N0/A, you can reach th main one form the secondary one (but not the other way around, that's why I picked this one to link from), so I won't be linkspamming like I did with N0/A; have only this one and click the link on it to reach the main.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://lina.sh/" target="_blank"><img src="https://lina.sh/assets/88x31/lina.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://lina.sh/" class="termtxt-links custom-link-underlining" target="_blank">lina.sh</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        No idea, tbh. But I reached this site via maia's, and decided to link to it from here for anyone who may want to continue digging further into the indie web, because it links to damn near the whole universe. SO MANY buttons, my god! Also... Damn, they pulled the „terminal-like” site style so well! I'm a bit jealous, ngl.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://we-are-jammin.xyz/" target="_blank"><img src="https://lina.sh/assets/88x31/jammin.webp" height="31" width="88"/></a>
+                <div>
+                    <a href="https://we-are-jammin.xyz/" class="termtxt-links custom-link-underlining" target="_blank">get doxxed</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        You.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://www.w3.org/TR/css-2026/" target="_blank"><img src="https://matdoes.dev/buttons/i/2f682ae7d6c9583cc3ce6d6d2aa09078.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://www.w3.org/TR/css-2026/" class="termtxt-links custom-link-underlining" target="_blank">CSS (2026 ed.)</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        CSS. The thing that styles your site (animations, layout, themes...), and probably causes a major amount of PAIN. Every bit of CSS on this page (tho not on The GuzioHub Site as a whole, as I have a generator) was written by hand. Kill me.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://zen-browser.app/" target="_blank"><img src="https://matdoes.dev/buttons/i/e56bd48e53ba130e30bdba37265dc64b.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://zen-browser.app/" class="termtxt-links custom-link-underlining" target="_blank">Zen Browser</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        Anything but Chrome. Zen is my preferred option, but anything except Chrome is fine. And yes, I know it's ironic that my site (as a whole, but not this button page) is broken on anything but Chromium, including my beloved Zen. Goddammit, Mozilla, get your shit together!
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://dolacz.partiarazem.pl/" target="_blank"><img src="https://matdoes.dev/buttons/i/1be486d1019c0bf1d342ffe104ffd791.png" height="31" width="88"/></a>
+                <div>
+                    <a href="https://dolacz.partiarazem.pl/" class="termtxt-links custom-link-underlining" target="_blank">Partia Razem</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        The Polish socialist party. That's the ones who I always vote for.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://ooo.eeeee.ooo/" target="_blank"><img src="https://matdoes.dev/buttons/i/06ca4b1c495093b69eced99a00d35d79.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://ooo.eeeee.ooo/" class="termtxt-links custom-link-underlining" target="_blank">Hatsune Miku</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        Are you serious rn?
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://guziohub.ovh/art1_gender.html"><img src="https://beeps.website/assets/images/buttons/no_binary_no_problem.png" height="31" width="88"/></a>
+                <div>
+                    <a href="https://guziohub.ovh/art1_gender.html" class="termtxt-links custom-link-underlining">I'm agender.</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        This button links to a site where I described/explored my gender identity. It's a shitty, messy and disjointed article; you'd do yourself a disservice if you try to use it as an actual educational article about gender (if you want that, see the next button). Or, tbh, if you read it at all (good luck, every time I go back to it, I end up skipping sections because it just gets so windy and hard to follow). The TL;DR is that I'm agender-ish-adjacent (with some amount of gender fluidity, ig).
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://beeps.website/about/gender/" target="_blank"><img src="https://beeps.website/assets/images/buttons/love_blahaj.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://beeps.website/about/gender/" class="termtxt-links custom-link-underlining" target="_blank">BLAHAJ!</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        An Ikea shark, icon of the gender-queer community. Also, the link goes to an actually-good (unlike whatever I have linked from the previous buton) explanation to agenderness because 1) I think I owe one, to everyone who ends up reading my own article on it, and 2) I want every button to link, but I didn't know where to link from this one, and that seemed like a good option.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://beeps.website/links/" target="_blank"><img src="https://beeps.website/assets/images/88x31-d.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://beeps.website/links/" class="termtxt-links custom-link-underlining" target="_blank">Beeps.</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        A person who I ran across while searching for buttons. I absolutely know nothing about it, but decided that it's noteworthy enough that I'll link it from here. Notably, its agender explanation is very lovely, succinct, and sensible (instead of my own, see the enby button), so I linked it, too (under the Blahaj button). Also, it's the source of my buttons for: enby, Blahaj, this, climate change, and MS-less HTML.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://www.youtube.com/@SimonClark/videos" target="_blank"><img src="https://beeps.website/assets/images/buttons/no_planet_b.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://www.youtube.com/@SimonClark/videos" class="termtxt-links custom-link-underlining" target="_blank">Climate change, yay!</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        ARE YOU SERIOUS RN???
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://wiki.archlinux.org/title/Arch_is_the_best" target="_blank"><img src="https://matdoes.dev/buttons/i/7609d153e1e2b3d3210ec789d3170329.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://wiki.archlinux.org/title/Arch_is_the_best" class="termtxt-links custom-link-underlining" target="_blank">Arch Linux</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        The OS I use.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://prismlauncher.org/" target="_blank"><img src="https://matdoes.dev/buttons/i/7dcb94b5a7097a1753288b88c12166d8.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://prismlauncher.org/" class="termtxt-links custom-link-underlining" target="_blank">Minecraft</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        My favourite game of all time. Low-key, the only game I play...
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://ublockorigin.com/" target="_blank"><img src="https://matdoes.dev/buttons/i/3bc210df467fe80421d30cb536c6d920.png" height="31" width="88"/></a>
+                <div>
+                    <a href="https://ublockorigin.com/" class="termtxt-links custom-link-underlining" target="_blank">uBlock Origin</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        My ad-blocker of choice.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://matdoes.dev/buttons" target="_blank"><img src="https://matdoes.dev/buttons/i/681ab8b6c5818ba2bd60c93fd695d744.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://matdoes.dev/buttons" class="termtxt-links custom-link-underlining" target="_blank">Mat's Button Search Engine</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        A search engine for buttons. maia introduced me to it, and I love it. Most of the buttons here come from it.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://notpron.com/notpron/beepbeep/phone.htm" target="_blank"><img src="https://minimos.nekoweb.org/resources/webbuttons/Banana.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://notpron.com/notpron/beepbeep/phone.htm" class="termtxt-links custom-link-underlining" target="_blank">Not porn.</a>
+                    <details name="buttons">
+                        <summary>Access</summary>
+                        login: getting / pass: smarter
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://cadence.moe" target="_blank"><img src="https://cadence.moe/static/img/cadence_now.png" alt="The text &quot;cadence now!&quot; on a purple background. There is a moon-shaped logo on the left side and a tiny star in the bottom right." width="88" height="31"></a>
+                <div>
+                    <a href="https://cadence.moe" class="termtxt-links custom-link-underlining" target="_blank">cadence now!</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        Cadence is the author of OOYE, the Matrix bot mentioned on my homepage. Wouldn't describe our relationship as „friends” because 99&percnt; of our interactions happens within the professional context of OOYE, but we're certainly „on friendly terms”. Friendly enough that I'd gladly link that site (it's got some truly fascinating stuff, eg. photos taken on a GameBoy), tho I'm wouldn't be expecting any link-back on buddies/links pages anytime soon.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="//girlboss.ceo" target="_blank"><img alt="june 🍓🦴 girlboss.ceo" title="girlboss.ceo" src="https://puppygock.gay/assets/buttons/june.png" loading="lazy"></a>
+                <div>
+                    <a href="https://puppygock.gay/" class="termtxt-links custom-link-underlining" target="_blank">June</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        The very 1st person whom I encountered in the „Matrix lore”, so to speak - when I was picking a software for my homeserver. That encounter wasn't exactly a happy story - I had been linked to her site's git forge (that's where Tuwunel, the software I eventually picked, forked from), only to be informed that the Git forge has shut down, same happened to the Matrix homeserver, and basically the entire Juniverse (she has a LOT of domains; I only link to two from here - one by button, another by the text link) got reduced to a TXT file that said she's basically leaving the internet. I remembered being quite saddened by it, felt like I had just missed the opportunity to interact with a fascinating human being (all the „remaining” signs of her activity pointed towards her being quite a cool person - also, piecing them all together was a surreal experience in its own right, felt like actual archeology). I then forgot about her for months, until I was talking with maia and mentioned Tuwunel, and she said that „the whole situation stings her, too, especially because she knew June personally”. Well, damn... Now I'm sad again. Also, this was around the time I basically lost all interest in the Matrix ecosystem, so I wasn't active on OOYE's space - and boy'o'boy, did I miss a canon event! June came back!!! Just recently when I was talking there, I saw a person named June say something, thought „Surely, the is no way that this-” *checks site* "WELL, DAMN! It IS her!". Also, her site had buttons again (and was generally a much less depressing read then previously), and one of those buttons linked to maia - and maia links back to June! Yaayyyy, friendship is back! (*I think. I'll go ask maia as soon as I'm done with this page.) June, if under any circumstances (however unlikely those may be - the only thing I can think of is either checking someone's HS's domain on Matrix out of boredom (I often do that on stuff ppl link on Discord, but not really on MX because people have SO MANY different HSs that I'd waste my whole day on that) or maia mentions it for whatever reason) you end up running into this, know that even though I barely know you personally - I'm very proud of you and your return to the society. U go, girl! :3
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://polyproto.org" target="_blank"><img loading="lazy" alt="polyproto" src="https://f003.backblazeb2.com/file/estrogenbucket/polyproto-88x31.png"></a>
+                <div>
+                    <a href="https://polyproto.org" class="termtxt-links custom-link-underlining" target="_blank">PolyProto</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        A really cool project. Check them out! :)
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://html.spec.whatwg.org/multipage/" target="_blank"><img src="https://beeps.website/assets/images/buttons/no_microsoft_html_extensions.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://html.spec.whatwg.org/multipage/" class="termtxt-links custom-link-underlining" target="_blank">HTML</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        HTML. The thing that, uhh, IS your site. Every bit of HTML on this page (tho not on The GuzioHub Site as a whole, as I have a generator) was written by hand. It's shockingly nice. Tho if I had to add 100+ more of those buttons, I'd probably just add a new mode to my generator. xD
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://rust-lang.org/" target="_blank"><img src="https://matdoes.dev/buttons/i/969933203251efc357de324634625ada.gif" height="31" width="88"/></a>
+                <div>
+                    <a href="https://rust-lang.org/" class="termtxt-links custom-link-underlining" target="_blank">Rust</a>
+                    <details name="buttons">
+                        <summary>Wat dis?</summary>
+                        You know how the previous button and the CSS ones mention a generator? Well, said generator is written in Rust! It's a nice lang, I already like it (*the generator was my 1st project in it).
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://en.wikipedia.org/wiki/Inferno_(Dante)" target="_blank"><img src="https://enjarai.dev/assets/buttons/java.png" height="31" width="88"/></a>
+                <div>
+                    <a href="https://en.wikipedia.org/wiki/Inferno_(Dante)" class="termtxt-links custom-link-underlining" target="_blank">Best viewed in Java-enabled browsers!</a>
+                    <details name="buttons">
+                        <summary>Y?</summary>
+                        You do NOT actually need Java to view this site. It actually wouldn't change literally anything because Java no longer supports web applets, anyway. I just like the language (yes, really).
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://enjarai.dev" target="_blank"><img src="https://enjarai.dev/assets/my-button.png" alt="enjarai.dev"/></a>
+                <div>
+                    <a href="https://helloeverybodymynameismarkiplierandwelcometofivenightsatfreddys.enjarai.dev/" class="termtxt-links custom-link-underlining" target="_blank">enjarai</a>
+                    <details name="buttons">
+                        <summary>What the fuck.</summary>
+                        Is there anyway for Fabric developers to write their Fabric Modding API and modding
+                        ability to new Android app by Fabric that will do the work just like Java Edition select Fabric
+                        profile.
+                        So when user opens android (Chromebook) version of Minecraft Fabric Launcher, it will have built-in
+                        Fabric Modding API and all other missing API stuff from java manually written in another language
+                        ported
+                        and injected into Minecraft Bedrock Edition on launcher startup. After that, of course mod
+                        developers
+                        who wants to support bedrock edition and to add cross-platform support for their mods must to
+                        re-write
+                        in other language their mods so that users will be able to add them into the launcher. But, if we
+                        have
+                        something called 'Java Compatibility Layer' into the Fabric Launcher app, that compatibility layer
+                        feature needs to be written to support cross-platform ability so that Java code and stuff will be
+                        translated to the language that the launcher supports on mod startup so that even when user try to
+                        put
+                        java fabric mod into the fabric launcher app, with that feature when user try to create a world and
+                        open
+                        it, while the world opening, the feature already translating java stuff into supported bedrock
+                        language
+                        and missing API stuff that is not available in Bedrock but available in Java that is important for
+                        mods
+                        to work property will be used not by Minecraft Bedrock, instead it will be used by Fabric Launcher
+                        app
+                        and the missing stuff in Bedrock will be fulfilled from that launcher and the modded game can be
+                        loaded
+                        successfully. Of course, that also means that there are so many work behind this and even separated
+                        source code for Android app version - so in short, for that launcher to exist Fabric needs a will to
+                        re-write only once Fabric Modloader to the Android app language that will be later used for all
+                        bedrock
+                        edition of Minecraft to all cross-platforms and with that, even Fabric will be able to earn money
+                        from
+                        that if you want - you will be remembered in the whole Minecraft history and first person ever that
+                        starts a new era for Bedrock Edition players - and that is Modding Era.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://vmfunc.re/" target="_blank" rel="noopener"><img src="https://vmfunc.re/button.png" alt="vmfunc.re" width="88" height="31" /></a>
+                <div>
+                    <a href="https://vmfunc.re/" class="termtxt-links custom-link-underlining" target="_blank">Celeste</a>
+                    <details name="buttons">
+                        <summary>Who dis?</summary>
+                        Idk, but the site is COOL AS FUCK, so I wanted to share it.
+                    </details>
+                </div>
+            </article>
+            <article>
+                <a href="https://guziohub.ovh/buttons.html"><img src="https://guziohub.ovh/assets/88x31/me.gif" height="31" width="88" alt="A yellow-black Guzio-logo, and a yellow-wite text 'Guzio', all on a black background."/></a>
+                <div>
+                    <a href="https://guziohub.ovh/" class="termtxt-links custom-link-underlining">&lt;- Back to GuzioHub Homepage</a>
+                    <details name="buttons">
+                        <summary>Link back to me!</summary>
+                        No way, you think my site is cool enough to earn a backlink from yours? Thank you! Recommended way: <span class="termtxt-warnings">&lt;a href="https://guziohub.ovh/buttons.html" target="_blank">&lt;img src="https://guziohub.ovh/assets/88x31/me.gif" height="31" width="88" alt="A yellow-black Guzio-logo, and a yellow-wite text 'Guzio', all on a black background."/>&lt;/a></span> Why: target="_blank" opens a new tab (so that it's easier for people hopping around the indie-web), and using a ref instead of downloading the button on your end ensures that the button will auto-update once I make it better (it's kinda ugly rn...).
+                    </details>
+                </div>
+            </article>
         </main>
         
         <script>
