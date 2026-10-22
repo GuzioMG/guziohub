@@ -41,6 +41,9 @@ A JSON Web Token secret for LDAP. Should be generated using [`./generate_secrets
 ## `ldap_pass.txt`
 A password of the `admin` account on LDAP.
 
+## `auth_key.txt`
+Authelia's secret key.
+
 ## bot_patchpanel.txt
 Holds the bot token for the Discord<->Matrix bot.
 
