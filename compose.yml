@@ -276,7 +276,7 @@ services:
       DB_PASSWORD_FILE: /run/secrets/pgpass
       REDIS_HOSTNAME: redis
     expose:
-      - 2282
+      - 2283
     restart: unless-stopped
     healthcheck:
       disable: false
