@@ -4,7 +4,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
----
 ###############################################################################
 ##                           Authelia Configuration                          ##
 ###############################################################################
@@ -845,7 +844,7 @@ session:
       ##   - The above 'domain' option MUST either:
       ##      - Match the host portion of this URI.
       ##      - Match the suffix of the host portion when prefixed with '.'.
-      # default_redirection_url: 'https://www.example.com'
+      default_redirection_url: 'https://account.guziohub.ovh/'
 
       ## Sets the Cookie SameSite value. Possible options are none, lax, or strict.
       ## Please read https://www.authelia.com/c/session#same_site
