@@ -10,7 +10,7 @@ nc
 
 # Authelia
 authelia/*
-!authelia/config.yml
+!authelia/configuration.yml
 
 # The minecraft part of this server is in a completely sorry state, that I don't want to show to anyone for now (nor - first and foremost - deploy it). But I want to keep working on the personal-homepage-website-thing, without having to remember to not commit anything MC-related. Hence - it's ignored for now.
 modpacks
