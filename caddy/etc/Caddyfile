@@ -262,3 +262,7 @@ https://bots.chat.guziohub.ovh:443, http://bots.chat.guziohub.ovh:80 {
 https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
     reverse_proxy ldap:17170
 }
+
+https://sso.account.guziohub.ovh:443 {
+    reverse_proxy authelia:9091
+}
