@@ -21,6 +21,10 @@ secrets:
     file: "./secrets/ldap_pass.txt"
   auth_key:
     file: "./secrets/auth_key.txt"
+  auth_hmac:
+    file: "./secrets/auth_hmac.txt"
+  auth_jwt:
+    file: "./secrets/auth_jwt.txt"
   immich_key_digest:
     file: "./secrets/immich_key_digest.txt"
 
@@ -238,11 +242,14 @@ services:
       - pgpass
       - ldap_pass
       - auth_key
+      - auth_jwt
       - immich_key_digest
+      - auth_hmac
     environment:
       AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: '/run/secrets/pgpass'
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: '/run/secrets/ldap_pass'
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/auth_key'
+      AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE: '/run/secrets/auth_hmac'
     volumes:
       - './authelia:/config'
     depends_on:
