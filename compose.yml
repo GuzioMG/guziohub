@@ -19,6 +19,8 @@ secrets:
     file: "./secrets/ldap_jwt.txt"
   ldap_pass:
     file: "./secrets/ldap_pass.txt"
+  auth_key:
+    file: "./secrets/auth_key.txt"
 
 services:
   web:
@@ -302,16 +304,18 @@ services:
       LLDAP_KEY_SEED: /run/secrets/ldap_key
       LLDAP_LDAP_USER_PASS_FILE: /run/secrets/ldap_pass
       LLDAP_LDAP_BASE_DN: dc=guziohub,dc=ovh
-  
+
   authelia:
     image: 'docker.io/authelia/authelia:latest'
     restart: 'unless-stopped'
     secrets:
       - pgpass
       - ldap_pass
+      - auth_key
     environment:
       AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: '/run/secrets/pgpass'
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: '/run/secrets/ldap_pass'
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/auth_key'
     volumes:
       - './authelia:/config'
 

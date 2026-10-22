@@ -185,10 +185,10 @@ server:
 ## Parameters used for TOTP generation.
 totp:
   ## Disable TOTP.
-  disable: true
+  # disable: false
 
   ## The issuer name displayed in the Authenticator application of your choice.
-  # issuer: 'authelia.com'
+  issuer: 'GuzioHub'
 
   ## The TOTP algorithm to use.
   ## It is CRITICAL you read the documentation before changing this option:
@@ -207,7 +207,7 @@ totp:
 
   ## The skew controls number of Time-based One-Time Passwords either side of the current one that are valid.
   ## Warning: before changing skew read the docs link below.
-  # skew: 1
+  skew: 2
   ## See: https://www.authelia.com/c/totp#input-validation to read
   ## the documentation.
 
@@ -723,10 +723,10 @@ authentication_backend:
 ##   is optional and matches any resource if not provided.
 ##
 ## Note: the order of the rules is important. The first policy matching (domain, resource, subject) applies.
-# access_control:
+access_control:
   ## Default policy can either be 'bypass', 'one_factor', 'two_factor' or 'deny'. It is the policy applied to any
   ## resource if there is no policy to be applied to the user.
-  # default_policy: 'deny'
+  default_policy: 'two_factor'
 
   # rules:
     ## Rules applied to everyone
@@ -809,21 +809,21 @@ authentication_backend:
 ##
 ## The session cookies identify the user once logged in.
 ## The available providers are: `memory`, `redis`. Memory is the provider unless redis is defined.
-# session:
+session:
   ## The secret to encrypt the session data. This is only used with Redis / Redis Sentinel.
   ## Secret can also be set using a secret: https://www.authelia.com/c/secrets
   # secret: 'insecure_session_secret'
 
   ## Cookies configures the list of allowed cookie domains for sessions to be created on.
   ## Undefined values will default to the values below.
-  # cookies:
-  #   -
+  cookies:
+    -
       ## The name of the session cookie.
-      # name: 'authelia_session'
+      name: 'authelia_session'
 
       ## The domain to protect.
       ## Note: the Authelia portal must also be in that domain.
-      # domain: 'example.com'
+      domain: 'guziohub.ovh'
 
       ## Required. The fully qualified URI of the portal to redirect users to on proxies that support redirections.
       ## Rules:
@@ -831,7 +831,7 @@ authentication_backend:
       ##   - The above 'domain' option MUST either:
       ##      - Match the host portion of this URI.
       ##      - Match the suffix of the host portion when prefixed with '.'.
-      # authelia_url: 'https://auth.example.com'
+      authelia_url: 'https://sso.account.guziohub.ovh'
 
       ## Optional. The fully qualified URI used as the redirection location if the portal is accessed directly. Not
       ## configuring this option disables the automatic redirection behavior.
@@ -870,7 +870,7 @@ authentication_backend:
       # remember_me: '1 month'
 
   ## Cookie Session Domain default 'name' value.
-  # name: 'authelia_session'
+  name: 'authelia_session'
 
   ## Cookie Session Domain default 'same_site' value.
   # same_site: 'lax'
