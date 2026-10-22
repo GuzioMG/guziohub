@@ -289,7 +289,7 @@ services:
       pgdb:
         condition: service_healthy
       authelia:
-        condition: service_healthy
+        condition: service_started
 
   immich-machine-learning:
     image: ghcr.io/immich-app/immich-machine-learning:v3
