@@ -124,9 +124,9 @@ server:
 ##
 ## Log Configuration
 ##
-# log:
+log:
   ## Level of verbosity for logs: info, debug, trace.
-  # level: 'debug'
+  level: 'debug'
 
   ## Format the logs are written as: json, text.
   # format: 'json'
@@ -523,11 +523,11 @@ authentication_backend:
 
     ## The distinguished name of the container searched for objects in the directory information tree.
     ## See also: additional_users_dn, additional_groups_dn.
-    base_dn: 'ou=people,dc=guziohub,dc=ovh'
+    base_dn: 'dc=guziohub,dc=ovh'
 
     ## The additional_users_dn is prefixed to base_dn and delimited by a comma when searching for users.
     ## i.e. with this set to OU=Users and base_dn set to DC=a,DC=com; OU=Users,DC=a,DC=com is searched for users.
-    additional_users_dn: 'OU=people'
+    additional_users_dn: 'ou=people'
 
     ## The users filter used in search queries to find the user profile based on input filled in login form.
     ## Various placeholders are available in the user filter which you can read about in the documentation which can
@@ -545,7 +545,7 @@ authentication_backend:
 
     ## The additional_groups_dn is prefixed to base_dn and delimited by a comma when searching for groups.
     ## i.e. with this set to OU=Groups and base_dn set to DC=a,DC=com; OU=Groups,DC=a,DC=com is searched for groups.
-    additional_groups_dn: 'OU=groups'
+    additional_groups_dn: 'ou=groups'
 
     ## The groups filter used in search queries to find the groups based on relevant authenticated user.
     ## Various placeholders are available in the groups filter which you can read about in the documentation which can
