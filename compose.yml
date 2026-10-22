@@ -250,6 +250,7 @@ services:
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: '/run/secrets/ldap_pass'
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/auth_key'
       AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE: '/run/secrets/auth_hmac'
+      X_AUTHELIA_CONFIG_FILTERS: 'template'
     volumes:
       - './authelia:/config'
     depends_on:
