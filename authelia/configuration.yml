@@ -1297,7 +1297,7 @@ identity_providers:
     ## The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
     ## configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
     jwks:
-      - key: {{ secret "/run/secrets/auth_jwt" | mindent 10 "|" | msquote }}
+      - key: {{fileContent "/run/secrets/auth_jwt"}}
 
     ## Enables additional debug messages.
     # enable_client_debug_messages: false
