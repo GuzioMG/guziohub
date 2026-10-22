@@ -47,97 +47,97 @@ services:
     environment:
       TZ: Europe/Warsaw
 
-  nextcloud:
-    image: nextcloud:31-fpm-alpine
-    restart: unless-stopped
-    depends_on:
-      imaginary:
-        condition: service_started
-      pgdb:
-        condition: service_healthy
-      web:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      ncapps:
-        condition: service_started
-      ldap:
-        condition: service_started
-    secrets:
-      - pgpass
-    volumes:
-      - ./nc:/var/www/html
-      - ../files/drive:/var/www/html/data
-    environment:
-      TZ: Europe/Warsaw
-      NEXTCLOUD_TRUSTED_DOMAINS: drive.guziohub.ovh
-      OVERWRITEHOST: drive.guziohub.ovh
-      OVERWRITECLIURL: https://drive.guziohub.ovh
-      OVERWRITEPROTOCOL: https
-      TRUSTED_PROXIES: 172.16.0.0/24
-      PHP_MEMORY_LIMIT: 1G
-      PHP_UPLOAD_LIMIT: 10G
-      POSTGRES_HOST: pgdb
-      POSTGRES_DB: nextcloud
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD_FILE: /run/secrets/pgpass
-      NEXTCLOUD_ADMIN_USER: root
-      REDIS_HOST: redis
-      DOMAIN: drive.guziohub.ovh
-      NEXTCLOUD_VERSION: 31-fpm-alpine
-      UID: "1001"
-      GID: "1001"
-
-  imaginary:
-    image: nextcloud/aio-imaginary:latest
-    restart: unless-stopped
-    stop_grace_period: 1s
-    expose:
-      - "9000"
-    environment:
-      TZ: Europe/Warsaw
-    cap_add:
-      - SYS_NICE
-    tmpfs:
-      - /tmp
-
-  nctasks:
-    image: nextcloud:31-fpm-alpine
-    restart: unless-stopped
-    stop_grace_period: 1s
-    volumes:
-      - ./nc:/var/www/html
-      - ../files/drive:/var/www/html/data
-    entrypoint: /cron.sh
-    environment:
-      TZ: Europe/Warsaw
-    depends_on:
-      pgdb:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-  
-  ncapps:
-    image: ghcr.io/nextcloud/nextcloud-appapi-dsp:release
-    restart: unless-stopped
-    stop_grace_period: 1s
-    secrets:
-      - ncappkey
-    environment:
-      NC_HAPROXY_PASSWORD_FILE: /run/secrets/ncappkey
-      TZ: Europe/Warsaw
-    volumes:
-      - /run/user/1000/podman/podman.sock:/var/run/docker.sock
-    privileged: true #Security nightmare, but it needs it to be able to manage other containers
-  
-  redis:
-    image: redis:alpine
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
-      interval: 1s
-      timeout: 3s
-      retries: 5
+#  nextcloud:
+#    image: nextcloud:31-fpm-alpine
+#    restart: unless-stopped
+#    depends_on:
+#      imaginary:
+#        condition: service_started
+#      pgdb:
+#        condition: service_healthy
+#      web:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      ncapps:
+#        condition: service_started
+#      ldap:
+#        condition: service_started
+#    secrets:
+#      - pgpass
+#    volumes:
+#      - ./nc:/var/www/html
+#      - ../files/drive:/var/www/html/data
+#    environment:
+#      TZ: Europe/Warsaw
+#      NEXTCLOUD_TRUSTED_DOMAINS: drive.guziohub.ovh
+#      OVERWRITEHOST: drive.guziohub.ovh
+#      OVERWRITECLIURL: https://drive.guziohub.ovh
+#      OVERWRITEPROTOCOL: https
+#      TRUSTED_PROXIES: 172.16.0.0/24
+#      PHP_MEMORY_LIMIT: 1G
+#      PHP_UPLOAD_LIMIT: 10G
+#      POSTGRES_HOST: pgdb
+#      POSTGRES_DB: nextcloud
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD_FILE: /run/secrets/pgpass
+#      NEXTCLOUD_ADMIN_USER: root
+#      REDIS_HOST: redis
+#      DOMAIN: drive.guziohub.ovh
+#      NEXTCLOUD_VERSION: 31-fpm-alpine
+#      UID: "1001"
+#      GID: "1001"
+#
+#  imaginary:
+#    image: nextcloud/aio-imaginary:latest
+#    restart: unless-stopped
+#    stop_grace_period: 1s
+#    expose:
+#      - "9000"
+#    environment:
+#      TZ: Europe/Warsaw
+#    cap_add:
+#      - SYS_NICE
+#    tmpfs:
+#      - /tmp
+#
+#  nctasks:
+#    image: nextcloud:31-fpm-alpine
+#    restart: unless-stopped
+#    stop_grace_period: 1s
+#    volumes:
+#      - ./nc:/var/www/html
+#      - ../files/drive:/var/www/html/data
+#    entrypoint: /cron.sh
+#    environment:
+#      TZ: Europe/Warsaw
+#    depends_on:
+#      pgdb:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#  
+#  ncapps:
+#    image: ghcr.io/nextcloud/nextcloud-appapi-dsp:release
+#    restart: unless-stopped
+#    stop_grace_period: 1s
+#    secrets:
+#      - ncappkey
+#    environment:
+#      NC_HAPROXY_PASSWORD_FILE: /run/secrets/ncappkey
+#      TZ: Europe/Warsaw
+#    volumes:
+#      - /run/user/1000/podman/podman.sock:/var/run/docker.sock
+#    privileged: true #Security nightmare, but it needs it to be able to manage other containers
+#  
+#  redis:
+#    image: redis:alpine
+#    restart: unless-stopped
+#    healthcheck:
+#      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+#      interval: 1s
+#      timeout: 3s
+#      retries: 5
     
   pgdb:
     image: postgres:17-alpine
