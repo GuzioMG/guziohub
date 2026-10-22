@@ -44,6 +44,12 @@ A password of the `admin` account on LDAP.
 ## `auth_key.txt`
 Authelia's secret key.
 
+## `immich_key.txt`
+The file generated as a result of running `podman run --rm authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986 > secrets/immich_key.txt`. Random Password should be pasted into Immich config. *I guess.* I'm not actually sure yet, tbh. Digest should be pasted into...
+
+## `immich_key_digest.txt`
+*See: Above.*
+
 ## bot_patchpanel.txt
 Holds the bot token for the Discord<->Matrix bot.
 

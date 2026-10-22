@@ -21,6 +21,8 @@ secrets:
     file: "./secrets/ldap_pass.txt"
   auth_key:
     file: "./secrets/auth_key.txt"
+  immich_key_digest:
+    file: "./secrets/immich_key_digest.txt"
 
 services:
   web:
@@ -49,18 +51,24 @@ services:
     environment:
       TZ: Europe/Warsaw
 
-#  
-#  redis:
-#    image: redis:alpine
-#    restart: unless-stopped
-#    healthcheck:
-#      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
-#      interval: 1s
-#      timeout: 3s
-#      retries: 5
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - ./db/redis:/data
+    user: 0:0
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
     
   pgdb:
-    image: postgres:17-alpine
+    image: tensorchord/vchord-postgres:pg17-v1.1.1
     restart: unless-stopped
     secrets:
       - pgpass
@@ -230,12 +238,65 @@ services:
       - pgpass
       - ldap_pass
       - auth_key
+      - immich_key_digest
     environment:
       AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: '/run/secrets/pgpass'
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: '/run/secrets/ldap_pass'
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: '/run/secrets/auth_key'
     volumes:
       - './authelia:/config'
+    depends_on:
+      web:
+        condition: service_healthy
+      pgdb:
+        condition: service_healthy
+      ldap:
+        condition: service_started
+
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:v3
+    volumes:
+      - ./../files/pics:/data
+      - /etc/localtime:/etc/localtime:ro
+    secrets:
+      - pgpass
+    environment:
+      TZ: Europe/Warsaw
+      DB_URL: postgresql://postgres@pgdb:5432/immich
+      DB_PASSWORD_FILE: /run/secrets/pgpass
+      REDIS_HOSTNAME: redis
+    expose:
+      - 2282
+    restart: unless-stopped
+    healthcheck:
+      disable: false
+    user: 0:0
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
+    authelia:
+      web:
+        condition: service_healthy
+      pgdb:
+        condition: service_healthy
+      ldap:
+        condition: service_healthy
+
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:v3
+    volumes:
+      - ./../files/pics/ai-cache:/cache
+    environment:
+      MACHINE_LEARNING_MODEL_REVISION: v2
+    restart: always
+    healthcheck:
+      disable: false
+    user: 0:0
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
 
   minecraft:
     # Docker Config
