@@ -275,12 +275,12 @@ services:
       - no-new-privileges:true
     cap_drop:
       - NET_RAW
-    authelia:
+    depends_on:
       web:
         condition: service_healthy
       pgdb:
         condition: service_healthy
-      ldap:
+      authelia:
         condition: service_healthy
 
   immich-machine-learning:
