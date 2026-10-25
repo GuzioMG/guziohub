@@ -1,0 +1,30 @@
+# Drasl default config file
+
+# Example: drasl.example.com
+Domain = "mc.guziohub.ovh"
+
+# Example: https://drasl.example.com
+BaseURL = "https://mc.guziohub.ovh"
+
+# List of usernames who automatically become admins of the Drasl instance
+DefaultAdmins = ["Guzio", "Guzio..mc.guziohub.ovh", "Lena..mc.guziohub.ovh"]
+
+
+## FROM MOJANG RECIPE
+
+SignPublicKeys = false
+AllowChangingPlayerName = true #...except this - this needs to exist so I can ..mc.guziohub.ovh myself
+
+[RegistrationUsernamePassword.CreateNewPlayer]
+  Allow = false
+
+[[FallbackAPIServers]]
+  Nickname = "Mojang"
+  DiscoveryMinecraftClientURL = "https://discovery.minecraftservices.com/minecraft/client"
+  EnableAuthentication = true
+  ForwardSkins = true
+  SetSkinURL = "https://www.minecraft.net/msaprofile/mygames/editskin"
+
+[[RegistrationUsernamePassword.ImportExistingPlayer]]
+  FallbackAPIServerNickname = "Mojang"
+  RequireSkinVerification = true

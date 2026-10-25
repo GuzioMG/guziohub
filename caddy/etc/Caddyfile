@@ -99,3 +99,7 @@ https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
 https://sso.account.guziohub.ovh:443 {
     reverse_proxy authelia:9091
 }
+
+https://mc.guziohub.ovh:443, http://mc.guziohub.ovh:80 {
+    reverse_proxy drasl:25585
+}

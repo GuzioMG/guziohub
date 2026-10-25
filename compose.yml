@@ -308,6 +308,15 @@ services:
     cap_drop:
       - NET_RAW
 
+  drasl:
+    image: unmojang/drasl
+    expose:
+      - "25585"
+    user: 0:0
+    volumes:
+      - ./drasl_conf:/etc/drasl
+      - ../minecraft/drasldata:/var/lib/drasl
+
   minecraft:
     # Docker Config
     image: "itzg/minecraft-server:java25-graalvm"
