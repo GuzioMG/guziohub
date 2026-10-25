@@ -8,6 +8,7 @@ BaseURL = "https://mc.guziohub.ovh"
 
 # List of usernames who automatically become admins of the Drasl instance
 DefaultAdmins = ["Guzio", "Guzio..mc.guziohub.ovh", "Lena..mc.guziohub.ovh"]
+MaxPlayerNameLength = 50 #  16 (vanilla name limit) + 2 (.. delimiter) + 32 (domain name length limit for MC federation (enforced by skin encoding; may be extended in the future, and just we don't allow those longer servers to have Mojang players, or maybe we add an extra line on the skin, or maybe use more efficient encoding (technically, we can squeeze an extra ASCII char into a single row of 8 8-bits), etc.))
 
 
 ## FROM MOJANG RECIPE
