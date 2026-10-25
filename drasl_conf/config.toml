@@ -11,7 +11,7 @@ DefaultAdmins = ["Guzio", "Guzio..mc.guziohub.ovh", "Lena..mc.guziohub.ovh"]
 
 # Federation testing
 MaxPlayerNameLength = 50 #  16 (vanilla name limit) + 2 (.. delimiter) + 32 (domain name length limit for MC federation (enforced by skin encoding; may be extended in the future, and just we don't allow those longer servers to have Mojang players, or maybe we add an extra line on the skin, or maybe use more efficient encoding (technically, we can squeeze an extra ASCII char into a single row of 8 8-bits), etc.))
-ValidPlayerNameRegex = "^[a-zA-Z0-9_]{1,16}(?:\\.\\.)((?!-)[A-Za-z0-9\\-_]{1,63}(?<!-)\\.){1,256}[A-Za-z]{2,6}$"
+ValidPlayerNameRegex = "^[a-zA-Z0-9_]+(?:\\.\\.)[a-z0-9_\\-.]+$"
 
 
 ## FROM MOJANG RECIPE
