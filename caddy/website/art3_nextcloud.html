@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="On the recent PHP security incident, and how it led to mi finally sunsetting my GuzioHub Drive Nextcloud instance.">
+        <title>Fuck PHP - GuzioHub</title>
+        
+        <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg" sizes="any">
+        <link rel="icon" type="image/png" href="/assets/logo/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="/assets/logo/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-192x192.png" sizes="192x192">
+        <link rel="shortcut icon" href="/assets/logo/favicon.ico" sizes="48x48">
+        <link rel="icon" type="image/png" href="/assets/logo/web-app-manifest-512x512.png" sizes="512x512">
+        <link rel="icon" type="image/png" href="/assets/logo.png" sizes="2880x2880">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
+        <link rel="manifest" type="application/manifest+json" href="/.well-known/site.webmanifest">
+        <link rel="canonical" href="https://guziohub.ovh/art1_gender.html">
+        
+        <style> /*Fonts*/
+        
+            /*Adapted from https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css to also include local() search. UPDATE: Actually... I removed the local searches (wouldn't want a situation where someone has a different font with the same name).*/
+            @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-regular.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bold.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: normal;
+            } @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-italic.woff?sha=3114f1256') format('woff');
+                font-weight: 400;
+                font-style: italic;
+            } @font-face {
+                font-family: 'Hack';
+                src: url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff2?sha=3114f1256') format('woff2'), url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/fonts/hack-bolditalic.woff?sha=3114f1256') format('woff');
+                font-weight: 700;
+                font-style: italic;
+            }
+            
+            body {
+                --we-have-courier-at-home: "Hack", "Liberation Mono", "Courier", monospace; /*The name is misleading, the 1st 2 fonts look absolutely NOTHING like Courier (and the last one isn't even a real font - just an OS-resolved „macro” - so it doesn't look like anything in particular, an certainly not like Courier), but nevertheless - this (or - more specifically - "Liberation Mono") is somehow what Brave tried to load as a replacement for Courier. Hence I believe that Brave thought „Nah! We have Courier at home!”, like in the memes. Then I went „Wait, this looks even better than Courier!” and spent HOURS looking for what font did Brave use as a replacement, failed at that, but found an (even-even better looking) Hack, so I picked that instead. Then, I found that there is a convenient panel that tells me which font was rendered. It was „Liberation Mono”, so I added that as a fallback.*/
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+        </style>
+        
+        <style id="a11y_display"> /*CRT effects*/
+        
+            /*Changes to <body>*/
+            body::before {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+              z-index: 2;
+              background-size: 100% 2px, 3px 100%;
+              pointer-events: none;
+            }
+            
+            body {
+                background-color: #333;
+            }
+            
+            body::after {
+              content: " ";
+              display: block;
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background: #444;
+              opacity: 0;
+              z-index: 2;
+              pointer-events: none;
+              animation: flicker 5ms ease-out 0s infinite alternate none; /*Simulates the flicker from a 50Hz (EU) power grid. First 5ms: voltage rises from 0V (represented as 0% opacity) to 325V (1% opacity) - sharply at first, then calms down (ease-out) near the end because of how Sine waves work. This is when the wave hits its peak, and this is also where the animation ends and starts going in reverse because of how „alternate” works. In the next 5ms it falls from 325V to 0V - softly at first, then accelerates and finally crosses 0V at high-speed (ease-in - but because the animation is reversed, that's what ease-out does here) and goes into the negatives. But we don't care about the negatives, so this is where our animation completes a single phase (it will now reverse again, into its normal direction). And we don't care about them because - even though the voltage would now go to -325V and then back to 0V (completing a whole phase of AC) to later rise to 325V, and keep cycling like that over and over again - from a CRT brightness perspective, 325V and -325V does the same thing, so our animation's complete phase can be half of what AC does.*/
+            }
+            
+            
+            /*Colors with chromatic aberration (like on a CRT). Apply them directly to div/p-like tags, or to span/a-like tags (the latter is especially meaningful for .termtxt-links), if within a p-tag already.*/
+            .termtxt-default {
+                color: #BFB;
+                text-shadow: -1px 0px 1px rgba(255,0,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-warnings {
+                color: #F44;
+                text-shadow: -1px 0px 1px rgba(0,255,0,2),
+                              1px 0px 1px rgba(0,0,255,2);
+            }
+            
+            .termtxt-links {
+                color: #2CF;
+                text-shadow: -1px 0px 1px rgba(0, 170, 255, 2),
+                              1px 0px 1px rgba(0, 0, 255, 2);
+            }
+            
+            .termtxt-guzio-signature-yellow {
+                color: #FDFF00;
+                text-shadow: -1px 0px 1px rgba(255, 255, 255, 2),
+                              1px 0px 1px rgba(0, 0, 0, 2);
+            }
+            
+        </style>
+        
+        <style> /*Anything (except color) related to text rendering.*/
+            
+            body {
+                /*
+                    calc(100vw/calc(var(--max-content-length) + 2))  -->  Calculates character width that would make the entire content (+2 characters of padding) fit snugly in the horizontal viewport.
+                    calc(^*calc(1/0.61))                         -->  Accounts for the fact that characters are not square and font-size (which is where this var is supposed to be placed) takes the height of characters, but we gave it the width. 1/0.61 is perfect scaling factor for Hack, a bit too small for Liberation Mono (1/0.6 would fit better, but it's just barely too big for Hack and causes scrollbars to appear), and untested for Courier (because Brave doesn't support it and I couldn't be bothered to check Firefox) and monospace (because it's impossible: it isn't any particular font, but rather an OS-resolved "macro").
+                    min(^, 18p)                                  -->  Ensures that the text never autoscales beyond 18px (because it just looks silly at sizes higher than this)...
+                    max(1em, 18p) [instead of just 18p in^]      -->  ...unless the user explicitly configured in their browser, that they want their text to be bigger than 18px (eg. they have a high-DPI screen and/or bad eyesight), and (as such) they're probably used to sillily large text, already, so the point above doesn't apply.
+                */
+                --unholy-formula: min( calc(calc(100vw/calc(var(--max-content-length) + 2))*calc(1/0.61)),  max(1em, 18px) );
+            }
+            
+            header {
+                display: flex;
+                flex-direction: column;
+                margin: 1ch;
+                
+                /*Needs to be set here to make ch units work correctly (at least the size - I might be going overkill with family (considering how it's set for the body, anyway), I dunno). Doesn't actually get used for any text rendering - that's done either by <p> tags and <h> tags (that font sizes) or by body{} that set family to --we-have-courier-at-home already.*/
+                font-size: var(--unholy-formula);
+                font-family: var(--we-have-courier-at-home);
+            }
+            
+            header>h1 {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0.5em;
+                margin-top: 0;
+                font-size: 3em;
+                padding: 0;
+            }
+            
+            .typing-animator-main {
+                width: 0;
+                white-space: nowrap;
+            }
+            
+            .custom-link-underlining {
+                text-decoration: none;
+            }
+            
+            .custom-link-underlining:hover {
+                text-decoration: underline;
+            }
+            
+            p {
+                font-size: var(--unholy-formula);
+                margin: 0;
+                padding: 0;
+                
+                /*These two are really only needed for typing animations (not very useful for the warning and maybe-in-the-future-if-I-can-be-bothered footers, extra easter-eggs (like the Kenobi one, but in-line), etc. - but I can't put it inside .typing-animator-main because it also applies to static (not-animated) prefixes (the ones with spaces and the one with the $)*/
+                display: inline-block;
+                overflow-x: hidden;
+            }
+            
+        </style>
+        
+        <style> /*Keyframe data*/
+            
+            /*Typing animation*/
+            @keyframes type {
+                to {
+                    width: max-content;
+                }
+            }
+            
+            @keyframes blinker {
+                from {
+                    width: max-content;
+                }
+                
+                50%, to {
+                    width: max-content;
+                    display: none;
+                }
+            }
+            
+            /* Animation data for the 50Hz Flicker Effect. Very subtle (at just 1%) because even that was enough to cause discomfort (I almost threw up lol) after a longer time, eg. an hour of being open in the preview window (unfortunately, on lower values (like 0.8% - which, even tho it's a minimal difference, it felt much less straining on the eyes) interference from the monitor's refresh rate started becoming an issue (the animation would work for a while, then get stuck (or rather appear as such), then continue again, periodically), so 1% is the lowest we can go, despite the discomfort). For the same reason (ie. this animation may cause discomfort, so there should be a way to stop it), we also have a listener for prefers-reduced-motion (since that's what ppl with epilepsy use, from what MDN told me - and last thing I'd want is someone dying because they opened my page) and prefers-reduced-transparency (opacity: is used under-the-hood to get this effect to work, so checking for that also seemed reasonable, even if I think? it's technically supposed to be used for other stuff). Ideally, there should be something like „prefers-reduced-flicker” (since neither reduced motion nor reduced transparency really fit - there's nothing actually moving in this animation, and transparency is an internal implementation detail for this effect, not something that a regular user would notice), but - allas - there is none, so checking if they have one and/or the other enabled is the only choice.*/
+            @media (prefers-reduced-motion), (prefers-reduced-transparency) {
+                body::after {
+                    animation: none !important; /*I don't think !important is actually needed here (@media has a higher specificity), but better safe than sorry (sorry in a literal sense - I don't wanna be the one apologizing to a family, in case someone were to get epilepsied to death because of this).*/
+                }
+            }
+            @keyframes flicker {
+                from {
+                    opacity: 0%;
+                }
+                to {
+                    opacity: 1%;
+                }
+            }
+            
+        </style>
+        
+        <style> /*CSS feature gates*/
+            
+            @supports (interpolate-size: allow-keywords){
+                .support-warning-size-interpolation {
+                    display: none;
+                }
+            }
+            
+        </style>
+        
+        <style> /*Assorted bits of custom CSS*/
+            
+            * {
+                interpolate-size: allow-keywords;
+            }
+        
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+        </style>
+        
+        <style id="skipper_display"> /*Autogenerated typing animation - see: github.com/GuzioMG/guziohub-generator for details*/
+            
+            body {
+                --max-content-length: 54;
+            }
+            
+            
+            .typing-animator-main:nth-child(2) {
+                animation: type 3s steps(19) 1s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(3) {
+                animation: blinker 0.5s steps(1) 0s 10 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(6) {
+                animation: type 2s steps(50) 6s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(7) {
+                animation: blinker 0.5s steps(1) 5s 6 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(10) {
+                animation: type 1s steps(26) 8s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(11) {
+                animation: blinker 0.5s steps(1) 8s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(14) {
+                animation: type 2s steps(50) 9s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(15) {
+                animation: blinker 0.5s steps(1) 9s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(18) {
+                animation: type 2s steps(54) 11s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(19) {
+                animation: blinker 0.5s steps(1) 11s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(22) {
+                animation: type 2s steps(54) 13s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(23) {
+                animation: blinker 0.5s steps(1) 13s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(26) {
+                animation: type 2s steps(51) 15s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(27) {
+                animation: blinker 0.5s steps(1) 15s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(30) {
+                animation: type 2s steps(52) 17s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(31) {
+                animation: blinker 0.5s steps(1) 17s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(34) {
+                animation: type 1s steps(27) 19s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(35) {
+                animation: blinker 0.5s steps(1) 19s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(38) {
+                animation: type 1s steps(26) 20s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(39) {
+                animation: blinker 0.5s steps(1) 20s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(42) {
+                animation: type 1s steps(42) 21s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(43) {
+                animation: blinker 0.5s steps(1) 21s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(46) {
+                animation: type 2s steps(51) 22s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(47) {
+                animation: blinker 0.5s steps(1) 22s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(50) {
+                animation: type 1s steps(48) 24s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(51) {
+                animation: blinker 0.5s steps(1) 24s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(54) {
+                animation: type 2s steps(53) 25s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(55) {
+                animation: blinker 0.5s steps(1) 25s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(58) {
+                animation: type 2s steps(51) 27s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(59) {
+                animation: blinker 0.5s steps(1) 27s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(62) {
+                animation: type 1s steps(46) 29s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(63) {
+                animation: blinker 0.5s steps(1) 29s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(66) {
+                animation: type 1s steps(41) 30s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(67) {
+                animation: blinker 0.5s steps(1) 30s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(70) {
+                animation: type 2s steps(54) 31s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(71) {
+                animation: blinker 0.5s steps(1) 31s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(74) {
+                animation: type 1s steps(48) 33s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(75) {
+                animation: blinker 0.5s steps(1) 33s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(78) {
+                animation: type 2s steps(53) 34s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(79) {
+                animation: blinker 0.5s steps(1) 34s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(82) {
+                animation: type 2s steps(51) 36s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(83) {
+                animation: blinker 0.5s steps(1) 36s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(86) {
+                animation: type 2s steps(54) 38s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(87) {
+                animation: blinker 0.5s steps(1) 38s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(90) {
+                animation: type 1s steps(49) 40s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(91) {
+                animation: blinker 0.5s steps(1) 40s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(94) {
+                animation: type 2s steps(51) 41s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(95) {
+                animation: blinker 0.5s steps(1) 41s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(98) {
+                animation: type 1s steps(36) 43s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(99) {
+                animation: blinker 0.5s steps(1) 43s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(102) {
+                animation: type 1s steps(8) 44s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(103) {
+                animation: blinker 0.5s steps(1) 44s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(106) {
+                animation: type 2s steps(51) 45s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(107) {
+                animation: blinker 0.5s steps(1) 45s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(110) {
+                animation: type 1s steps(49) 47s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(111) {
+                animation: blinker 0.5s steps(1) 47s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(114) {
+                animation: type 1s steps(38) 48s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(115) {
+                animation: blinker 0.5s steps(1) 48s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(118) {
+                animation: type 2s steps(52) 49s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(119) {
+                animation: blinker 0.5s steps(1) 49s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(122) {
+                animation: type 2s steps(53) 51s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(123) {
+                animation: blinker 0.5s steps(1) 51s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(126) {
+                animation: type 2s steps(54) 53s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(127) {
+                animation: blinker 0.5s steps(1) 53s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(130) {
+                animation: type 2s steps(50) 55s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(131) {
+                animation: blinker 0.5s steps(1) 55s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(134) {
+                animation: type 1s steps(48) 57s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(135) {
+                animation: blinker 0.5s steps(1) 57s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(138) {
+                animation: type 2s steps(50) 58s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(139) {
+                animation: blinker 0.5s steps(1) 58s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(142) {
+                animation: type 2s steps(54) 60s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(143) {
+                animation: blinker 0.5s steps(1) 60s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(146) {
+                animation: type 2s steps(52) 62s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(147) {
+                animation: blinker 0.5s steps(1) 62s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(150) {
+                animation: type 2s steps(50) 64s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(151) {
+                animation: blinker 0.5s steps(1) 64s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(154) {
+                animation: type 2s steps(53) 66s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(155) {
+                animation: blinker 0.5s steps(1) 66s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(158) {
+                animation: type 2s steps(53) 68s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(159) {
+                animation: blinker 0.5s steps(1) 68s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(162) {
+                animation: type 2s steps(52) 70s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(163) {
+                animation: blinker 0.5s steps(1) 70s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(166) {
+                animation: type 1s steps(46) 72s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(167) {
+                animation: blinker 0.5s steps(1) 72s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(170) {
+                animation: type 2s steps(54) 73s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(171) {
+                animation: blinker 0.5s steps(1) 73s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(174) {
+                animation: type 2s steps(53) 75s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(175) {
+                animation: blinker 0.5s steps(1) 75s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(178) {
+                animation: type 2s steps(54) 77s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(179) {
+                animation: blinker 0.5s steps(1) 77s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(182) {
+                animation: type 2s steps(53) 79s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(183) {
+                animation: blinker 0.5s steps(1) 79s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(186) {
+                animation: type 1s steps(49) 81s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(187) {
+                animation: blinker 0.5s steps(1) 81s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(190) {
+                animation: type 2s steps(54) 82s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(191) {
+                animation: blinker 0.5s steps(1) 82s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(194) {
+                animation: type 2s steps(53) 84s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(195) {
+                animation: blinker 0.5s steps(1) 84s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(198) {
+                animation: type 2s steps(54) 86s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(199) {
+                animation: blinker 0.5s steps(1) 86s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(202) {
+                animation: type 2s steps(53) 88s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(203) {
+                animation: blinker 0.5s steps(1) 88s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(206) {
+                animation: type 2s steps(52) 90s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(207) {
+                animation: blinker 0.5s steps(1) 90s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(210) {
+                animation: type 2s steps(54) 92s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(211) {
+                animation: blinker 0.5s steps(1) 92s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(214) {
+                animation: type 2s steps(54) 94s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(215) {
+                animation: blinker 0.5s steps(1) 94s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(218) {
+                animation: type 2s steps(54) 96s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(219) {
+                animation: blinker 0.5s steps(1) 96s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(222) {
+                animation: type 1s steps(46) 98s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(223) {
+                animation: blinker 0.5s steps(1) 98s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(226) {
+                animation: type 2s steps(51) 99s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(227) {
+                animation: blinker 0.5s steps(1) 99s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(230) {
+                animation: type 2s steps(51) 101s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(231) {
+                animation: blinker 0.5s steps(1) 101s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(234) {
+                animation: type 2s steps(51) 103s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(235) {
+                animation: blinker 0.5s steps(1) 103s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(238) {
+                animation: type 1s steps(46) 105s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(239) {
+                animation: blinker 0.5s steps(1) 105s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(242) {
+                animation: type 1s steps(49) 106s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(243) {
+                animation: blinker 0.5s steps(1) 106s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(246) {
+                animation: type 2s steps(52) 107s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(247) {
+                animation: blinker 0.5s steps(1) 107s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(250) {
+                animation: type 1s steps(48) 109s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(251) {
+                animation: blinker 0.5s steps(1) 109s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(254) {
+                animation: type 2s steps(53) 110s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(255) {
+                animation: blinker 0.5s steps(1) 110s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(258) {
+                animation: type 1s steps(45) 112s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(259) {
+                animation: blinker 0.5s steps(1) 112s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(262) {
+                animation: type 2s steps(50) 113s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(263) {
+                animation: blinker 0.5s steps(1) 113s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(266) {
+                animation: type 2s steps(51) 115s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(267) {
+                animation: blinker 0.5s steps(1) 115s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(270) {
+                animation: type 1s steps(49) 117s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(271) {
+                animation: blinker 0.5s steps(1) 117s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(274) {
+                animation: type 1s steps(49) 118s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(275) {
+                animation: blinker 0.5s steps(1) 118s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(278) {
+                animation: type 2s steps(51) 119s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(279) {
+                animation: blinker 0.5s steps(1) 119s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(282) {
+                animation: type 1s steps(46) 121s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(283) {
+                animation: blinker 0.5s steps(1) 121s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(286) {
+                animation: type 2s steps(51) 122s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(287) {
+                animation: blinker 0.5s steps(1) 122s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(290) {
+                animation: type 1s steps(49) 124s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(291) {
+                animation: blinker 0.5s steps(1) 124s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(294) {
+                animation: type 1s steps(48) 125s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(295) {
+                animation: blinker 0.5s steps(1) 125s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(298) {
+                animation: type 2s steps(53) 126s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(299) {
+                animation: blinker 0.5s steps(1) 126s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(302) {
+                animation: type 2s steps(51) 128s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(303) {
+                animation: blinker 0.5s steps(1) 128s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(306) {
+                animation: type 2s steps(52) 130s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(307) {
+                animation: blinker 0.5s steps(1) 130s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(310) {
+                animation: type 1s steps(48) 132s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(311) {
+                animation: blinker 0.5s steps(1) 132s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(314) {
+                animation: type 2s steps(52) 133s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(315) {
+                animation: blinker 0.5s steps(1) 133s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(318) {
+                animation: type 2s steps(52) 135s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(319) {
+                animation: blinker 0.5s steps(1) 135s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(322) {
+                animation: type 2s steps(53) 137s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(323) {
+                animation: blinker 0.5s steps(1) 137s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(326) {
+                animation: type 2s steps(52) 139s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(327) {
+                animation: blinker 0.5s steps(1) 139s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(330) {
+                animation: type 2s steps(54) 141s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(331) {
+                animation: blinker 0.5s steps(1) 141s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(334) {
+                animation: type 2s steps(53) 143s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(335) {
+                animation: blinker 0.5s steps(1) 143s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(338) {
+                animation: type 1s steps(49) 145s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(339) {
+                animation: blinker 0.5s steps(1) 145s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(342) {
+                animation: type 2s steps(52) 146s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(343) {
+                animation: blinker 0.5s steps(1) 146s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(346) {
+                animation: type 2s steps(50) 148s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(347) {
+                animation: blinker 0.5s steps(1) 148s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(350) {
+                animation: type 2s steps(50) 150s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(351) {
+                animation: blinker 0.5s steps(1) 150s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(354) {
+                animation: type 1s steps(47) 152s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(355) {
+                animation: blinker 0.5s steps(1) 152s 2 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(358) {
+                animation: type 2s steps(52) 153s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(359) {
+                animation: blinker 0.5s steps(1) 153s 4 normal forwards ;
+            }
+            
+            
+            .typing-animator-main:nth-child(362) {
+                animation: type 1s steps(11) 155s 1 normal forwards;
+            }
+            
+            .typing-animator-main:nth-child(363) {
+                animation: blinker 0.5s steps(1) 155s 8 normal forwards ;
+            }
+            
+        </style>
+    </head>
+    
+    <body>
+        <header>
+            <h1 class="termtxt-default">Death to PHP, and screw you NextCloud.</h1>
+            <p class="termtxt-warnings support-warning-size-interpolation skipping-hides">[ <strong>*WARNING!*</strong> You seem to be using a browser that doesn't yet <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size#browser_compatibility" class="termtxt-links custom-link-underlining">support the 'interpolate-size' CSS property</a>. At the time of writing this, that feature wasn't available in Firefox or Safari (despite it being over two years since it entered a stable standard phase). You can still see the content, but the terminal-typing-like animation will look very broken (whole lines revealing at once; the cursors won't blink nor „despawn”). Consider using a real, Chromium-based browser (this is coming from a Firefox fork (Zen browser) user, btw; I suffer here as much as you), updating Chrome or your Chromium-based-thing of choice (if you're using it already), not having the severe skill-issue called „being an Apple user” (on iPhones, this site WILL be broken because App Store Chrome is just Safari with a Google skin, because big daddy Tim Uncooked has insecurities about his shitty engine, and compensates by forcing all apps on the App Store to use it), or waiting until your browser of choice supports this feature (if that happens to be Firefox, you might want to consider <a href="https://www.mozillafoundation.org/donate/" class="termtxt-links custom-link-underlining">donating to Mozilla</a>, so they have more funds to implement web standards faster). Also, you have the Skip button below, if the broken animation is annoying to you. ]</p>
+            <p>
+                <span class="termtxt-links skipping-hides custom-link-underlining" id="skipper_trigger">[SKIP ANIMATION<noscript> (JS needed!)</noscript>]</span>
+                <span class="termtxt-links a11y-hides custom-link-underlining" id="a11y_trigger">[EZ-EYES MODE<noscript> (same)</noscript>]</span>
+            </p>
+        </header>
+        <main>
+            <p class="termtxt-default">&nbsp;$&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">cat&nbsp;/articles/3.txt</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">This&nbsp;will&nbsp;be&nbsp;a&nbsp;comparatively&nbsp;short&nbsp;article,&nbsp;I&nbsp;just</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">need&nbsp;to&nbsp;rant&nbsp;a&nbsp;tiny&nbsp;bit...</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">So,&nbsp;you&nbsp;may&nbsp;have&nbsp;seen&nbsp;this&nbsp;site&nbsp;long-ago-enough&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">remember&nbsp;that&nbsp;once&nbsp;upon&nbsp;a&nbsp;time&nbsp;there&nbsp;existed&nbsp;a&nbsp;service</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">called&nbsp;GuzioHub&nbsp;Drive.&nbsp;That&nbsp;service&nbsp;was&nbsp;powered&nbsp;by&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">most&nbsp;overrated&nbsp;piece&nbsp;of&nbsp;self-hosted&nbsp;software&nbsp;on&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">planet,&nbsp;Nextcloud.&nbsp;Nextcloud&nbsp;is&nbsp;written&nbsp;in&nbsp;PHP.&nbsp;PHP,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">just&nbsp;like&nbsp;GuzioHub&nbsp;Drive...</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">Has&nbsp;recently&nbsp;<strong>fucking&nbsp;died</strong>.</span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">The&nbsp;"death"&nbsp;of&nbsp;PHP&nbsp;I'm&nbsp;referring&nbsp;to&nbsp;is&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">widely-publicized&nbsp;(so&nbsp;widely,&nbsp;in&nbsp;fact,&nbsp;that&nbsp;I&nbsp;don't</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">feel&nbsp;inclined&nbsp;to&nbsp;link&nbsp;to&nbsp;any&nbsp;sources&nbsp;because&nbsp;you</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">probably&nbsp;already&nbsp;know&nbsp;it&nbsp;-&nbsp;I'm&nbsp;sure&nbsp;someone&nbsp;in&nbsp;20yrs,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">if&nbsp;this&nbsp;blog&nbsp;(or&nbsp;even&nbsp;the&nbsp;internet&nbsp;itself,&nbsp;for&nbsp;that</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">matter)&nbsp;survives&nbsp;that&nbsp;long,&nbsp;will&nbsp;be&nbsp;incredibly</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">displeased&nbsp;by&nbsp;this&nbsp;decision)&nbsp;RCE&nbsp;security</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">vulnerability&nbsp;in&nbsp;PHP.&nbsp;Of&nbsp;course,&nbsp;PHP&nbsp;didn't&nbsp;completely</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">disappear&nbsp;as&nbsp;the&nbsp;result&nbsp;of&nbsp;that&nbsp;incident.&nbsp;It&nbsp;was</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">discovered,&nbsp;patched,&nbsp;and&nbsp;after&nbsp;some&nbsp;very&nbsp;hectic&nbsp;24h&nbsp;-</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">things&nbsp;mostly&nbsp;came&nbsp;back&nbsp;to&nbsp;normal.&nbsp;Still,&nbsp;basically</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">every&nbsp;PHP&nbsp;site&nbsp;on&nbsp;earth&nbsp;was&nbsp;offline&nbsp;for&nbsp;several&nbsp;hours,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">so&nbsp;a&nbsp;part&nbsp;of&nbsp;the&nbsp;internet&nbsp;DID&nbsp;die.&nbsp;It&nbsp;simply&nbsp;came</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">back.&nbsp;You&nbsp;know&nbsp;what&nbsp;didn't&nbsp;come&nbsp;back,&nbsp;tho?&nbsp;GuzioHub</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Drive.&nbsp;This&nbsp;one&nbsp;stays&nbsp;dead.&nbsp;Forever.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text"><span class="termtxt-guzio-signature-yellow">But&nbsp;why?</span></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">Nextcloud&nbsp;SUCKS.&nbsp;I&nbsp;hated&nbsp;it&nbsp;from&nbsp;the&nbsp;very&nbsp;1st&nbsp;day&nbsp;I</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">deployed&nbsp;it,&nbsp;and&nbsp;it&nbsp;was&nbsp;the&nbsp;very&nbsp;first&nbsp;service&nbsp;on</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">GuzioHub.&nbsp;2&nbsp;main&nbsp;reasons&nbsp;why&nbsp;it&nbsp;sucks:</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">*&nbsp;It's&nbsp;TOO&nbsp;DAMN&nbsp;HEAVY.&nbsp;The&nbsp;amount&nbsp;of&nbsp;stuff&nbsp;a&nbsp;typical</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;Nextcloud&nbsp;instance&nbsp;does&nbsp;it&nbsp;TRULY&nbsp;UNSETTLING.&nbsp;And...</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;I&nbsp;get&nbsp;it!&nbsp;It's&nbsp;enterprise&nbsp;software.&nbsp;It&nbsp;needs&nbsp;to&nbsp;have</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;many&nbsp;features.&nbsp;If&nbsp;you're&nbsp;an&nbsp;enterprise&nbsp;customer,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;you'd&nbsp;probably&nbsp;be&nbsp;happy.&nbsp;You&nbsp;know&nbsp;who&nbsp;<em>isn't</em>&nbsp;an</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;enterprise&nbsp;customer?&nbsp;<strong>A&nbsp;single&nbsp;fkin&nbsp;user.</strong>&nbsp;Even&nbsp;if</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;said&nbsp;user&nbsp;has&nbsp;prospects&nbsp;of&nbsp;expansion&nbsp;to&nbsp;their&nbsp;family</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;and&nbsp;friends...&nbsp;Even&nbsp;on&nbsp;that&nbsp;scale&nbsp;-&nbsp;Nextcloud&nbsp;does</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;way&nbsp;too&nbsp;fkin&nbsp;much.&nbsp;If&nbsp;you're&nbsp;setting&nbsp;up&nbsp;a&nbsp;family</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;cloud&nbsp;for&nbsp;you&nbsp;and&nbsp;your&nbsp;partner&nbsp;-&nbsp;you&nbsp;don't&nbsp;need&nbsp;it.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;If&nbsp;you're&nbsp;setting&nbsp;up&nbsp;a&nbsp;"friend-cloud"&nbsp;-&nbsp;even&nbsp;if&nbsp;you</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;anticipate&nbsp;expanding&nbsp;to&nbsp;as&nbsp;much&nbsp;as&nbsp;100&nbsp;users&nbsp;(say,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;your&nbsp;friends&nbsp;will&nbsp;be&nbsp;allowed&nbsp;to&nbsp;invite&nbsp;their</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;friends,&nbsp;and&nbsp;so&nbsp;on)&nbsp;-&nbsp;you&nbsp;STILL&nbsp;DON'T&nbsp;NEED&nbsp;IT,&nbsp;trust</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;me.&nbsp;I've&nbsp;ran&nbsp;across&nbsp;many&nbsp;larger-scale&nbsp;friend-clouds</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;since&nbsp;I&nbsp;joined&nbsp;Matrix,&nbsp;and&nbsp;not&nbsp;a&nbsp;single&nbsp;one&nbsp;of&nbsp;those</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;hosts&nbsp;Nextcloud.&nbsp;That's&nbsp;gotta&nbsp;be&nbsp;telling&nbsp;something.</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;What&nbsp;it's&nbsp;telling,&nbsp;is&nbsp;that&nbsp;unless&nbsp;you're&nbsp;a&nbsp;<em>real</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;enterprise&nbsp;-&nbsp;with&nbsp;Debora&nbsp;from&nbsp;the&nbsp;reception&nbsp;desk&nbsp;who</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;hadn't&nbsp;touched&nbsp;a&nbsp;computer&nbsp;in&nbsp;30&nbsp;years,&nbsp;and&nbsp;needs&nbsp;an</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;enterprise-certified&nbsp;idiot-proofing&nbsp;level;&nbsp;with&nbsp;500+</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;employees;&nbsp;with&nbsp;an&nbsp;IT&nbsp;stack&nbsp;that's&nbsp;already&nbsp;a&nbsp;legacy</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;tangled&nbsp;mess&nbsp;and&nbsp;an&nbsp;extra&nbsp;PHP&nbsp;service&nbsp;slapped&nbsp;onto</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;it&nbsp;will&nbsp;seem&nbsp;right&nbsp;at&nbsp;home;&nbsp;with&nbsp;some&nbsp;enterprise&nbsp;SSO</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;solution&nbsp;-&nbsp;you&nbsp;<strong>DO&nbsp;NOT.&nbsp;NEED.&nbsp;NEXTCLOUD.</strong>&nbsp;You're&nbsp;gonna</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;get&nbsp;a&nbsp;much&nbsp;better&nbsp;mileage&nbsp;out&nbsp;of&nbsp;your&nbsp;server&nbsp;by&nbsp;just</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;picking&nbsp;individual&nbsp;solutions&nbsp;to&nbsp;problems&nbsp;you</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;actually&nbsp;have.&nbsp;In&nbsp;<em>„Oh,&nbsp;but&nbsp;the&nbsp;integration!”</em>&nbsp;SHUT</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;UP!&nbsp;You&nbsp;want&nbsp;<strong>real</strong>&nbsp;integration?&nbsp;Set&nbsp;up&nbsp;an&nbsp;SSO&nbsp;gate</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;like&nbsp;Authentik&nbsp;or&nbsp;LLDAP&nbsp;or&nbsp;LLDAP+Authelia&nbsp;(I&nbsp;went</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;from&nbsp;option&nbsp;2&nbsp;(worked&nbsp;fine&nbsp;for&nbsp;NextCloud&nbsp;and</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;Matrix/Tuwunel)&nbsp;to&nbsp;3&nbsp;when&nbsp;I&nbsp;migrated&nbsp;to&nbsp;Immich,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;because&nbsp;it&nbsp;didn't&nbsp;support&nbsp;"raw"&nbsp;LDAP&nbsp;and&nbsp;instead&nbsp;I</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;needed&nbsp;to&nbsp;deploy&nbsp;Authelia,&nbsp;as&nbsp;an&nbsp;OAuth2&nbsp;engine</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;sitting&nbsp;on&nbsp;top&nbsp;of&nbsp;LDAP).&nbsp;I'm&nbsp;an&nbsp;integration&nbsp;nerd,&nbsp;I</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;know&nbsp;what&nbsp;I'm&nbsp;talking&nbsp;about!&nbsp;Integration&nbsp;in</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;NextCloud&nbsp;is&nbsp;a&nbsp;<strong>lie</strong>.&nbsp;Most&nbsp;actual&nbsp;Apps&nbsp;come&nbsp;with&nbsp;a</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;little&nbsp;"It's&nbsp;only&nbsp;the&nbsp;frontend,&nbsp;please&nbsp;deploy&nbsp;the</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;backend&nbsp;yourself&nbsp;and&nbsp;point&nbsp;to&nbsp;it&nbsp;from&nbsp;the&nbsp;admin</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;settings&nbsp;menu!".&nbsp;<em>Congrats!&nbsp;You&nbsp;managed&nbsp;to&nbsp;add&nbsp;a</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;<em>button&nbsp;to&nbsp;the&nbsp;top-bar&nbsp;with,&nbsp;that&nbsp;opens&nbsp;an&nbsp;iframe!</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;<em>Truly&nbsp;revolutionary&nbsp;tech;&nbsp;I&nbsp;totally&nbsp;couldn't</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;<em>replicate&nbsp;it&nbsp;on&nbsp;this&nbsp;very&nbsp;website&nbsp;if&nbsp;I&nbsp;wanted&nbsp;to,</em></p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;<em>with&nbsp;a&nbsp;dozen&nbsp;of&nbsp;hand-written&nbsp;HTML&nbsp;lines.</em>&nbsp;When&nbsp;I</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;first&nbsp;got&nbsp;interested&nbsp;in&nbsp;NextCloud,&nbsp;I&nbsp;got&nbsp;truly</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;hooked&nbsp;on&nbsp;it&nbsp;because&nbsp;I&nbsp;thought&nbsp;I'm&nbsp;gonna&nbsp;be&nbsp;able&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;automate&nbsp;the&nbsp;setup&nbsp;of&nbsp;anything&nbsp;else&nbsp;I&nbsp;may&nbsp;want&nbsp;to</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;host,&nbsp;from&nbsp;a&nbsp;site&nbsp;like&nbsp;this&nbsp;to&nbsp;a&nbsp;Minecraft&nbsp;server,</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;via&nbsp;that&nbsp;apps&nbsp;menu.&nbsp;And&nbsp;that&nbsp;it's&nbsp;gonna&nbsp;all&nbsp;be</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;magically&nbsp;integrated,&nbsp;with&nbsp;a&nbsp;single&nbsp;account&nbsp;system</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;and&nbsp;god-knows-what-else.&nbsp;That&nbsp;wasn't&nbsp;the&nbsp;case&nbsp;back</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;then.&nbsp;NextCloud&nbsp;is&nbsp;written&nbsp;in&nbsp;PHP&nbsp;and&nbsp;any&nbsp;apps&nbsp;were</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;also&nbsp;limited&nbsp;to&nbsp;PHP,&nbsp;which&nbsp;excludes&nbsp;a&nbsp;huge&nbsp;portion</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;of&nbsp;services&nbsp;one&nbsp;may&nbsp;want&nbsp;to&nbsp;run&nbsp;because&nbsp;it's&nbsp;a&nbsp;dying</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;language&nbsp;and&nbsp;no&nbsp;New&nbsp;And&nbsp;Cool&nbsp;stuff&nbsp;is&nbsp;written&nbsp;in&nbsp;it</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;anymore&nbsp;(even&nbsp;if&nbsp;we&nbsp;exclude&nbsp;the&nbsp;recent&nbsp;security</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;nightmare,&nbsp;it's&nbsp;not&nbsp;a&nbsp;secret&nbsp;that&nbsp;PHP&nbsp;was&nbsp;bleeding</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;users&nbsp;for&nbsp;a&nbsp;while).&nbsp;NextCloud&nbsp;foundation&nbsp;finally</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;noticed&nbsp;this&nbsp;and&nbsp;allowed&nbsp;Docker&nbsp;containers&nbsp;to&nbsp;be</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;managed&nbsp;by&nbsp;NextCloud,&nbsp;but&nbsp;it's&nbsp;too&nbsp;little&nbsp;too</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;late.......&nbsp;WARNING:&nbsp;THIS&nbsp;ARTICLE&nbsp;IS&nbsp;INCOMPLETE&nbsp;AS</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+            <br><p class="termtxt-default">&nbsp;</p><p class="termtxt-default typing-animator-main typing-animator-text">&nbsp;&nbsp;OF&nbsp;YET!!!</p><p class="termtxt-default typing-animator-main typing-animator-cursor">_</p>
+        </main>
+        
+        <script>
+            document.getElementById("skipper_trigger").addEventListener("click", () => {
+                document.getElementById("skipper_display").innerHTML = " /*Autogenerated typing animation - SKIPPED BY USER*/\n            .typing-animator-main {\n                width: fit-content;\n            }\n            .skipping-hides {\n                display: none;\n            }\n            .typing-animator-cursor {\n                display: none;\n            }\n            body {\n                --max-content-length: "+window.getComputedStyle(document.body).getPropertyValue('--max-content-length')+";\n            }\n        ";
+            });
+            document.getElementById("a11y_trigger").addEventListener("click", () => {
+                document.getElementById("a11y_display").innerHTML = " /*CRT effects - REDUCED BY USER*/\n            \n            body {\n                background-color: #333;\n            }\n            \n            .termtxt-default {\n                color: #BFB;\n            }\n            \n            .termtxt-warnings {\n                color: #F44;\n            }\n            \n            .termtxt-links {\n                color: #2CF;\n            }\n            \n            .termtxt-guzio-signature-yellow {\n                color: #FDFF00;\n            }\n            .a11y-hides {\n                display: none;\n            }\n            \n        ";
+                setTimeout( () => alert("Btw, if it's only the flicker that's problematic, you can turn if off by enabling Reduced Motion or Reduced Transparency (unfortunately, I don't think there is a Reduced Flicker option, and if something like this was introduced - this site doesn't know it yet and so won't support it) in your browser settings for this site (if your browser even lets you customize it per-site)."), 0) //Must be in a timeout, otherwise the „bad CSS” will remain active for as long as the alert it open.
+            });
+        </script>
+    </body>
+</html>

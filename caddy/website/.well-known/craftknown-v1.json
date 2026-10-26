@@ -1,0 +1,14 @@
+{
+	"mojangDiscoveryUrl": "https://mc.guziohub.ovh/discovery/minecraft/client",
+	"hostsAuxServices": {
+		"endpoints": {
+			"authlib_injector:discovery":{
+				"uri":"https://mc.guziohub.ovh/authlib-injector"
+			},
+			"mojang:skin_setter":{
+				"uri": "https://www.minecraft.net/msaprofile/mygames/editskin"
+			}
+		}
+	},
+	"hostsMcServers": ["mc.guziohub.ovh", "guziohub.ovh", "play.guziohub.ovh", "join.guziohub.ovh"]
+}
