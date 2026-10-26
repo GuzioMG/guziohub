@@ -10,5 +10,5 @@
 			}
 		}
 	},
-	"hostsMcServers": ["mc.guziohub.ovh", "guziohub.ovh", "play.guziohub.ovh", "join.guziohub.ovh"]
+	"hostsMcServers": ["v6.guziohub.ovh", "guziohub.ovh", "v4.guziohub.ovh"]
 }
