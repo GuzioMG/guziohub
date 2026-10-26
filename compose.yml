@@ -323,7 +323,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - "../minecraft/servers/surveyor-test:/data"
+      - "../minecraft/servers/fediverse:/data"
       - "../minecraft/builds:/modpacks:ro"
     ports:
       - "25565:25565"
@@ -340,9 +340,9 @@ services:
     # MC Config
     environment:
       # Modpack
-      #VERSION: "SNAPSHOT"
-      TYPE: "MODRINTH"
-      MODRINTH_MODPACK: "/modpacks/surveyor-test.mrpack"
+      VERSION: "26.3"
+      TYPE: "FABRIC"
+      #MODRINTH_MODPACK: "/modpacks/surveyor-test.mrpack"
       # Minecraft stuff
       GUI: "FALSE"
       EULA: "TRUE"              #  Why are some bools upper-case...
