@@ -308,15 +308,15 @@ services:
     cap_drop:
       - NET_RAW
 
-  drasl:
+  xiolot:
     restart: unless-stopped
-    image: unmojang/drasl
+    build:
+      context: ./dockerfiles
+      dockerfile: xiolot.Dockerfile
     expose:
-      - "25585"
-    user: 0:0
+      - 27233
     volumes:
-      - ./drasl_conf:/etc/drasl
-      - ../minecraft/drasldata:/var/lib/drasl
+      - ../minecraft/xiolotdata:/data
 
   minecraft:
     # Docker Config

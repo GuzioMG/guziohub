@@ -101,5 +101,5 @@ https://sso.account.guziohub.ovh:443 {
 }
 
 https://mc.guziohub.ovh:443, http://mc.guziohub.ovh:80 {
-    reverse_proxy drasl:25585
+    reverse_proxy xiolot:27233
 }
