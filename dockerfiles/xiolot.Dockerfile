@@ -3,7 +3,7 @@ WORKDIR /repo
 ADD https://codeberg.org/fmctf/xiolot.git#latest-release .
 
 FROM eclipse-temurin:25-jdk-alpine AS builder
-RUN $JAVA_HOME/bin/jlink --add-modules java.base --strip-debug --no-man-pages --no-header-files --compress=2 --output /javaruntime
+RUN $JAVA_HOME/bin/jlink --add-modules java.base,org.xml.sax --strip-debug --no-man-pages --no-header-files --compress=2 --output /javaruntime
 WORKDIR /opt/app
 COPY --from=downloader /repo/.mvn ./.mvn
 COPY --from=downloader /repo/mvnw ./mvnw
