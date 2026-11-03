@@ -17,6 +17,6 @@ FROM alpine
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH "${JAVA_HOME}/bin:${PATH}"
 COPY --from=builder /javaruntime $JAVA_HOME
-COPY --from=builder xiolot.jar /opt/app/target/xiolot.jar
+COPY --from=builder /opt/app/target/xiolot.jar /opt/app/xiolot.jar
 WORKDIR /data
 CMD ["java", "-jar", "/opt/app/xiolot.jar"]
