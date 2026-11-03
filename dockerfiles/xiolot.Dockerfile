@@ -13,7 +13,7 @@ RUN ["./mvnw", "package"]
 RUN mv -v ./target/xiolot-server-*-fat-jar.jar ./target/xiolot.jar
 
 FROM eclipse-temurin:25-jdk-alpine AS jbuilder
-RUN $JAVA_HOME/bin/jlink --add-modules java.base,java.xml,java.sql --strip-debug --no-man-pages --no-header-files --compress --output /javaruntime
+RUN $JAVA_HOME/bin/jlink --add-modules java.base,java.xml,java.sql --strip-debug --no-man-pages --no-header-files --output /javaruntime
 
 FROM alpine
 ENV JAVA_HOME=/opt/jre25
