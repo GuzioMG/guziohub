@@ -316,7 +316,7 @@ services:
     expose:
       - 27233
     volumes:
-      - ../minecraft/xiolotdata:/data
+      - ../minecraft/xiolotdata:/opt/app/config
     user: 0:0
 
   minecraft:
