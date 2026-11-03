@@ -314,8 +314,8 @@ services:
     expose:
       - 27233
     volumes:
-      - ../minecraft/xiolotdata:/opt/app/config
-    user: 0:0
+      - ../minecraft/xiolotdata/conf:/opt/xiolot/config
+      - ../minecraft/xiolotdata/data:/opt/xiolot/data
 
   minecraft:
     # Docker Config
