@@ -309,10 +309,8 @@ services:
       - NET_RAW
 
   xiolot:
+    image: codeberg.org/fmctf/xiolot:nightly
     restart: unless-stopped
-    build:
-      context: ./dockerfiles
-      dockerfile: xiolot.Dockerfile
     expose:
       - 27233
     volumes:
