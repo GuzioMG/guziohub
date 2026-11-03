@@ -309,6 +309,7 @@ services:
       - NET_RAW
 
   drasl:
+    restart: unless-stopped
     image: unmojang/drasl
     expose:
       - "25585"
