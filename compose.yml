@@ -317,6 +317,7 @@ services:
       - 27233
     volumes:
       - ../minecraft/xiolotdata:/data
+    user: 0:0
 
   minecraft:
     # Docker Config
