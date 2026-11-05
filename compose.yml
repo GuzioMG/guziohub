@@ -243,8 +243,10 @@ services:
       - ldap_pass
       - auth_key
       - auth_jwt
-      - immich_key_digest
       - auth_hmac
+	  
+      - immich_key_digest
+      - xiolot_key_digest
     environment:
       AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: '/run/secrets/pgpass'
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: '/run/secrets/ldap_pass'
@@ -314,8 +316,10 @@ services:
     expose:
       - 27233
     volumes:
-      - ../minecraft/xiolotdata/conf:/opt/xiolot/config
-      - ../minecraft/xiolotdata/data:/opt/xiolot/data
+      - ./xiolot:/opt/xiolot/config
+      - ../minecraft/xiolotdata:/opt/xiolot/data
+    secrets:
+      - xiolot_key
 
   minecraft:
     # Docker Config

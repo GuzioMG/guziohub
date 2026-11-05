@@ -16,6 +16,15 @@ sessionKeyPath: "/opt/xiolot/data/session.key"
 #Just like with sessionSecretPath, this is mostly for documentation's sake - if you're not planning to use OIDC, feel free to remove this whole block.
 oidc:
   #If you set this to true, make sure that the secret specified below is actually being passed
-  enable: false
+  enable: true
   #You can of course rename the secret
-  clientSecretPath: "/run/secrets/xiolot_oidc_client"
+  clientSecretPath: "/run/secrets/xiolot_key"
+  # custom
+  name: "GuzioHub Account"
+  issuer: "https://auth.example.com/application/o/xiolot/"
+  allowPasswordLogin: false
+
+# custom
+baseUrl: "http://mc.guziohub.ovh/"
+domain: "guziohub.ovh"
+registrationMode: "I use OIDC, and allowPasswordLogin is false, so I don't need to put closed/invite (anything else is treated as 'open') in here because it's not like any rando can walk in and register anyway (they'd need a GuzioHub Account first). All that putting closed/invite here would lead to, is more work for me whenever I want to onboard any of my GuzioHubbed friends."

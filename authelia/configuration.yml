@@ -1284,10 +1284,12 @@ identity_providers:
         custom_claims:
           immich_quota:
             attribute: 'immich_quota'
+      xiolot_policy:
     scopes:
       immich_scope:
         claims:
           - 'immich_quota'
+      xiolot:
 
     ## The hmac_secret is used to sign OAuth2 tokens (authorization code, access tokens and refresh tokens).
     ## HMAC Secret can also be set using a secret: https://www.authelia.com/c/secrets
@@ -1380,6 +1382,27 @@ identity_providers:
           - 'email'
           - 'immich_scope'
         claims_policy: 'immich_policy'
+        response_types:
+          - 'code'
+        grant_types:
+          - 'authorization_code'
+        id_token_signed_response_alg: 'RS256'
+        userinfo_signed_response_alg: 'RS256'
+        token_endpoint_auth_method: 'client_secret_post'
+      - client_id: 'xiolot'
+        client_name: 'GuzioHub Minecraft - xiolot'
+        client_secret: '{{fileContent "/run/secrets/xiolot_key_digest"}}'
+        public: false
+        require_pkce: true
+        pkce_challenge_method: 'S256'
+        redirect_uris:
+          - 'https://mc.guziohub.ovh/' #idk if this will work, guess I'll see...
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'xiolot'
+        claims_policy: 'xiolot_policy'
         response_types:
           - 'code'
         grant_types:
