@@ -27,6 +27,10 @@ secrets:
     file: "./secrets/auth_jwt.txt"
   immich_key_digest:
     file: "./secrets/immich_key_digest.txt"
+  xiolot_key_digest:
+    file: "./secrets/xiolot_key_digest.txt"
+  xiolot_key:
+    file: "./secrets/xiolot_key.txt"
 
 services:
   web:
