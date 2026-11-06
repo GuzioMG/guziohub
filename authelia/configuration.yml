@@ -1396,7 +1396,7 @@ identity_providers:
         require_pkce: true
         pkce_challenge_method: 'S256'
         redirect_uris:
-          - 'https://mc.guziohub.ovh/' #idk if this will work, guess I'll see...
+          - 'https://mc.guziohub.ovh/oauth/callback'
         scopes:
           - 'openid'
           - 'profile'
