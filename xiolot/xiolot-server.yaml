@@ -25,6 +25,6 @@ oidc:
   allowPasswordLogin: false
 
 # custom
-baseUrl: "http://mc.guziohub.ovh/"
+baseUrl: "https://mc.guziohub.ovh/"
 domain: "guziohub.ovh"
 registrationMode: "I use OIDC, and allowPasswordLogin is false, so I don't need to put closed/invite (anything else is treated as 'open') in here because it's not like any rando can walk in and register anyway (they'd need a GuzioHub Account first). All that putting closed/invite here would lead to, is more work for me whenever I want to onboard any of my GuzioHubbed friends."
