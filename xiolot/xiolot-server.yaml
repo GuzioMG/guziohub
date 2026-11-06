@@ -23,6 +23,7 @@ oidc:
   name: "GuzioHub Account"
   issuer: "https://sso.account.guziohub.ovh/"
   allowPasswordLogin: false
+  maxProfiles: 10
 
 # custom
 baseUrl: "https://mc.guziohub.ovh/"
