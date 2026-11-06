@@ -1394,7 +1394,6 @@ identity_providers:
         client_secret: '{{fileContent "/run/secrets/xiolot_key_digest"}}'
         public: false
         require_pkce: false
-        pkce_challenge_method: 'S256'
         redirect_uris:
           - 'https://mc.guziohub.ovh/oauth/callback'
         scopes:
