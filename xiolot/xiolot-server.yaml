@@ -1,7 +1,7 @@
 # This is a MINIMIZED set of options, required to ensure you don't break xiolot in a container, plus 2 extra bits of options kept for documentation. Please see https://codeberg.org/fmctf/xiolot#configuring for a complete list of available config options.
 
 #Do NOT touch this! (unless you're manually migrating config versions)
-configVersion: 2
+configVersion: 3
 #Do NOT touch this, EVER!!! (Changing this allows xiolot to auto-update, which in a containerized environment will lead to xiolot spontaneously downgrading back to the image's version whenever the container recreates. Version downgrades are not officially supported and can lead to anything from instability to config/DB corruption, and as such should NOT be done spontaneously with no backups!)
 disableUpdating: true
 #If you do decide to pass a session secret (xiolot works just fine with it unset), it's best practice to use a secret file if you're using Compose. Otherwise, feel free to remove this.
@@ -27,4 +27,4 @@ oidc:
 # custom
 baseUrl: "https://mc.guziohub.ovh/"
 domain: "guziohub.ovh"
-registrationMode: "I use OIDC, and allowPasswordLogin is false, so I don't need to put closed/invite (anything else is treated as 'open') in here because it's not like any rando can walk in and register anyway (they'd need a GuzioHub Account first). All that putting closed/invite here would lead to, is more work for me whenever I want to onboard any of my GuzioHubbed friends."
+registrationMode: "closed"
