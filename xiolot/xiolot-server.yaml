@@ -21,7 +21,7 @@ oidc:
   clientSecretPath: "/run/secrets/xiolot_key"
   # custom
   name: "GuzioHub Account"
-  issuer: "https://sso.account.guziohub.ovh/application/o/xiolot/"
+  issuer: "https://sso.account.guziohub.ovh/"
   allowPasswordLogin: false
 
 # custom
