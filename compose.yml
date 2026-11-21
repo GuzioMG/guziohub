@@ -181,7 +181,7 @@ services:
     environment:
       LIVEKIT_URL: 'wss://rtc.chat.guziohub.ovh'
       LIVEKIT_KEY_FILE: '/run/secrets/mxrtc'
-      LIVEKIT_FULL_ACCESS_HOMESERVERS: 'this.value.is.ignored.when.im.using.app-service.mode.and.its.actually.about.to.be.deleted.but.they.still.force.me.to.set.it.lol'
+      LIVEKIT_FULL_ACCESS_HOMESERVERS: 'guziohub.ovh'
       LIVEKIT_HS_SERVER_NAME: 'guziohub.ovh'
       LIVEKIT_AS_REGISTRATION_FILE: '/run/secrets/mxrtcreg'
     restart: unless-stopped
