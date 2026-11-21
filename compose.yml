@@ -11,8 +11,10 @@ secrets:
     file: "./secrets/ncappkey.txt"
   mxregkey:
     file: "./secrets/mxregkey.txt"
-  mxturn:
-    file: "./secrets/mxturn.txt"
+  mxrtcreg:
+    file: "./secrets/mxrtc.yaml"
+  mxrtc:
+    file: "./secrets/mxrtc.txt"
   ldap_key:
     file: "./secrets/ldap_key.txt"
   ldap_jwt:
@@ -99,7 +101,6 @@ services:
     restart: unless-stopped
     secrets:
       - mxregkey
-      - mxturn
       - ldap_pass
     volumes:
       - ./db/matrix:/var/lib/tuwunel
@@ -107,14 +108,10 @@ services:
     depends_on:
       web:
         condition: service_healthy
-      mxturn:
+      mxrtc:
         condition: service_started
       ldap:
         condition: service_started
-#    ulimits: # tuwunel uses quite a few file descriptors, and on some systems it defaults to 1024, so you can tell docker to increase it [FROM: https://github.com/matrix-construct/tuwunel/blob/main/docs/deploying/docker-compose.for-traefik.yml#L38-L41]
-#      nofile:
-#        soft: 1048567
-#        hard: 1048567
     environment:
       # Core
       TUWUNEL_SERVER_NAME: guziohub.ovh
@@ -171,26 +168,27 @@ services:
       TUWUNEL_LDAP__UID_ATTRIBUTE: 'uid'
       TUWUNEL_LDAP__NAME_ATTRIBUTE: 'displayname'
       TUWUNEL_LDAP__MAIL_ATTRIBUTE: 'email'
-      # TURN
-      TUWUNEL_TURN_URIS: '["turn:rtc.chat.guziohub.ovh?transport=udp","turn:rtc.chat.guziohub.ovh?transport=tcp"]'
-      TUWUNEL_TURN_SECRET_FILE: '/run/secrets/mxturn'
+      # MxRTC
+      TUWUNEL_WELL_KNOWN__LIVEKIT_URL: 'rtc.chat.guziohub.ovh'
       # Support
       TUWUNEL_WELL_KNOWN__SUPPORT_PAGE: 'https://guziohub.ovh/matrix/help.html'
       TUWUNEL_WELL_KNOWN__SUPPORT_ROLE: 'Admin'
       TUWUNEL_WELL_KNOWN__SUPPORT_MXID: '@guzio:guziohub.ovh'
       TUWUNEL_WELL_KNOWN__SUPPORT_EMAIL: 'guzekk@protonmail.com'
   
-  mxturn:
-    image: coturn/coturn:alpine
+  mxrtc:
+    image: ghcr.io/element-hq/lk-jwt-service:latest
+    environment:
+      LIVEKIT_URL: 'wss://rtc.chat.guziohub.ovh'
+      LIVEKIT_KEY_FILE: '/run/secrets/mxrtc'
+      LIVEKIT_HS_SERVER_NAME: 'guziohub.ovh'
+      LIVEKIT_AS_REGISTRATION_FILE: '/run/secrets/mxrtcreg'
     restart: unless-stopped
-    network_mode: "host" # Coturn needs to be able to bind to many ports, so - even if it's security nightmare - it needs host networking to perform well (According to their docs, Docker is bad with large port ranges. Dunno if this also applies to Podman, but I'd rather not risk it. Especially with how I have no real way of debugging TURN performance, so unless it was obscenely bad, I wouldn't've even known if I'm leaving performance on the table.).
-    volumes:
-      - type: bind
-        source: ./secrets/mxturnfull.conf
-        target: /etc/coturn/turnserver.conf
-        read_only: true
-      - type: tmpfs # Provides a speed boost, according to https://github.com/coturn/coturn/blob/master/docker/coturn/README.md?plain=1#L118-L125  Why they don't just do this by default is beyond me. I'm pretty sure TURN servers don't need persistent storage (from my own understanding of WebRTC - and from how they recommend to use tmpfs for a speed bump in their own docs, which they probably wouldn't advise (not without a warning, anyway) if they knew they were risks involved), so it should've been fine for them to do.
-        target: /var/lib/coturn
+    secrets:
+      - mxrtc
+      - mxrtcreg
+    expose:
+      - 8080
   
   mxbot-meta:
     image: dock.mau.dev/mautrix/meta:latest

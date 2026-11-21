@@ -92,6 +92,23 @@ https://bots.chat.guziohub.ovh:443, http://bots.chat.guziohub.ovh:80 {
 	}
 }
 
+https://rtc.chat.guziohub.ovh:443, http://rtc.chat.guziohub.ovh:80 {
+    # This is matrix-rtc-jwt
+    @jwt_service {
+        path /sfu/get* /healthz* /get_token*
+    }
+    handle @jwt_service {
+        reverse_proxy mxrtc:8080
+    }
+    # This is LiveKit itself - MUST BE MANUALLY LAUNCHED ON THE V4 HOST!
+    handle {
+        reverse_proxy livekit.guziohub.ovh:7880 {
+            header_up Connection "upgrade"
+            header_up Upgrade {http.request.header.Upgrade}
+        }
+    }
+}
+
 https://account.guziohub.ovh:443, http://account.guziohub.ovh:80 {
     reverse_proxy ldap:17170
 }

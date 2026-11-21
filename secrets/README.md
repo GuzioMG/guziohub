@@ -19,20 +19,11 @@ Shared secret between Nextcloud and ExApps DSP
 The password used for registration on Matrix.
 *Note: Registration is disabled for now, due to LDAP being used for accounts instead. This is kept for future reference, tho.*
 
-## `mxturnfull.conf`
-A full config for COTURN. Unfortunately, it's not possible to just pass the actual secret values as `_FILE` envars - or any envars, for that matter - because Coturn doesn't support those.
+## `mxrtc.yaml`
+The app-service registration file for MxRTC. Must be pasted into the admin room.
 
-The file should look like this:
-```conf
-use-auth-secret
-static-auth-secret=<a secret key>
-realm=rtc.chat.guziohub.ovh
-```
-
-## `mxturn.txt`
-The value of `static-auth-secret=` from `mxturnfull.conf`.
-
-*The world would've been such a great place if everyone had followed the damn specs..... I wouldn't need to split this stupid secret into 2 different files.*
+## `mxrtc.txt`
+Credentials for MxRTC. Must be in a `<20 characters>: <64 characters>` format (no `<>`, ofc).
 
 ## `ldap_key.txt`
 The seed for LDAP's secret key. Should be generated using [`./generate_secrets.sh`](https://github.com/lldap/lldap/blob/main/generate_secrets.sh).

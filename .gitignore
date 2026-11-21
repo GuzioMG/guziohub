@@ -25,4 +25,4 @@ grinch.kdl
 
 # Secrets
 secrets/*.txt
-secrets/mxturnfull.conf
+secrets/mxrtc.yaml
