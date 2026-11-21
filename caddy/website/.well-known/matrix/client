@@ -1,1 +1,1 @@
-{"m.homeserver":{"base_url":"https://api.chat.guziohub.ovh/"}}
+{"m.homeserver":{"base_url":"https://api.chat.guziohub.ovh/"},"org.matrix.msc4143.rtc_foci":[{"type":"livekit","livekit_service_url":"https://rtc.chat.guziohub.ovh/"}]}
